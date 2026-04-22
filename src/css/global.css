@@ -11,11 +11,11 @@ body {
 
 /* BODY — базовые стили всего сайта */
 body {
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
-  color: #ffffff;
+  color: var(--color-content-primary);
 
   /* Основной градиент-фон */
   background: var(--gradient-primary);

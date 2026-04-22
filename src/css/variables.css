@@ -2,20 +2,26 @@
 
 :root {
   /* Основной градиент — фон всего сайта. */
-  --gradient-primary:
-    linear-gradient(
-      180deg,
-      #243f7d 0%,
-      #213a71 45%,
-      #172a54 100%
-    );
+  --gradient-primary: linear-gradient(
+    180deg,
+    #243f7d 0%,
+    #213a71 45%,
+    #172a54 100%
+  );
 
   /* Bloom — мягкое радиальное свечение поверх основного градиента.*/
-  --gradient-bloom:
-    radial-gradient(
-      ellipse 50% 40% at 50% 40%,
-      rgba(255, 255, 255, 0.07) 0%,
-      rgba(255, 255, 255, 0) 100%
-    );
+  --gradient-bloom: radial-gradient(
+    ellipse 50% 40% at 50% 40%,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* Brand colors */
+  --color-brand-blue: #213a71;
+  --color-brand-crimson: #e62249;
+  /* Neutral colors */
+  --color-neutral-strong: #3c3c3b;
+  --color-neutral-subtle: #d0d0d0;
+  /* Content colors */
+  --color-content-primary: #f9f9f9;
+  --color-content-secondary: #ffffff;
 }
-
