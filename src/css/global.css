@@ -1,10 +1,32 @@
-/* Применяем Manrope как основной шрифт */
+/* ============================================
+   ГЛОБАЛЬНЫЕ СТИЛИ
+   ============================================ */
+
+/* Растягиваем html и body на всю высоту экрана,
+   чтобы фон занимал весь viewport даже на коротких страницах */
+html,
+body {
+  min-height: 100vh;
+}
+
+/* BODY — базовые стили всего сайта */
 body {
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
-  color: #fff;
-  background-color: #0a1628; /* временный тёмный фон, чтобы видеть текст */
-} 
+  color: #ffffff;
 
+  /* Основной градиент-фон */
+  background: var(--gradient-primary);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+main {
+  background: var(--gradient-bloom);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: top center;
+}
