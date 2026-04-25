@@ -1,0 +1,181 @@
+/* ============================================
+   GRID SYSTEM — АМ ГРУПП
+   Mobile-first responsive grid
+   Breakpoints:
+     Mobile          : 0      – 659px   (4 cols, container 300px)
+     Tablet Vertical : 660px  – 1023px  (8 cols, container 620px)
+     Tablet Horizontal: 1024px – 1199px (12 cols, container 940px)
+     Desktop         : 1200px+         (12 cols, container 1160px)
+   ============================================ */
+
+/* ----- 1. CONTAINER ----- */
+/* Центрирующая обёртка с адаптивной шириной.
+   Используется как корневой элемент любой секции. */
+
+.container {
+  width: 100%;
+  max-width: 300px;
+  margin-inline: auto;
+  padding-inline: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 660px) {
+  .container { max-width: 620px; }
+}
+
+@media (min-width: 1024px) {
+  .container { max-width: 940px; }
+}
+
+@media (min-width: 1200px) {
+  .container { max-width: 1160px; }
+}
+
+
+/* ----- 2. GRID ----- */
+/* Базовая 12-колоночная (или 8/4 на узких) сетка.
+   Используется внутри .container для раскладки контента. */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* mobile: 4 cols */
+  column-gap: 20px;                         /* mobile gutter */
+  row-gap: 20px;
+}
+
+@media (min-width: 660px) {
+  .grid {
+    grid-template-columns: repeat(8, 1fr); /* tablet vertical: 8 cols */
+    column-gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(12, 1fr); /* tablet horizontal: 12 cols */
+    column-gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(12, 1fr); /* desktop: 12 cols */
+    column-gap: 40px;                        /* desktop gutter — больше! */
+  }
+}
+
+
+/* ----- 3. COL CLASSES ----- */
+/* Универсальные классы ширины (по умолчанию = mobile = 4 cols max).
+   На брейкпоинтах вверх перебиваются медиа-запросами через col-tablet-*, col-tablet-h-*, col-desktop-*.
+   Принцип: используй базовый col-N для desktop/tablet H (12 cols),
+   и переопределяй вниз при необходимости. */
+
+/* --- Базовые колонки (12-колоночная логика) --- */
+/* Применяются от 1024px (tablet horizontal) и выше */
+.col-1  { grid-column: span 1; }
+.col-2  { grid-column: span 2; }
+.col-3  { grid-column: span 3; }
+.col-4  { grid-column: span 4; }
+.col-5  { grid-column: span 5; }
+.col-6  { grid-column: span 6; }
+.col-7  { grid-column: span 7; }
+.col-8  { grid-column: span 8; }
+.col-9  { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+
+/* --- Mobile (0 – 659px, 4 cols) --- */
+/* Принудительно перебивает любые .col-N на узких экранах */
+@media (max-width: 659px) {
+  .col-mobile-1 { grid-column: span 1; }
+  .col-mobile-2 { grid-column: span 2; }
+  .col-mobile-3 { grid-column: span 3; }
+  .col-mobile-4 { grid-column: span 4; }
+
+  /* Безопасный фолбэк: если на мобайле ничего не указано — занимает всю ширину */
+  [class*="col-"]:not([class*="col-mobile-"]) {
+    grid-column: span 4;
+  }
+}
+
+/* --- Tablet Vertical (660px – 1023px, 8 cols) --- */
+@media (min-width: 660px) and (max-width: 1023px) {
+  .col-tablet-1 { grid-column: span 1; }
+  .col-tablet-2 { grid-column: span 2; }
+  .col-tablet-3 { grid-column: span 3; }
+  .col-tablet-4 { grid-column: span 4; }
+  .col-tablet-5 { grid-column: span 5; }
+  .col-tablet-6 { grid-column: span 6; }
+  .col-tablet-7 { grid-column: span 7; }
+  .col-tablet-8 { grid-column: span 8; }
+
+  /* Безопасный фолбэк */
+  [class*="col-"]:not([class*="col-tablet-"]):not([class*="col-mobile-"]) {
+    grid-column: span 8;
+  }
+}
+
+
+/* ============================================
+   ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ
+   ============================================
+
+   <!-- Ряд из 3 карточек товаров -->
+   <div class="container">
+     <div class="grid">
+       <article class="card col-4 col-tablet-4 col-mobile-4">Silo Twice</article>
+       <article class="card col-4 col-tablet-4 col-mobile-4">Silo Rye</article>
+       <article class="card col-4 col-tablet-4 col-mobile-4">Декоман</article>
+     </div>
+   </div>
+
+   Поведение:
+   - Desktop / Tablet H : col-4   → 3 в ряд
+   - Tablet V           : col-tablet-4 → 2 в ряд (8 ÷ 4 = 2), третья переносится
+   - Mobile             : col-mobile-4 → 1 в ряд
+
+   ⚠️ ВНИМАНИЕ: для tablet H (1024–1199px) нужно использовать col-6,
+   чтобы было 2 в ряд (мы об этом договорились):
+
+   <article class="card col-4 col-tablet-h-6 col-tablet-4 col-mobile-4">
+
+   Но col-tablet-h-* у нас пока нет — добавлю ниже отдельным блоком.
+
+   ---
+
+   <!-- Ряд из 4 карточек категорий -->
+   <div class="container">
+     <div class="grid">
+       <a class="category col-3 col-tablet-8 col-mobile-4">Кормовая база</a>
+       <a class="category col-3 col-tablet-8 col-mobile-4">Побочные продукты</a>
+       <a class="category col-3 col-tablet-8 col-mobile-4">Крупный рогатый скот</a>
+       <a class="category col-3 col-tablet-8 col-mobile-4">Почва, семена и растения</a>
+     </div>
+   </div>
+
+   ============================================ */
+
+
+/* ----- 4. TABLET HORIZONTAL (1024px – 1199px) ----- */
+/* Отдельный брейкпоинт для tablet H, потому что на нём логика
+   отличается от desktop (даже при одинаковом количестве колонок).
+   Например: товары на desktop = col-4 (3 в ряд),
+   а на tablet H = col-6 (2 в ряд). */
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .col-tablet-h-1  { grid-column: span 1; }
+  .col-tablet-h-2  { grid-column: span 2; }
+  .col-tablet-h-3  { grid-column: span 3; }
+  .col-tablet-h-4  { grid-column: span 4; }
+  .col-tablet-h-5  { grid-column: span 5; }
+  .col-tablet-h-6  { grid-column: span 6; }
+  .col-tablet-h-7  { grid-column: span 7; }
+  .col-tablet-h-8  { grid-column: span 8; }
+  .col-tablet-h-9  { grid-column: span 9; }
+  .col-tablet-h-10 { grid-column: span 10; }
+  .col-tablet-h-11 { grid-column: span 11; }
+  .col-tablet-h-12 { grid-column: span 12; }
+}
