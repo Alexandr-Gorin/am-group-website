@@ -45,7 +45,7 @@
   /* Primary button */
   /* Default state */
   --button-primary-default-fill-base: linear-gradient(
-    90deg,
+    180deg,
     #ff3a64 0%,
     #e62249 100%
   );
@@ -57,6 +57,23 @@
   );
   --button-primary-default-stroke: rgba(255, 255, 255, 0.22);
   --button-primary-default-shadow: 0 10px 30px 0 rgba(230, 34, 73, 0.35);
+
+  /* Hover state */
+  --button-primary-hover-fill-base: linear-gradient(
+    180deg,
+    #ff4a72 0%,
+    #f02b52 100%
+  );
+
+  --button-primary-hover-fill-highlight: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.052) 0%,
+    rgba(255, 255, 255, 0.02) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  --button-primary-hover-stroke: rgba(255, 255, 255, 0.4);
+  --button-primary-hover-shadow: 0 12px 36px 0 rgba(230, 34, 73, 0.42);
 }
 
 /* Адаптивность */

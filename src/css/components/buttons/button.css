@@ -24,14 +24,22 @@
   color: var(--color-content-primary);
 
   /* Behaviour */
-  transition: all 0.2s ease;
+  transition: all 0.4s ease;
   white-space: nowrap;
 }
-
+/* Button Primary Default/Hover */
 .button--primary {
   background:
     var(--button-primary-default-fill-highlight),
     var(--button-primary-default-fill-base);
   border: 1px solid var(--button-primary-default-stroke);
   box-shadow: var(--button-primary-default-shadow);
+}
+
+.button--primary:hover {
+  background:
+    var(--button-primary-hover-fill-highlight),
+    var(--button-primary-hover-fill-base);
+  border-color: var(--button-primary-hover-stroke);
+  box-shadow: var(--button-primary-hover-shadow);
 }
