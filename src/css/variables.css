@@ -39,6 +39,24 @@
   --font-size-body-l: 16px;
   --font-size-body-m: 14px;
   --font-size-body-s: 12px;
+
+  /* Button tokens */
+
+  /* Primary button */
+  /* Default state */
+  --button-primary-default-fill-base: linear-gradient(
+    90deg,
+    #ff3a64 0%,
+    #e62249 100%
+  );
+  --button-primary-default-fill-highlight: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.012) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  --button-primary-default-stroke: rgba(255, 255, 255, 0.22);
+  --button-primary-default-shadow: 0 10px 30px 0 rgba(230, 34, 73, 0.35);
 }
 
 /* Адаптивность */
