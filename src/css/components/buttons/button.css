@@ -24,7 +24,7 @@
   color: var(--color-content-primary);
 
   /* Behaviour */
-  transition: all 0.4s ease;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
 }
 /* Button Primary Default/Hover */
@@ -49,4 +49,24 @@
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+}
+
+/* Soft button */
+/* Default state */
+.button--soft {
+  font-size: 20px;
+  padding: 16px 20px;
+  gap: 16px;
+  background: var(--button-soft-default-fill);
+  border: 1px solid var(--button-soft-default-stroke);
+  border-bottom-color: transparent;
+  box-shadow: var(--button-soft-default-shadow);
+}
+
+/* Hover state */
+.button--soft:hover {
+  background: var(--button-soft-hover-fill);
+  border-color: var(--button-soft-hover-stroke);
+  box-shadow: var(--button-soft-hover-shadow);
+  transform: translateY(-1px);
 }

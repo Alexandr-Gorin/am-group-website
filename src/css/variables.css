@@ -74,6 +74,30 @@
 
   --button-primary-hover-stroke: rgba(255, 255, 255, 0.4);
   --button-primary-hover-shadow: 0 12px 36px 0 rgba(230, 34, 73, 0.42);
+
+  /* Glass Strong */
+  --color-glass-strong-fill: rgba(255, 255, 255, 0.16);
+  --color-glass-strong-stroke: rgba(255, 255, 255, 0.64);
+
+  --color-glass-strong-fill-hover:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.072) 0%,
+      rgba(255, 255, 255, 0.048) 100%
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16));
+  --color-glass-strong-stroke-hover: rgba(255, 255, 255, 0.4);
+
+  /* Soft button */
+  /* Default state */
+  --button-soft-default-fill: var(--color-glass-strong-fill);
+  --button-soft-default-stroke: var(--color-glass-strong-stroke);
+  --button-soft-default-shadow: 0 8px 22px 0 rgba(0, 0, 0, 0.22);
+
+  /* Hover state */
+  --button-soft-hover-fill: var(--color-glass-strong-fill-hover);
+  --button-soft-hover-stroke: var(--color-glass-strong-stroke-hover);
+  --button-soft-hover-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.28);
 }
 
 /* Адаптивность */
