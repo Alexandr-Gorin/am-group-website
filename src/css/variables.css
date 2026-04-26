@@ -25,6 +25,9 @@
   --color-content-primary: #f9f9f9;
   --color-content-secondary: #ffffff;
 
+  /* Button ghost stroke color */
+  --color-brand-crimson-80: rgba(230, 34, 73, 0.80);
+
   /* Breakpoints - Для адаптивного дизайна */
   --breakpoint-mobile: 0px;
   --breakpoint-tablet-mini: 660px;
@@ -101,6 +104,7 @@
   --button-soft-hover-shadow: var(--shadow-elevation-2-hover);
 
   /* Elevation (universal shadow tokens */
+  --shadow-elevation-1: 0px 12px 36px 0px rgba(0, 0, 0, 0.24);
   --shadow-elevation-2-default: 0 8px 22px 0 rgba(0, 0, 0, 0.22);
   --shadow-elevation-2-hover: 0 12px 32px 0 rgba(0, 0, 0, 0.28);
 
