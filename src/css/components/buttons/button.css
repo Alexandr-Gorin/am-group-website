@@ -50,6 +50,11 @@
   height: 24px;
   flex-shrink: 0;
 }
+/* Иконка в Soft-кнопке крупнее */
+.button--soft .button__icon {
+  width: 32px;
+  height: 32px;
+}
 
 /* Soft button */
 /* Default state */
