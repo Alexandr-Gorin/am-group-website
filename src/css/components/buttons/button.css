@@ -43,3 +43,10 @@
   border-color: var(--button-primary-hover-stroke);
   box-shadow: var(--button-primary-hover-shadow);
 }
+
+/* Button icon */
+.button__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
