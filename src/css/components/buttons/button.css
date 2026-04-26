@@ -75,3 +75,24 @@
   box-shadow: var(--button-soft-hover-shadow);
   transform: translateY(-1px);
 }
+
+/* Secondary button */
+/* Default state */
+.button--secondary {
+  background:
+    var(--button-secondary-default-fill-highlight),
+    var(--button-secondary-default-fill-base);
+  border: 1px solid var(--button-secondary-default-stroke);
+  box-shadow: var(--button-secondary-default-shadow);
+}
+/* Hover state */
+.button--secondary:hover {
+  background:
+    var(--button-secondary-hover-fill-highlight),
+    var(--button-secondary-hover-fill-base);
+  border-color: var(--button-secondary-hover-stroke);
+  box-shadow: var(--button-secondary-hover-shadow);
+  transform: translateY(-1px);
+}
+
+
