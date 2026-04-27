@@ -7,7 +7,9 @@
 html,
 body {
   min-height: 100vh;
-}
+} 
+
+
 
 /* BODY — базовые стили всего сайта */
 body {
@@ -25,6 +27,7 @@ body {
 }
 
 main {
+  padding-top: 20px;
   background: var(--gradient-bloom);
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -110,4 +113,54 @@ p {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+/* Стиль header */
+.header {
+  overflow: visible;
+  position: sticky;
+  top: 20px
+  z-index: 100;
+  border-radius: 20px;
+  background: var(--color-glass-header-default-fill);
+  box-shadow:
+    inset 0 0 0 1px var(--color-glass-header-default-stroke),
+    var(--shadow-header-default);
+} 
+
+.header--scrolled {
+  background: var(--color-glass-header-scroll-fill);
+  box-shadow:
+    inset 0 0 0 1px var(--color-glass-header-scroll-stroke),
+    var(--shadow-header-scroll);
+} 
+
+/* Компоненты header */ 
+
+.header__container {
+  display: flex;
+  align-items: center;
+  gap: 240px;
+  height: 140px;
+}
+
+.header__logo img {
+  height: 140px;
+  width: auto;
+  display: block;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.header__link {
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.header__link:hover {
+  opacity: 0.7;
 }
