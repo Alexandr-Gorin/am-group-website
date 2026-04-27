@@ -119,52 +119,6 @@
 }
 
 
-/* ============================================
-   ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ
-   ============================================
-
-   <!-- Ряд из 3 карточек товаров -->
-   <div class="container">
-     <div class="grid">
-       <article class="card col-4 col-tablet-4 col-mobile-4">Silo Twice</article>
-       <article class="card col-4 col-tablet-4 col-mobile-4">Silo Rye</article>
-       <article class="card col-4 col-tablet-4 col-mobile-4">Декоман</article>
-     </div>
-   </div>
-
-   Поведение:
-   - Desktop / Tablet H : col-4   → 3 в ряд
-   - Tablet V           : col-tablet-4 → 2 в ряд (8 ÷ 4 = 2), третья переносится
-   - Mobile             : col-mobile-4 → 1 в ряд
-
-   ⚠️ ВНИМАНИЕ: для tablet H (1024–1199px) нужно использовать col-6,
-   чтобы было 2 в ряд (мы об этом договорились):
-
-   <article class="card col-4 col-tablet-h-6 col-tablet-4 col-mobile-4">
-
-   Но col-tablet-h-* у нас пока нет — добавлю ниже отдельным блоком.
-
-   ---
-
-   <!-- Ряд из 4 карточек категорий -->
-   <div class="container">
-     <div class="grid">
-       <a class="category col-3 col-tablet-8 col-mobile-4">Кормовая база</a>
-       <a class="category col-3 col-tablet-8 col-mobile-4">Побочные продукты</a>
-       <a class="category col-3 col-tablet-8 col-mobile-4">Крупный рогатый скот</a>
-       <a class="category col-3 col-tablet-8 col-mobile-4">Почва, семена и растения</a>
-     </div>
-   </div>
-
-   ============================================ */
-
-
-/* ----- 4. TABLET HORIZONTAL (1024px – 1199px) ----- */
-/* Отдельный брейкпоинт для tablet H, потому что на нём логика
-   отличается от desktop (даже при одинаковом количестве колонок).
-   Например: товары на desktop = col-4 (3 в ряд),
-   а на tablet H = col-6 (2 в ряд). */
-
 @media (min-width: 1024px) and (max-width: 1199px) {
   .col-tablet-h-1  { grid-column: span 1; }
   .col-tablet-h-2  { grid-column: span 2; }

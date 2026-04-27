@@ -140,7 +140,7 @@ p {
 .header__container {
   display: flex;
   align-items: center;
-  gap: 240px;
+  justify-content: space-between;
   height: 140px;
 }
 
@@ -163,4 +163,193 @@ p {
 
 .header__link:hover {
   opacity: 0.7;
+} 
+
+.header--hidden {
+  opacity: 0;
+  pointer-events: none;
+} 
+
+/* Меню начинается от верха, без offset */
+.burger-menu .container {
+  gap: 16px;
+}
+
+/* Burger Button header */
+.burger {
+  display: none; /* скрыт по умолчанию */
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-content-primary); /* белый */
+  flex-shrink: 0;
+  transition: opacity 0.3s ease;
+} 
+
+.burger:hover {
+  opacity: 0.7;
+} 
+
+/* Burger menu overlay */ 
+.burger-menu {
+  position: fixed;
+  top: 120px;      /* высота header */
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  padding-top: 16px; /* gap между header и nav-блоком */
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.burger-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.burger-menu .container {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* между header-частью и nav-блоком */
+  padding-top: 16px; /* отступ сверху под статус-бар/край */
+} 
+
+* ─── Шапка меню (логотип + крестик) ───────────────────────── */
+.burger--close {
+  width: 60px;
+  height: 60px;
+}
+
+.burger-close:hover {
+  opacity: 0.7;
+}
+
+.burger-menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  height: 300px; /* фиксированная высота по Figma */
+  padding: 32px;
+  box-sizing: border-box;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.156) 0%,
+    rgba(255, 255, 255, 0.104) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  box-shadow: var(--shadow-elevation-2-default);
+} 
+
+.burger-menu__link {
+  font-family: var(--font-primary); /* Manrope */
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-content-primary);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  line-height: 1;
+}
+
+.burger-menu__link:hover {
+  opacity: 0.7;
+}
+
+/* Блокирновка скролла bady */ 
+
+body.burger-open {
+  overflow: hidden;
+}
+
+
+/* Адаптивность */
+
+/* Header Tablet Horizontal */ 
+
+/* Tablet horizontal: 940–1023px */
+@media (min-width: 940px) and (max-width: 1023px) {
+
+  .header__nav {
+    gap: 24px;
+  }
+
+  .header__link {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .header__logo img {
+    width: 180px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .header__container {
+    gap: 100px;
+  }
+
+   .header__logo img {
+    width: 220px;
+  }
+
+  .header__nav {
+    gap: 32px;
+  }
+}
+
+/* Tablet vertical: 660–939px → показываем бургер, скрываем nav */
+@media (min-width: 660px) and (max-width: 939px) {
+  .burger {
+    display: flex;
+  }
+
+  .header__nav {
+    display: none;
+  }
+}
+
+/* Desktop 940px+: скрываем бургер и меню */
+@media (min-width: 940px) {
+  .burger {
+    display: none;
+  }
+
+  .burger-menu {
+    display: none;
+  }
+}
+
+/* Mobile < 660px: тоже скрываем nav, показываем бургер
+   (если мобильный header ещё не сделан — раскомментируешь потом) */
+
+@media (max-width: 659px) {
+  .header__container {
+    height: 100px;
+  }
+
+  .header__logo img {
+    height: 100px;
+    width: auto;
+  }
+
+  .burger { display: flex; }
+
+  .header__nav { display: none; }
 }
