@@ -26,7 +26,7 @@
   --color-content-secondary: #ffffff;
 
   /* Button ghost stroke color */
-  --color-brand-crimson-80: rgba(230, 34, 73, 0.80);
+  --color-brand-crimson-80: rgba(230, 34, 73, 0.8);
 
   /* Breakpoints - Для адаптивного дизайна */
   --breakpoint-mobile: 0px;
@@ -137,29 +137,59 @@
   );
 
   --button-secondary-hover-stroke: var(--color-glass-subtle-stroke-hover);
-  --button-secondary-hover-shadow: var(--shadow-elevation-2-hover); 
+  --button-secondary-hover-shadow: var(--shadow-elevation-2-hover);
 
   /* Header fill */
   /* Header / Desktop state */
---color-glass-header-default-fill:
-  linear-gradient(180deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.00) 100%),
-  linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.12) 100%);
-  --color-glass-header-default-stroke: rgba(255, 255, 255, 0.30);
---shadow-header-default: 0px 16px 56px 0px rgba(0, 0, 0, 0.32);
+  --color-glass-header-default-fill:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.01) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.32) 0%,
+      rgba(255, 255, 255, 0.12) 100%
+    );
+  --color-glass-header-default-stroke: rgba(255, 255, 255, 0.3);
+  --shadow-header-default: 0px 16px 56px 0px rgba(0, 0, 0, 0.32);
 
-/* Header / Scroll state */
---color-glass-header-scroll-fill: linear-gradient(
+  /* Header / Scroll state */
+  --color-glass-header-scroll-fill:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.01) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.36) 0%,
+      rgba(255, 255, 255, 0.16) 100%
+    );
+  --color-glass-header-scroll-stroke: rgba(255, 255, 255, 0.15);
+  --shadow-header-scroll: 0px 12px 40px 0px rgba(0, 0, 0, 0.28);
+
+  /* Card Surface */
+  /* Default state */
+  --color-glass-card-default-fill: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.01) 0%,
-    rgba(255, 255, 255, 0.00) 100%
-  ),
-  linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.36) 0%,
-    rgba(255, 255, 255, 0.16) 100%
+    rgba(255, 255, 255, 0.156) 0%,
+    rgba(255, 255, 255, 0.104) 100%
   );
---color-glass-header-scroll-stroke: rgba(255, 255, 255, 0.15);
---shadow-header-scroll: 0px 12px 40px 0px rgba(0, 0, 0, 0.28);
+  --color-glass-card-default-stroke: rgba(255, 255, 255, 0.18);
+  --shadow-card-default: 0 10px 40px -10px rgba(255, 255, 255, 0.25);
+  --blur-card-default: blur(32px);
+
+  /* Hover state */
+  --color-glass-card-hover-fill: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.234) 0%,
+    rgba(255, 255, 255, 0.182) 100%
+  );
+  --color-glass-card-hover-stroke: rgba(255, 255, 255, 0.24);
+  --shadow-card-hover: 0 16px 45px -20px rgba(255, 255, 255, 0.25);
+  --blur-card-hover: blur(36px);
 }
 
 /* Адаптивность */

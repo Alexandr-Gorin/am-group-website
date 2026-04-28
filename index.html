@@ -18,65 +18,126 @@
     <link rel="stylesheet" href="/src/css/grid.css" />
     <link rel="stylesheet" href="/src/css/grid-debug.css" />
     <link rel="stylesheet" href="/src/css/components/buttons/button.css" />
+    <link rel="stylesheet" href="/src/css/components/card.css" />
   </head>
-<body>
-  <div class="wrapper">
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="header__container">
-          <a href="/" class="header__logo">
-            <img
-              src="/src/assets/images/Logo/logo header.png"
-              alt="АМ Групп — Агропромышленная микробиология групп"
-              height="140"
-            />
-          </a>
-          <nav class="header__nav">
-            <a href="/" class="header__link">Главная</a>
-            <a href="/products" class="header__link">Продукция</a>
-            <a href="/services" class="header__link">Услуги</a>
-            <a href="/about" class="header__link">О компании</a>
-            <a href="/contacts" class="header__link">Контакты</a>
+  <body>
+    <div class="wrapper">
+      <!-- Header -->
+      <header class="header">
+        <div class="container">
+          <div class="header__container">
+            <a href="/" class="header__logo">
+              <img
+                src="/src/assets/images/Logo/logo header.png"
+                alt="АМ Групп — Агропромышленная микробиология групп"
+                height="140"
+              />
+            </a>
+            <nav class="header__nav">
+              <a href="/" class="header__link">Главная</a>
+              <a href="/products" class="header__link">Продукция</a>
+              <a href="/services" class="header__link">Услуги</a>
+              <a href="/about" class="header__link">О компании</a>
+              <a href="/contacts" class="header__link">Контакты</a>
+            </nav>
+            <button
+              class="burger"
+              aria-label="Открыть меню"
+              aria-expanded="false"
+              aria-controls="burger-menu"
+            >
+              <svg
+                width="60"
+                height="24"
+                viewBox="0 0 60 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <rect y="0" width="60" height="4" rx="2" fill="currentColor" />
+                <rect y="20" width="60" height="4" rx="2" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+      <!-- Burger menu overlay -->
+      <div class="burger-menu" id="burger-menu" aria-hidden="true">
+        <div class="container">
+          <!-- Nav links -->
+          <nav class="burger-menu__nav" aria-label="Мобильная навигация">
+            <a href="/" class="burger-menu__link">Главная</a>
+            <a href="/products" class="burger-menu__link">Продукция</a>
+            <a href="/services" class="burger-menu__link">Услуги</a>
+            <a href="/about" class="burger-menu__link">О компании</a>
+            <a href="/contacts" class="burger-menu__link">Контакты</a>
           </nav>
-          <button 
-  class="burger" 
-  aria-label="Открыть меню" 
-  aria-expanded="false"
-  aria-controls="burger-menu"
->
-  <svg width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect y="0" width="60" height="4" rx="2" fill="currentColor"/>
-    <rect y="20" width="60" height="4" rx="2" fill="currentColor"/>
-  </svg>
-</button>
         </div>
       </div>
-    </header>
-<!-- Burger menu overlay -->
-<div class="burger-menu" id="burger-menu" aria-hidden="true">
-  <div class="container">
-    <!-- Nav links -->
-    <nav class="burger-menu__nav" aria-label="Мобильная навигация">
-      <a href="/" class="burger-menu__link">Главная</a>
-      <a href="/products" class="burger-menu__link">Продукция</a>
-      <a href="/services" class="burger-menu__link">Услуги</a>
-      <a href="/about" class="burger-menu__link">О компании</a>
-      <a href="/contacts" class="burger-menu__link">Контакты</a>
-    </nav>
+      <!-- Main -->
+      <main class="main">
+        <div class="container">
+          <div class="cards-grid">
+            <article class="card">
+              <div class="card__image-wrapper">
+                <img
+                  class="card__image"
+                  src="./src/assets/images/Cards/Image Silo Twice.png"
+                  alt="Silo Twice"
+                />
+              </div>
+              <div class="card__content">
+                <h3 class="card__title">Silo Twice</h3>
+                <p class="card__description">
+                  Биоконсервант для консервации плющеного и целого зерна
+                  повышенной влажности
+                </p>
+              </div>
+              <a href="#" class="button button--secondary">Подробнее</a>
+            </article>
+            <article class="card">
+              <div class="card__image-wrapper">
+                <img
+                  class="card__image"
+                  src="./src/assets/images/Cards/Image Silo Rye.png"
+                  alt="Silo Rye"
+                />
+              </div>
+              <div class="card__content">
+                <h3 class="card__title">Silo Rye</h3>
+                <p class="card__description">
+                  Биоконсервант для легкосилосуемого сырья (ржаной силос,
+                  травяной и кукурузный силос)
+                </p>
+              </div>
+              <a href="#" class="button button--secondary">Подробнее</a>
+            </article>
+            <article class="card">
+              <div class="card__image-wrapper">
+                <img
+                  class="card__image"
+                  src="./src/assets/images/Cards/Image Decoman-Dry.png"
+                  alt="Декоман"
+                />
+              </div>
+              <div class="card__content">
+                <h3 class="card__title">Декоман</h3>
+                <p class="card__description">
+                  Биопрепарат для деструкции навоза, обеззараживания,
+                  дезинфекции и осушения подстилки
+                </p>
+              </div>
+              <a href="#" class="button button--secondary">Подробнее</a>
+            </article>
+          </div>
+        </div>
+      </main>
 
-  </div>
-</div>
-    <!-- Main -->
-    <main class="main">
-    </main>
+      <!-- Footer -->
+      <footer class="footer"></footer>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer"></footer>
-
-  </div>
-
-  <!-- JS -->
-  <script type="module" src="/src/js/main.js"></script>
-</body>
+    <!-- JS -->
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
 </html>

@@ -126,16 +126,15 @@ p {
   box-shadow:
     inset 0 0 0 1px var(--color-glass-header-default-stroke),
     var(--shadow-header-default);
-} 
-
+}
 .header--scrolled {
   background: var(--color-glass-header-scroll-fill);
   box-shadow:
     inset 0 0 0 1px var(--color-glass-header-scroll-stroke),
     var(--shadow-header-scroll);
-} 
+}
 
-/* Компоненты header */ 
+/* Компоненты header */
 
 .header__container {
   display: flex;
@@ -226,9 +225,9 @@ p {
   flex-direction: column;
   gap: 16px; /* между header-частью и nav-блоком */
   padding-top: 16px; /* отступ сверху под статус-бар/край */
-} 
+}
 
-* ─── Шапка меню (логотип + крестик) ───────────────────────── */
+/* Burger крестик */
 .burger--close {
   width: 60px;
   height: 60px;
@@ -272,7 +271,7 @@ p {
   opacity: 0.7;
 }
 
-/* Блокирновка скролла bady */ 
+/* Блокировка скролла body */
 
 body.burger-open {
   overflow: hidden;
@@ -281,7 +280,7 @@ body.burger-open {
 
 /* Адаптивность */
 
-/* Header Tablet Horizontal */ 
+/* Header Tablet Horizontal */
 
 /* Tablet horizontal: 940–1023px */
 @media (min-width: 940px) and (max-width: 1023px) {
@@ -291,12 +290,12 @@ body.burger-open {
   }
 
   .header__link {
-    font-size: 16px;
+    font-size: 18px;
     white-space: nowrap;
   }
 
   .header__logo img {
-    width: 180px;
+    width: 200px;
   }
 }
 
@@ -353,3 +352,35 @@ body.burger-open {
 
   .header__nav { display: none; }
 }
+
+/* Card Surface */
+
+.card {
+  background: var(--color-glass-card-default-fill);
+  box-shadow: 
+    inset 0 0 0 1px var(--color-glass-card-default-stroke),
+    var(--shadow-card-default);
+  backdrop-filter: var(--blur-card-default);
+  -webkit-backdrop-filter: var(--blur-card-default);
+}
+
+.card:hover {
+  background: var(--color-glass-card-hover-fill);
+  box-shadow:
+    inset 0 0 0 1px var(--color-glass-card-hover-stroke),
+    var(--shadow-card-hover);
+  backdrop-filter: var(--blur-card-hover);
+  -webkit-backdrop-filter: var(--blur-card-hover);
+}
+
+.card__image-wrapper {
+  width: 100%;
+  height: 250px;
+}
+
+.card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* не обрезает, вписывает целиком */
+} 
+
