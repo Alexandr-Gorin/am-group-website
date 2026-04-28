@@ -42,6 +42,10 @@
   justify-content: center;
 }
 
+.card .button {
+  margin-top: auto;
+}
+
 /* ===== СЕТКА КАРТОЧЕК ===== */
 
 /* Mobile — 1 в ряд */
