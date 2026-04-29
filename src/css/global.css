@@ -266,88 +266,6 @@ p {
   opacity: 0.7;
 }
 
-/* Блокировка скролла body */
-
-body.burger-open {
-  overflow: hidden;
-}
-
-
-/* Адаптивность */
-
-/* Header Tablet Horizontal */
-
-/* Tablet horizontal: 940–1023px */
-@media (min-width: 940px) and (max-width: 1023px) {
-
-  .header__nav {
-    gap: 24px;
-  }
-
-  .header__link {
-    font-size: 18px;
-    white-space: nowrap;
-  }
-
-  .header__logo img {
-    width: 200px;
-  }
-}
-
-@media (min-width: 1024px) and (max-width: 1199px) {
-  .header__container {
-    gap: 100px;
-  }
-
-   .header__logo img {
-    width: 220px;
-  }
-
-  .header__nav {
-    gap: 32px;
-  }
-}
-
-/* Tablet vertical: 660–939px → показываем бургер, скрываем nav */
-@media (min-width: 660px) and (max-width: 939px) {
-  .burger {
-    display: flex;
-  }
-
-  .header__nav {
-    display: none;
-  }
-}
-
-/* Desktop 940px+: скрываем бургер и меню */
-@media (min-width: 940px) {
-  .burger {
-    display: none;
-  }
-
-  .burger-menu {
-    display: none;
-  }
-}
-
-/* Mobile < 660px: тоже скрываем nav, показываем бургер
-   (если мобильный header ещё не сделан — раскомментируешь потом) */
-
-@media (max-width: 659px) {
-  .header__container {
-    height: 100px;
-  }
-
-  .header__logo img {
-    height: 100px;
-    width: auto;
-  }
-
-  .burger { display: flex; }
-
-  .header__nav { display: none; }
-}
-
 /* Card Surface */
 
 .card {
@@ -377,5 +295,58 @@ body.burger-open {
   width: 100%;
   height: 100%;
   object-fit: contain; /* не обрезает, вписывает целиком */
-} 
+}
 
+/* Блокировка скролла body */
+
+body.burger-open {
+  overflow: hidden;
+}
+
+/* Адаптивность */
+
+/* Tablet Horizontal: 1024–1199px — карточки 2×2, контейнер 940px */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .header__container { gap: 100px; }
+  .header__logo img { width: 220px; }
+  .header__nav { gap: 32px; }
+
+}
+
+/* Tablet Vertical: 660–1023px */
+@media (min-width: 660px) and (max-width: 1023px) {
+  .burger { display: flex; }
+  .header__nav { display: none; }
+  .header__link { font-size: 18px; white-space: nowrap; }
+  .header__logo img { width: 200px; }
+}
+
+
+/* Desktop 940px+: скрываем бургер и меню */
+@media (min-width: 1024px) {
+  .burger {
+    display: none;
+  }
+
+  .burger-menu {
+    display: none;
+  }
+}
+
+/* Mobile < 660px: тоже скрываем nav, показываем бургер
+   (если мобильный header ещё не сделан — раскомментируешь потом) */
+
+@media (max-width: 659px) {
+  .header__container {
+    height: 100px;
+  }
+
+  .header__logo img {
+    height: 100px;
+    width: auto;
+  }
+
+  .burger { display: flex; }
+
+  .header__nav { display: none; }
+}

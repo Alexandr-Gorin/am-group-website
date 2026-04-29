@@ -190,6 +190,20 @@
   --color-glass-card-hover-stroke: rgba(255, 255, 255, 0.24);
   --shadow-card-hover: 0 16px 45px -20px rgba(255, 255, 255, 0.25);
   --blur-card-hover: blur(36px);
+
+  /* Card Strong */
+  --color-glass-card-strong:
+  radial-gradient(
+    ellipse at 50% 0%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 60%,
+    rgba(255, 255, 255, 0.00) 100%
+  ),
+  linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.294) 0%,
+    rgba(255, 255, 255, 0.205) 100%
+  );
 }
 
 /* Адаптивность */

@@ -1,0 +1,209 @@
+/* Catalog hero */
+.catalog-hero {
+  padding: 80px 0 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.catalog-hero__top {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.catalog-hero__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.catalog-hero__top {
+  padding: 0 32px;
+}
+
+.catalog-hero__top .button--soft {
+  width: 460px;
+  align-self: flex-start;
+}
+
+.catalog-hero__title {
+  font-size: var(--font-size-h2);
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  color: var(--color-content-primary);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.catalog-hero__desc {
+  font-size: var(--font-size-body-l);
+  font-family: "Manrope", sans-serif;
+  color: var(--color-content-primary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Panel Card - Category Navigation */
+.panel-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 32px 24px;
+  border-radius: 24px;
+  background: var(--color-glass-card-strong);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    var(--shadow-elevation-1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  color: var(--color-content-primary);
+}
+
+/* Panel Cards container */
+.panel-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  width: 100%;
+}
+
+/* Icon */
+.panel-card__icon {
+  display: flex;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: var(--color-content-primary);
+}
+
+.panel-card__icon svg {
+  width: 64px;
+  height: 64px;
+  fill: currentColor;
+}
+
+/* Title */
+.panel-card__title {
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-content-primary);
+  margin: 0;
+}
+
+/* Ghost button inside card — width override */
+.panel-card .button--ghost {
+  width: 164px;
+  height: 44px;
+  margin-top: auto;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+/* Адаптивность */
+
+/* Tablet Horizontal: 1024–1199px — карточки 2×2 */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .panel-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .panel-card {
+    min-height: 247px;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+}
+/* Адаптивность */
+/* 660–939px: карточки в 1 колонку */
+@media (min-width: 660px) and (max-width: 939px) {
+  .catalog-hero {
+    gap: 48px;
+    padding-bottom: 48px;
+  }
+
+  .catalog-hero__header {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .catalog-hero__top {
+    gap: 40px;
+  }
+
+  .catalog-hero__top .button--soft {
+    width: 556px;
+    align-self: flex-start;
+  }
+
+  .panel-cards {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .panel-card {
+    width: auto;
+    min-height: 247px;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+}
+
+/* 940–1199px: карточки 2×2 */
+@media (min-width: 940px) and (max-width: 1199px) {
+  .panel-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .panel-card {
+    min-height: 247px;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 659px) {
+  .catalog-hero {
+    gap: 32px;
+    padding-bottom: 48px;
+  }
+
+  .catalog-hero__top {
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  .catalog-hero__header {
+    flex-direction: column;
+    gap: 32px;
+    padding-inline: 0;
+    width: 260px;
+  }
+
+  .catalog-hero__top .button--soft {
+    width: 260px;
+    height: 52px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .panel-cards {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .panel-card {
+    width: auto;
+    min-height: 247px;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+}

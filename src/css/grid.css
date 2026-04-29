@@ -20,18 +20,23 @@
   box-sizing: border-box;
 }
 
-@media (min-width: 660px) {
-  .container { max-width: 620px; }
+@media (min-width: 660px) and (max-width: 939px) {
+  .container {
+    max-width: 620px;
+  }
 }
 
-@media (min-width: 1024px) {
-  .container { max-width: 940px; }
+@media (min-width: 940px) and (max-width: 1199px) {
+  .container {
+    max-width: 940px;
+  }
 }
 
 @media (min-width: 1200px) {
-  .container { max-width: 1160px; }
+  .container {
+    max-width: 1160px;
+  }
 }
-
 
 /* ----- 2. GRID ----- */
 /* Базовая 12-колоночная (или 8/4 на узких) сетка.
@@ -39,8 +44,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);   /* mobile: 4 cols */
-  column-gap: 20px;                         /* mobile gutter */
+  grid-template-columns: repeat(4, 1fr); /* mobile: 4 cols */
+  column-gap: 20px; /* mobile gutter */
   row-gap: 20px;
 }
 
@@ -61,10 +66,9 @@
 @media (min-width: 1200px) {
   .grid {
     grid-template-columns: repeat(12, 1fr); /* desktop: 12 cols */
-    column-gap: 40px;                        /* desktop gutter — больше! */
+    column-gap: 40px; /* desktop gutter — больше! */
   }
 }
-
 
 /* ----- 3. COL CLASSES ----- */
 /* Универсальные классы ширины (по умолчанию = mobile = 4 cols max).
@@ -74,26 +78,58 @@
 
 /* --- Базовые колонки (12-колоночная логика) --- */
 /* Применяются от 1024px (tablet horizontal) и выше */
-.col-1  { grid-column: span 1; }
-.col-2  { grid-column: span 2; }
-.col-3  { grid-column: span 3; }
-.col-4  { grid-column: span 4; }
-.col-5  { grid-column: span 5; }
-.col-6  { grid-column: span 6; }
-.col-7  { grid-column: span 7; }
-.col-8  { grid-column: span 8; }
-.col-9  { grid-column: span 9; }
-.col-10 { grid-column: span 10; }
-.col-11 { grid-column: span 11; }
-.col-12 { grid-column: span 12; }
+.col-1 {
+  grid-column: span 1;
+}
+.col-2 {
+  grid-column: span 2;
+}
+.col-3 {
+  grid-column: span 3;
+}
+.col-4 {
+  grid-column: span 4;
+}
+.col-5 {
+  grid-column: span 5;
+}
+.col-6 {
+  grid-column: span 6;
+}
+.col-7 {
+  grid-column: span 7;
+}
+.col-8 {
+  grid-column: span 8;
+}
+.col-9 {
+  grid-column: span 9;
+}
+.col-10 {
+  grid-column: span 10;
+}
+.col-11 {
+  grid-column: span 11;
+}
+.col-12 {
+  grid-column: span 12;
+}
 
 /* --- Mobile (0 – 659px, 4 cols) --- */
 /* Принудительно перебивает любые .col-N на узких экранах */
 @media (max-width: 659px) {
-  .col-mobile-1 { grid-column: span 1; }
-  .col-mobile-2 { grid-column: span 2; }
-  .col-mobile-3 { grid-column: span 3; }
-  .col-mobile-4 { grid-column: span 4; }
+  .col-mobile-1 {
+    grid-column: span 1;
+  }
+  .col-mobile-2 {
+    grid-column: span 2;
+  }
+  .col-mobile-3 {
+    grid-column: span 3;
+  }
+  .col-mobile-4 {
+    grid-column: span 4;
+  }
 
   /* Безопасный фолбэк: если на мобайле ничего не указано — занимает всю ширину */
   [class*="col-"]:not([class*="col-mobile-"]) {
@@ -103,14 +139,30 @@
 
 /* --- Tablet Vertical (660px – 1023px, 8 cols) --- */
 @media (min-width: 660px) and (max-width: 1023px) {
-  .col-tablet-1 { grid-column: span 1; }
-  .col-tablet-2 { grid-column: span 2; }
-  .col-tablet-3 { grid-column: span 3; }
-  .col-tablet-4 { grid-column: span 4; }
-  .col-tablet-5 { grid-column: span 5; }
-  .col-tablet-6 { grid-column: span 6; }
-  .col-tablet-7 { grid-column: span 7; }
-  .col-tablet-8 { grid-column: span 8; }
+  .col-tablet-1 {
+    grid-column: span 1;
+  }
+  .col-tablet-2 {
+    grid-column: span 2;
+  }
+  .col-tablet-3 {
+    grid-column: span 3;
+  }
+  .col-tablet-4 {
+    grid-column: span 4;
+  }
+  .col-tablet-5 {
+    grid-column: span 5;
+  }
+  .col-tablet-6 {
+    grid-column: span 6;
+  }
+  .col-tablet-7 {
+    grid-column: span 7;
+  }
+  .col-tablet-8 {
+    grid-column: span 8;
+  }
 
   /* Безопасный фолбэк */
   [class*="col-"]:not([class*="col-tablet-"]):not([class*="col-mobile-"]) {
@@ -118,18 +170,41 @@
   }
 }
 
-
 @media (min-width: 1024px) and (max-width: 1199px) {
-  .col-tablet-h-1  { grid-column: span 1; }
-  .col-tablet-h-2  { grid-column: span 2; }
-  .col-tablet-h-3  { grid-column: span 3; }
-  .col-tablet-h-4  { grid-column: span 4; }
-  .col-tablet-h-5  { grid-column: span 5; }
-  .col-tablet-h-6  { grid-column: span 6; }
-  .col-tablet-h-7  { grid-column: span 7; }
-  .col-tablet-h-8  { grid-column: span 8; }
-  .col-tablet-h-9  { grid-column: span 9; }
-  .col-tablet-h-10 { grid-column: span 10; }
-  .col-tablet-h-11 { grid-column: span 11; }
-  .col-tablet-h-12 { grid-column: span 12; }
+  .col-tablet-h-1 {
+    grid-column: span 1;
+  }
+  .col-tablet-h-2 {
+    grid-column: span 2;
+  }
+  .col-tablet-h-3 {
+    grid-column: span 3;
+  }
+  .col-tablet-h-4 {
+    grid-column: span 4;
+  }
+  .col-tablet-h-5 {
+    grid-column: span 5;
+  }
+  .col-tablet-h-6 {
+    grid-column: span 6;
+  }
+  .col-tablet-h-7 {
+    grid-column: span 7;
+  }
+  .col-tablet-h-8 {
+    grid-column: span 8;
+  }
+  .col-tablet-h-9 {
+    grid-column: span 9;
+  }
+  .col-tablet-h-10 {
+    grid-column: span 10;
+  }
+  .col-tablet-h-11 {
+    grid-column: span 11;
+  }
+  .col-tablet-h-12 {
+    grid-column: span 12;
+  }
 }

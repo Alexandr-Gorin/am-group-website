@@ -109,7 +109,7 @@
 }
 
 /* Tablet Horizontal 1024px — 2 в ряд */
-@media (min-width: 1024px) {
+@media (min-width: 941px) {
   .cards-grid {
     grid-template-columns: repeat(2, 460px);
     column-gap: 20px;
