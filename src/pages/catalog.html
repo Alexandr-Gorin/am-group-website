@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/src/css/grid-debug.css" />
     <link rel="stylesheet" href="/src/css/components/buttons/button.css" />
     <link rel="stylesheet" href="/src/css/components/card.css" />
-    <link rel="stylesheet" href="/src/css/components/panel-card.css">
+    <link rel="stylesheet" href="/src/css/components/panel-card.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -76,19 +76,21 @@
       <!-- Main -->
       <main class="main">
         <div class="container">
-    <div class="catalog-hero">
+           <section class="catalog-hero-section">
+          <div class="container">
+              <div class="catalog-hero">
       <!-- Шапка + кнопка -->
-      <div class="catalog-hero__top">
-        <div class="catalog-hero__header">
-          <h1 class="catalog-hero__title">Каталог продукции</h1>
-          <p class="catalog-hero__desc">Линейка микробных препаратов для животноводства и растениеводства от компании Агропромышленная микробиология групп</p>
-        </div>
-        <a href="#all" class="button button--soft">
-          Смотреть всю продукцию
-        </a>
-      </div>
-      <!-- Панельные карточки -->
-      <div class="panel-cards">
+            <div class="catalog-hero__top">
+              <div class="catalog-hero__header">
+                <h1 class="catalog-hero__title">Каталог продукции</h1>
+                <p class="catalog-hero__desc">Линейка микробных препаратов для животноводства и растениеводства от компании Агропромышленная микробиология групп</p>
+              </div>
+              <a href="#all" class="button button--soft">
+                Смотреть всю продукцию
+              </a>
+            </div>
+            <!-- Панельные карточки -->
+            <div class="panel-cards">
         <!-- Кормовая база -->
         <a href="#feed-supply" class="panel-card">
           <p class="panel-card__title">Кормовая база</p>
@@ -309,247 +311,250 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
           </button>
         </a>
       </div>
-      </div>
-      <section class="card-section">
-        <div class="container">
-          <hr class="divider">
-          <div class="cards-grid">
-            <!-- 1. Silo Twice -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Silo Twice.png"
-                  alt="Silo Twice"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Silo Twice</h3>
-                <p class="card__description">
-                  Биоконсервант для консервации плющеного и целого зерна
-                  повышенной влажности
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
-            <!-- 2. Silo Rye -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Silo Rye.png"
-                  alt="Silo Rye"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Silo Rye</h3>
-                <p class="card__description">
-                  Биоконсервант для легкосилосуемого сырья (ржаной силос,
-                  травяной и кукурузный силос)
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
-            <!-- 3. Декоман -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Decoman.png"
-                  alt="Декоман"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Декоман</h3>
-                <p class="card__description">
-                  Биопрепарат для деструкции навоза, обеззараживания,
-                  дезинфекции и осушения подстилки
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
-            <!-- 4. Декоман + -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Decoman-Dry.png"
-                  alt="Декоман +"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Декоман +</h3>
-                <p class="card__description">
-                  Биопрепарат для деструкции навоза, обеззараживания,
-                  дезинфекции и осушения подстилки
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
-            <!-- 5. Румибакт -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Rumibact-dry.png"
-                  alt="Румибакт"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Румибакт</h3>
-                <p class="card__description">
-                  Кормовая добавка для нормализации рубинового пищеварения у
-                  жвачных животных
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
-            <!-- 6. Полибакт -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Polibact.png"
-                  alt="Полибакт"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Полибакт</h3>
-                <p class="card__description">
-                  Микробный препарат для ускорения разложения пожнивных остатков
-                  и восстановления микробиоценоза почв
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
-            <!-- 7. Сояриз -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Soyariz.png"
-                  alt="Сояриз"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Сояриз</h3>
-                <p class="card__description">
-                  Биоудобрение для повышения продуктивности сои
-                </p>
-              </div>
-              <a href="#" class="button button--primary">Подробнее</a>
-            </article>
-            <!-- 8. Ризофос-клевер -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Rizofos-clever.png"
-                  alt="Ризофос-клевер"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Ризофос-клевер</h3>
-                <p class="card__description">
-                  Микробный препарат для предпосевной обработки семян и
-                  вегетирующих растений Клевера
-                </p>
-              </div>
-              <a href="#" class="button button--primary">Подробнее</a>
-            </article>
-            <!-- 9. Ризофос-люцерна -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Rizofos-lucern.png"
-                  alt="Ризофос-люцерна"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Ризофос-люцерна</h3>
-                <p class="card__description">
-                  Микробный препарат для предпосевной обработки семян и
-                  вегетирующих растений Люцерны
-                </p>
-              </div>
-              <a href="#" class="button button--primary">Подробнее</a>
-            </article>
-            <!-- 10. Агромик -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Agromik.png"
-                  alt="Агромик"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Агромик</h3>
-                <p class="card__description">
-                  Микробный препарат для обработки семян и вегетирующих растений
-                  озимых и яровых зерновых культур
-                </p>
-              </div>
-              <a href="#" class="button button--primary">Подробнее</a>
-            </article>
-            <!-- 11. Гордебак -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Gordeback.png"
-                  alt="Гордебак"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Гордебак</h3>
-                <p class="card__description">
-                  Биопрепарат для предпосевной обработки семян и вегетирующих
-                  растений ячменя, озимого и ярового рапса
-                </p>
-              </div>
-              <a href="#" class="button button--primary">Подробнее</a>
-            </article>
-            <!-- 12. Биопродуктин -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Bioproductin.png"
-                  alt="Биопродуктин"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Биопродуктин</h3>
-                <p class="card__description">
-                  Микробный препарат для улучшения фитосанитарного состояния
-                  посевов зерновых культур
-                </p>
-              </div>
-              <a href="#" class="button button--primary">Подробнее</a>
-            </article>
-            <!-- 13. Антойл -->
-            <article class="card">
-              <div class="card__image-wrapper">
-                <img
-                  class="card__image"
-                  src="/src/assets/images/Cards/Image Antoyl.png"
-                  alt="Антойл"
-                />
-              </div>
-              <div class="card__content">
-                <h3 class="card__title">Антойл</h3>
-                <p class="card__description">
-                  Биопрепарат для интенсификации очистки коммунально-бытовых и
-                  промышленных сточных вод
-                </p>
-              </div>
-              <a href="#" class="button button--secondary">Подробнее</a>
-            </article>
+    </div>
           </div>
+        </section>
+        <section class="card-section">
+          <div class="container">
+            <hr class="divider" />
+            <div class="cards-grid">
+              <!-- 1. Silo Twice -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Silo Twice.png"
+                    alt="Silo Twice"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Silo Twice</h3>
+                  <p class="card__description">
+                    Биоконсервант для консервации плющеного и целого зерна
+                    повышенной влажности
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+              <!-- 2. Silo Rye -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Silo Rye.png"
+                    alt="Silo Rye"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Silo Rye</h3>
+                  <p class="card__description">
+                    Биоконсервант для легкосилосуемого сырья (ржаной силос,
+                    травяной и кукурузный силос)
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+              <!-- 3. Декоман -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Decoman.png"
+                    alt="Декоман"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Декоман</h3>
+                  <p class="card__description">
+                    Биопрепарат для деструкции навоза, обеззараживания,
+                    дезинфекции и осушения подстилки
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+              <!-- 4. Декоман + -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Decoman-Dry.png"
+                    alt="Декоман +"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Декоман +</h3>
+                  <p class="card__description">
+                    Биопрепарат для деструкции навоза, обеззараживания,
+                    дезинфекции и осушения подстилки
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+              <!-- 5. Румибакт -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Rumibact-dry.png"
+                    alt="Румибакт"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Румибакт</h3>
+                  <p class="card__description">
+                    Кормовая добавка для нормализации рубинового пищеварения у
+                    жвачных животных
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+              <!-- 6. Полибакт -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Polibact.png"
+                    alt="Полибакт"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Полибакт</h3>
+                  <p class="card__description">
+                    Микробный препарат для ускорения разложения пожнивных
+                    остатков и восстановления микробиоценоза почв
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+              <!-- 7. Сояриз -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Soyariz.png"
+                    alt="Сояриз"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Сояриз</h3>
+                  <p class="card__description">
+                    Биоудобрение для повышения продуктивности сои
+                  </p>
+                </div>
+                <a href="#" class="button button--primary">Подробнее</a>
+              </article>
+              <!-- 8. Ризофос-клевер -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Rizofos-clever.png"
+                    alt="Ризофос-клевер"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Ризофос-клевер</h3>
+                  <p class="card__description">
+                    Микробный препарат для предпосевной обработки семян и
+                    вегетирующих растений Клевера
+                  </p>
+                </div>
+                <a href="#" class="button button--primary">Подробнее</a>
+              </article>
+              <!-- 9. Ризофос-люцерна -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Rizofos-lucern.png"
+                    alt="Ризофос-люцерна"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Ризофос-люцерна</h3>
+                  <p class="card__description">
+                    Микробный препарат для предпосевной обработки семян и
+                    вегетирующих растений Люцерны
+                  </p>
+                </div>
+                <a href="#" class="button button--primary">Подробнее</a>
+              </article>
+              <!-- 10. Агромик -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Agromik.png"
+                    alt="Агромик"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Агромик</h3>
+                  <p class="card__description">
+                    Микробный препарат для обработки семян и вегетирующих
+                    растений озимых и яровых зерновых культур
+                  </p>
+                </div>
+                <a href="#" class="button button--primary">Подробнее</a>
+              </article>
+              <!-- 11. Гордебак -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Gordeback.png"
+                    alt="Гордебак"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Гордебак</h3>
+                  <p class="card__description">
+                    Биопрепарат для предпосевной обработки семян и вегетирующих
+                    растений ячменя, озимого и ярового рапса
+                  </p>
+                </div>
+                <a href="#" class="button button--primary">Подробнее</a>
+              </article>
+              <!-- 12. Биопродуктин -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Bioproductin.png"
+                    alt="Биопродуктин"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Биопродуктин</h3>
+                  <p class="card__description">
+                    Микробный препарат для улучшения фитосанитарного состояния
+                    посевов зерновых культур
+                  </p>
+                </div>
+                <a href="#" class="button button--primary">Подробнее</a>
+              </article>
+              <!-- 13. Антойл -->
+              <article class="card">
+                <div class="card__image-wrapper">
+                  <img
+                    class="card__image"
+                    src="/src/assets/images/Cards/Image Antoyl.png"
+                    alt="Антойл"
+                  />
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">Антойл</h3>
+                  <p class="card__description">
+                    Биопрепарат для интенсификации очистки коммунально-бытовых и
+                    промышленных сточных вод
+                  </p>
+                </div>
+                <a href="#" class="button button--secondary">Подробнее</a>
+              </article>
+            </div>
+          </div>
+        </section>
         </div>
-      </section>
       </main>
       <!-- Footer -->
       <footer class="footer"></footer>
