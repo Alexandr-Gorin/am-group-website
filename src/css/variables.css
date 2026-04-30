@@ -207,19 +207,32 @@
 
   /* Panel Card */
   --color-glass-panel-fill:
-  radial-gradient(
-    ellipse at 50% 0%,
-    rgba(255, 255, 255, 0.02) 0%,
-    rgba(255, 255, 255, 0.008) 60%,
-    rgba(255, 255, 255, 0.00) 100%
-  ),
-  linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.10) 100%
-  );
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(255, 255, 255, 0.008) 60%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
 
---color-glass-panel-stroke: rgba(255, 255, 255, 0.18);
+  --color-glass-panel-stroke: rgba(255, 255, 255, 0.18);
+
+  /* Panel Card mini */
+  --color-glass-panel-mini-fill:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(33, 58, 113, 0.1) 0%,
+      rgba(255, 255, 255, 0.26) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.38) 0%,
+      rgba(255, 255, 255, 0.29) 100%
+    );
 }
 
 /* Адаптивность */
