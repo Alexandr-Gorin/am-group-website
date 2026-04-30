@@ -136,7 +136,8 @@
 @media (min-width: 1200px) {
   .cards-grid {
     grid-template-columns: repeat(3, 360px);
-    gap: 40px;
+    column-gap: 40px;
+    row-gap: 48px;
     justify-content: center;
   }
 
