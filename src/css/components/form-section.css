@@ -1,0 +1,249 @@
+/* ============================================
+   FORM SECTION
+   ============================================ */
+
+.form-section {
+  position: relative;
+  width: 100%;
+  padding-top: 64px;
+  padding-bottom: 64px;
+  overflow: hidden;
+}
+
+/* Background wrapper — fills section, clips image */
+
+.form-section__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Background image */
+
+.form-section__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gradient overlay — on top of image only, via ::after on the wrapper */
+
+.form-section__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(33, 58, 113, 0.90) 0%,
+    rgba(33, 58, 113, 0.95) 40%,
+    rgba(33, 58, 113, 1.00) 100%
+  );
+  opacity: 0.35;
+}
+
+/* Inner layout */
+
+.form-section__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Text block */
+
+.form-section__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-inline: 20px;
+}
+
+.form-section__title {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-content-primary);
+}
+
+.form-section__subtitle {
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-content-primary);
+}
+
+/* Form card */
+
+.form-section__card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 20px;
+  border-radius: 16px;
+  background: var(--color-glass-card-strong);
+  box-shadow:
+    inset 0 0 0 1px var(--color-glass-strong-stroke),
+    var(--shadow-elevation-1);
+  overflow: hidden;
+}
+
+/* Fields: stacked on mobile */
+
+.form-section__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Input */
+
+.form-section__input {
+  height: 40px;
+  width: 100%;
+  background: #f9f9f9;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-neutral-strong);
+  outline: none;
+  flex-shrink: 0;
+}
+
+.form-section__input::placeholder {
+  color: rgba(60, 60, 59, 0.5);
+}
+
+.form-section__input:focus {
+  box-shadow: 0 0 0 2px var(--color-brand-crimson);
+}
+
+/* Submit button: full width on mobile */
+
+.form-section__btn {
+  width: 100%;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+/* Privacy disclaimer */
+
+.form-section__privacy {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-content-primary);
+}
+
+.form-section__privacy strong {
+  font-weight: 700;
+}
+
+.form-section__privacy a {
+  color: var(--color-content-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Tablet Vertical: 660–939px */
+@media (min-width: 660px) and (max-width: 939px) {
+  .form-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .form-section__text {
+    padding-inline: 32px;
+  }
+
+  .form-section__card {
+    padding: 32px;
+  }
+
+  .form-section__btn {
+    width: 300px;
+  }
+
+  .form-section__privacy {
+    font-size: 14px;
+  }
+}
+
+/* Tablet Horizontal: 940–1199px */
+@media (min-width: 940px) and (max-width: 1199px) {
+  .form-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .form-section__inner {
+    gap: 48px;
+  }
+
+  .form-section__text {
+    padding-inline: 32px;
+  }
+
+  .form-section__card {
+    padding: 32px;
+  }
+
+  .form-section__fields {
+    flex-direction: row;
+  }
+
+  .form-section__input {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  .form-section__btn {
+    width: 300px;
+  }
+
+  .form-section__privacy {
+    font-size: 14px;
+  }
+}
+
+/* Desktop: 1200px+ */
+@media (min-width: 1200px) {
+  .form-section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  .form-section__inner {
+    gap: 48px;
+  }
+
+  .form-section__text {
+    padding-inline: 32px;
+  }
+
+  .form-section__card {
+    padding: 32px;
+  }
+
+  .form-section__fields {
+    flex-direction: row;
+  }
+
+  .form-section__input {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  .form-section__btn {
+    width: 300px;
+  }
+
+  .form-section__privacy {
+    font-size: 14px;
+  }
+}
