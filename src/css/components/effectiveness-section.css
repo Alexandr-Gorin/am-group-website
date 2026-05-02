@@ -1,0 +1,119 @@
+/* ============================================
+   EFFECTIVENESS SECTION
+   ============================================ */
+
+.effectiveness-section {
+  width: 100%;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.effectiveness-section__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.effectiveness-section__header {
+  padding-inline: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.effectiveness-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.effectiveness-section__card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: inset 0 0 0 1px var(--color-glass-strong-stroke);
+  text-align: center;
+}
+
+.effectiveness-section__card-title {
+  font-size: var(--font-size-card);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--color-content-primary);
+}
+
+.effectiveness-section__card-body {
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-content-primary);
+}
+
+/* Tablet Vertical: 660–939px */
+@media (min-width: 660px) and (max-width: 939px) {
+  .effectiveness-section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .effectiveness-section__header {
+    padding-inline: 32px;
+  }
+
+  .effectiveness-section__card {
+    gap: 24px;
+    padding: 32px;
+  }
+}
+
+/* Tablet Horizontal: 940–1199px */
+@media (min-width: 940px) and (max-width: 1199px) {
+  .effectiveness-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .effectiveness-section__inner {
+    gap: 48px;
+  }
+
+  .effectiveness-section__header {
+    padding-inline: 32px;
+  }
+
+  .effectiveness-section__card {
+    gap: 24px;
+    padding: 32px;
+  }
+}
+
+/* Desktop: 1200px+ */
+@media (min-width: 1200px) {
+  .effectiveness-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .effectiveness-section__inner {
+    gap: 40px;
+  }
+
+  .effectiveness-section__header {
+    padding-inline: 32px;
+  }
+
+  .effectiveness-section__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .effectiveness-section__card {
+    gap: 24px;
+    padding: 32px;
+  }
+}
