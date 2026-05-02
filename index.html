@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="/src/css/components/partnership-section.css" />
     <link rel="stylesheet" href="/src/css/components/faq-section.css" />
     <link rel="stylesheet" href="/src/css/components/form-section.css" />
+    <link rel="stylesheet" href="/src/css/components/news-section.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -868,6 +869,138 @@
             </div>
           </div>
         </section>
+
+        <!-- News Section -->
+        <section class="news-section">
+          <div class="container">
+            <div class="news-section__inner">
+              <div class="news-section__header">
+                <h2 class="news-section__title">Актуально для агробизнеса</h2>
+                <p class="news-section__subtitle">
+                  Актуальные новости компании, отрасли и практики применения
+                  микробиологических решений.
+                </p>
+              </div>
+              <ul class="news-section__list">
+                <li class="news-section__item">
+                  <div class="news-section__item-row">
+                    <div class="news-section__item-image">
+                      <img
+                        src="/src/assets/images/Main page/News/Image-News-1.jpg"
+                        alt="Севооборот под контролем"
+                      />
+                    </div>
+                    <div class="news-section__item-content">
+                      <div class="news-section__item-description">
+                        <p class="news-section__item-title">
+                          Севооборот под контролем: аграриев ждут новые штрафы
+                        </p>
+                        <p class="news-section__item-excerpt">
+                          Кубань предлагает штрафовать за нарушение севооборота
+                          по всей стране
+                        </p>
+                      </div>
+                      <p class="news-section__item-date">24.09.2025</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="news-section__item">
+                  <div class="news-section__item-row">
+                    <div class="news-section__item-image">
+                      <img
+                        src="/src/assets/images/Main page/News/Image-News-2.jpg"
+                        alt="Национальная премия Агролидер 2025"
+                      />
+                    </div>
+                    <div class="news-section__item-content">
+                      <div class="news-section__item-description">
+                        <a
+                          class="news-section__item-title"
+                          href="https://microbio.pro/tpost/oc4s6j5u51-natsionalnaya-premiya-agrolider-2025"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          >Национальная премия «Агролидер 2025»</a
+                        >
+                        <p class="news-section__item-excerpt">
+                          Будем счастливы снова почувствовать вашу поддержку!
+                        </p>
+                      </div>
+                      <p class="news-section__item-date">24.09.2025</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="news-section__item">
+                  <div class="news-section__item-row">
+                    <div class="news-section__item-image">
+                      <img
+                        src="/src/assets/images/Main page/News/Image-News-3.jpg"
+                        alt="Лучшие технологии в агропромышленности"
+                      />
+                    </div>
+                    <div class="news-section__item-content">
+                      <div class="news-section__item-description">
+                        <p class="news-section__item-title">
+                          «Лучшие технологии в агропромышленности»
+                        </p>
+                        <p class="news-section__item-excerpt">
+                          «Агропромышленная микробиология групп» — победитель в
+                          номинации «Лучшие технологии в агропромышленности»!
+                        </p>
+                      </div>
+                      <p class="news-section__item-date">24.09.2025</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="news-section__actions">
+                <button
+                  class="news-section__btn news-section__btn--prev"
+                  aria-label="Предыдущая страница новостей"
+                  disabled
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  Назад
+                </button>
+                <button
+                  class="news-section__btn news-section__btn--next"
+                  aria-label="Следующая страница новостей"
+                  disabled
+                >
+                  Вперёд
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <!-- Footer -->
@@ -877,5 +1010,6 @@
     <!-- JS -->
     <script type="module" src="/src/js/main.js"></script>
     <script type="module" src="/src/js/faq.js"></script>
+    <script type="module" src="/src/js/news.js"></script>
   </body>
 </html>
