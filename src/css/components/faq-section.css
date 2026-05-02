@@ -1,0 +1,228 @@
+/* ============================================
+   FAQ SECTION
+   ============================================ */
+
+.faq-section {
+  width: 100%;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.faq-section__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.faq-section__title {
+  padding-inline: 20px;
+}
+
+.faq-section__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-section__list::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: var(--color-glass-strong-stroke);
+}
+
+.faq-section__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-section__divider {
+  height: 1px;
+  border: none;
+  background-color: var(--color-glass-strong-stroke);
+  margin: 0;
+}
+
+.faq-section__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+}
+
+.faq-section__question-text {
+  font-size: var(--font-size-card);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--color-content-primary);
+}
+
+/* + / − icon */
+.faq-section__icon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.faq-section__icon::before,
+.faq-section__icon::after {
+  content: "";
+  position: absolute;
+  background: var(--color-content-primary);
+  border-radius: 3px;
+}
+
+/* Horizontal bar — always visible, forms the − when open */
+.faq-section__icon::before {
+  width: 100%;
+  height: 5px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+/* Vertical bar — visible only when closed, forms the + */
+.faq-section__icon::after {
+  width: 5px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  transition: transform 0.25s ease;
+}
+
+.faq-section__item.is-open .faq-section__icon::after {
+  transform: translateX(-50%) scaleY(0);
+}
+
+/* Answer accordion — grid-rows trick for smooth height animation */
+.faq-section__answer-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.faq-section__item.is-open .faq-section__answer-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.faq-section__answer {
+  overflow: hidden;
+}
+
+.faq-section__answer ul,
+.faq-section__answer ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.faq-section__answer ul {
+  list-style-type: disc;
+}
+
+.faq-section__answer ol {
+  list-style-type: decimal;
+}
+
+.faq-section__answer li {
+  margin-bottom: 4px;
+}
+
+.faq-section__answer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+.faq-section__answer-inner p {
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-content-primary);
+}
+
+.faq-section__answer-inner a {
+  color: var(--color-content-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Tablet Vertical: 660–939px */
+@media (min-width: 660px) and (max-width: 939px) {
+  .faq-section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .faq-section__title {
+    padding-inline: 32px;
+  }
+}
+
+/* Tablet Horizontal: 940–1199px */
+@media (min-width: 940px) and (max-width: 1199px) {
+  .faq-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .faq-section__inner {
+    gap: 48px;
+  }
+
+  .faq-section__title {
+    padding-inline: 32px;
+  }
+
+  .faq-section__question {
+    padding: 24px 0;
+  }
+
+  .faq-section__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .faq-section__answer-inner {
+    padding-bottom: 24px;
+  }
+}
+
+/* Desktop: 1200px+ */
+@media (min-width: 1200px) {
+  .faq-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .faq-section__inner {
+    gap: 48px;
+  }
+
+  .faq-section__title {
+    padding-inline: 32px;
+  }
+
+  .faq-section__question {
+    padding: 24px 0;
+  }
+
+  .faq-section__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .faq-section__answer-inner {
+    padding-bottom: 24px;
+  }
+}
