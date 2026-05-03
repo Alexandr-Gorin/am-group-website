@@ -221,6 +221,10 @@
 
   --color-glass-panel-stroke: rgba(255, 255, 255, 0.18);
 
+  /* Footer */
+  --color-footer-deep: linear-gradient(180deg, #1b2c54 0%, #0f1b36 100%);
+  --color-footer-stroke: rgba(255, 255, 255, 0.18);
+
   /* Panel Card mini */
   --color-glass-panel-mini-fill:
     radial-gradient(

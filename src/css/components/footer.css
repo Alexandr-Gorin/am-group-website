@@ -1,0 +1,295 @@
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  background: var(--color-footer-deep);
+  border-top: 1px solid var(--color-footer-stroke);
+}
+
+/* ---- Container ---- */
+.footer__container {
+  width: 100%;
+  max-width: 300px;
+  margin-inline: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 32px;
+}
+
+/* ============================================
+   TOP SECTION: brand + socials
+   ============================================ */
+
+.footer__top {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Brand block */
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 20px;
+}
+
+.footer__company-name {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-content-primary);
+  text-align: center;
+}
+
+/* Logo + contacts wrapper */
+.footer__brand-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.footer__logo {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer__logo img {
+  width: 260px;
+  height: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Contacts */
+.footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-footer-stroke);
+  text-align: center;
+}
+
+.footer__contact-item {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-content-primary);
+  text-align: center;
+}
+
+/* Social icons — horizontal row on mobile */
+.footer__socials {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-footer-stroke);
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.footer__social-link:hover {
+  opacity: 0.7;
+}
+
+.footer__social-link img {
+  width: 52px;
+  height: 52px;
+  display: block;
+}
+
+/* ============================================
+   BOTTOM SECTION: divider + legal links
+   ============================================ */
+
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.footer__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--color-footer-stroke);
+  flex-shrink: 0;
+}
+
+.footer__legal {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.footer__legal-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 12px 20px;
+  font-size: var(--font-size-body-m);
+  font-weight: 400;
+  line-height: 1;
+  color: #ffffff;
+  text-decoration: none;
+  background: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.footer__legal-link:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   TABLET VERTICAL: 660px+
+   Two-column: brand (left) | socials (right, vertical icons)
+   Brand inner stays stacked (logo over contacts)
+   ============================================ */
+
+@media (min-width: 660px) {
+  .footer__container {
+    max-width: 620px;
+    gap: 48px;
+    padding-bottom: 48px;
+  }
+
+  .footer__top {
+    flex-direction: row;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .footer__brand {
+    flex: 1;
+    min-width: 0;
+    padding: 32px;
+  }
+
+  .footer__company-name {
+    text-align: center;
+  }
+
+  /* Brand inner stays stacked at tablet-v */
+  .footer__brand-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Socials: vertical column on the right with left divider */
+  .footer__socials {
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 140px;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    padding-left: 40px;
+    border-top: none;
+    border-left: 1px solid var(--color-footer-stroke);
+  }
+
+  .footer__legal-link {
+    font-size: var(--font-size-body-l);
+  }
+}
+
+/* ============================================
+   TABLET HORIZONTAL: 940px+
+   Brand inner switches to row: logo | contacts
+   Legal links go side by side
+   ============================================ */
+
+@media (min-width: 940px) {
+  .footer__container {
+    max-width: 940px;
+  }
+
+  .footer__company-name {
+    text-align: left;
+  }
+
+  /* Brand inner: logo and contacts side by side */
+  .footer__brand-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+  }
+
+  /* Contacts: vertical divider (border-left) replaces horizontal (border-top) */
+  .footer__contacts {
+    border-top: none;
+    border-left: 1px solid var(--color-footer-stroke);
+    padding-top: 0;
+    padding-left: 48px;
+    text-align: left;
+    width: auto;
+    flex: 1;
+  }
+
+  .footer__contact-item {
+    text-align: left;
+  }
+
+  /* Legal links: row layout */
+  .footer__legal {
+    flex-direction: row;
+    gap: 40px;
+    padding-bottom: 0;
+  }
+
+  .footer__legal-link {
+    font-size: 20px;
+  }
+}
+
+/* ============================================
+   DESKTOP WIDE: 1200px+
+   Container expands to 1160px, socials column widens
+   ============================================ */
+
+@media (min-width: 1200px) {
+  .footer__container {
+    max-width: 1160px;
+    gap: 48px;
+    padding-bottom: 48px;
+  }
+
+  .footer__top {
+    gap: 40px;
+  }
+
+  .footer__brand-inner {
+    gap: 64px;
+  }
+
+  .footer__contacts {
+    padding-left: 64px;
+  }
+
+  .footer__socials {
+    width: 260px;
+    padding-left: 60px;
+  }
+}
