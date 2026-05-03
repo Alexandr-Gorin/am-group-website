@@ -61,6 +61,13 @@
   color: var(--color-content-primary);
 }
 
+.panel-card.is-active {
+  box-shadow:
+    inset 0 0 0 2px var(--color-brand-crimson-80),
+    var(--shadow-elevation-1);
+  transform: translateY(-2px);
+}
+
 /* Panel Cards container */
 .panel-cards {
   display: grid;

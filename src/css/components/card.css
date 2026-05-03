@@ -71,8 +71,14 @@
     var(--shadow-card-default);
   backdrop-filter: var(--blur-card-default);
   -webkit-backdrop-filter: var(--blur-card-default);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+}
+
+.card.is-hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
 }
 
 .card:hover {

@@ -86,14 +86,14 @@
                 <h1 class="catalog-hero__title">Каталог продукции</h1>
                 <p class="catalog-hero__desc">Линейка микробных препаратов для животноводства и растениеводства от компании Агропромышленная микробиология групп</p>
               </div>
-              <a href="#all" class="button button--soft">
+              <a href="#all" data-filter="all" class="button button--soft">
                 Смотреть всю продукцию
               </a>
             </div>
             <!-- Панельные карточки -->
             <div class="panel-cards">
         <!-- Кормовая база -->
-        <a href="#feed-supply" class="panel-card">
+        <a href="#feed-supply" data-filter="feed-supply" class="panel-card">
           <p class="panel-card__title">Кормовая база</p>
           <div class="panel-card__icon">
               <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -123,7 +123,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
           </button>
         </a>
         <!-- Побочные продукты -->
-        <a href="#byproducts" class="panel-card">
+        <a href="#byproducts" data-filter="byproducts" class="panel-card">
           <p class="panel-card__title">Побочные продукты животноводства</p>
           <div class="panel-card__icon">
             <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -159,7 +159,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
           </button>
         </a>
         <!-- КРС -->
-        <a href="#livestock" class="panel-card">
+        <a href="#cattle" data-filter="cattle" class="panel-card">
           <p class="panel-card__title">Крупный рогатый скот</p>
           <div class="panel-card__icon">
            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -202,7 +202,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
           </button>
         </a>
         <!-- Почва -->
-        <a href="#soil" class="panel-card">
+        <a href="#soil" data-filter="soil" class="panel-card">
           <p class="panel-card__title">Почва, семена и растения</p>
           <div class="panel-card__icon">
             <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -318,9 +318,9 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
         <section class="card-section">
           <div class="container">
             <hr class="divider" />
-            <div class="cards-grid">
+            <div class="cards-grid" id="all">
               <!-- 1. Silo Twice -->
-              <article class="card">
+              <article class="card" data-category="feed-supply">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -338,7 +338,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--secondary">Подробнее</a>
               </article>
               <!-- 2. Silo Rye -->
-              <article class="card">
+              <article class="card" data-category="feed-supply">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -356,7 +356,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--secondary">Подробнее</a>
               </article>
               <!-- 3. Декоман -->
-              <article class="card">
+              <article class="card" data-category="byproducts">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -374,7 +374,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--secondary">Подробнее</a>
               </article>
               <!-- 4. Декоман + -->
-              <article class="card">
+              <article class="card" data-category="byproducts">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -392,7 +392,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--secondary">Подробнее</a>
               </article>
               <!-- 5. Румибакт -->
-              <article class="card">
+              <article class="card" data-category="cattle">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -410,7 +410,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--secondary">Подробнее</a>
               </article>
               <!-- 6. Полибакт -->
-              <article class="card">
+              <article class="card" data-category="soil">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -428,7 +428,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--secondary">Подробнее</a>
               </article>
               <!-- 7. Сояриз -->
-              <article class="card">
+              <article class="card" data-category="soil seeds">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -445,7 +445,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--primary">Подробнее</a>
               </article>
               <!-- 8. Ризофос-клевер -->
-              <article class="card">
+              <article class="card" data-category="soil seeds plants">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -463,7 +463,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--primary">Подробнее</a>
               </article>
               <!-- 9. Ризофос-люцерна -->
-              <article class="card">
+              <article class="card" data-category="soil seeds plants">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -481,7 +481,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--primary">Подробнее</a>
               </article>
               <!-- 10. Агромик -->
-              <article class="card">
+              <article class="card" data-category="soil seeds plants">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -499,7 +499,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--primary">Подробнее</a>
               </article>
               <!-- 11. Гордебак -->
-              <article class="card">
+              <article class="card" data-category="soil seeds plants">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -517,7 +517,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--primary">Подробнее</a>
               </article>
               <!-- 12. Биопродуктин -->
-              <article class="card">
+              <article class="card" data-category="soil plants">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -535,7 +535,7 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
                 <a href="#" class="button button--primary">Подробнее</a>
               </article>
               <!-- 13. Антойл -->
-              <article class="card">
+              <article class="card" data-category="cattle">
                 <div class="card__image-wrapper">
                   <img
                     class="card__image"
@@ -640,5 +640,6 @@ aria-hidden="true" role="img" class="iconify iconify--emojione-monotone" preserv
     </div>
     <!-- JS -->
     <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/js/catalog-filter.js"></script>
   </body>
 </html>
