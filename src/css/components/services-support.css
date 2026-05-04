@@ -1,0 +1,125 @@
+/* ============================================
+   SUPPORT PAGE SECTIONS
+   ============================================ */
+
+/* Remove global main padding so hero touches the header */
+.main {
+  padding-top: 0;
+}
+
+/* Hero Banner */
+
+.support-hero {
+  position: relative;
+  width: 100%;
+  height: 630px;
+  margin-top: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.support-hero__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.support-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.support-hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(33, 58, 113, 0.90) 0%,
+    rgba(33, 58, 113, 0.95) 40%,
+    rgba(33, 58, 113, 1.00) 100%
+  );
+  opacity: 0.35;
+}
+
+/* Content Section */
+
+.support-content {
+  width: 100%;
+}
+
+.support-content__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.support-content__title {
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.01em;
+  color: var(--color-content-primary);
+}
+
+.support-content__description {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.support-content__intro {
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-content-primary);
+}
+
+/* Text blocks — normal block layout so <br> creates blank-line spacing */
+
+.support-content__block {
+  color: var(--color-content-primary);
+  font-size: var(--font-size-body-l);
+  line-height: 1.5;
+}
+
+.support-content__block-title {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.01em;
+}
+
+.support-content__btn {
+  width: 100%;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+/* Form section gradient opacity for this page */
+.form-section__bg::after {
+  opacity: 0.35;
+}
+
+/* Tablet Vertical: 660px+ */
+@media (min-width: 660px) {
+  .support-content__inner {
+    gap: 32px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .support-content__description {
+    gap: 32px;
+  }
+
+  .support-content__block-title {
+    font-size: 20px;
+  }
+
+  .support-content__btn {
+    width: 300px;
+  }
+}
