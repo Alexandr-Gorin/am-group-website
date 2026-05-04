@@ -6,7 +6,7 @@
   position: relative;
   width: 100%;
   padding-top: 64px;
-  padding-bottom: 64px;
+  padding-bottom: 80px;
   overflow: hidden;
 }
 
@@ -154,7 +154,7 @@
 @media (min-width: 660px) and (max-width: 939px) {
   .form-section {
     padding-top: 100px;
-    padding-bottom: 100px;
+    padding-bottom: 80px;
   }
 
   .form-section__text {
@@ -178,7 +178,7 @@
 @media (min-width: 940px) and (max-width: 1199px) {
   .form-section {
     padding-top: 100px;
-    padding-bottom: 100px;
+    padding-bottom: 80px;
   }
 
   .form-section__inner {
@@ -215,7 +215,7 @@
 @media (min-width: 1200px) {
   .form-section {
     padding-top: 100px;
-    padding-bottom: 100px;
+    padding-bottom: 80px;
   }
 
   .form-section__inner {

@@ -177,6 +177,76 @@
             </div>
           </section>
         </div>
+
+        <section class="form-section">
+          <div class="form-section__bg">
+            <img
+              class="form-section__bg-image"
+              src="/src/assets/images/Serives/Image-Form-Services.jpg"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+          <div class="container">
+            <div class="form-section__inner">
+              <div class="form-section__text">
+                <h2 class="form-section__title">Остались вопросы?</h2>
+                <p class="form-section__subtitle">
+                  Оставьте заявку и наши специалисты свяжутся с Вами в
+                  ближайшее время.
+                </p>
+              </div>
+
+              <form
+                class="form-section__card"
+                action="https://formspree.io/f/FORM_ID"
+                method="POST"
+              >
+                <input
+                  type="hidden"
+                  name="_subject"
+                  value="Новая заявка с сайта — Услуги"
+                />
+                <input type="hidden" name="source" value="services" />
+                <div class="form-section__fields">
+                  <input
+                    type="text"
+                    name="company"
+                    class="form-section__input"
+                    placeholder="Название компании"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-section__input"
+                    placeholder="ФИО"
+                    required
+                  />
+                  <input
+                    type="tel"
+                    name="phone"
+                    class="form-section__input"
+                    placeholder="Телефон"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="button button--primary form-section__btn"
+                >
+                  Получить консультацию
+                </button>
+                <p class="form-section__privacy">
+                  Нажимая кнопку <strong>"Получить консультацию",</strong> Вы
+                  соглашаетесь с
+                  <a href="#">Политикой конфиденциальности</a> и даёте согласие
+                  на обработку персональных данных.
+                </p>
+              </form>
+            </div>
+          </div>
+        </section>
       </main>
 
       <!-- Footer -->
