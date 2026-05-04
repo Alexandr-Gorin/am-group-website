@@ -1,0 +1,181 @@
+/* ============================================
+   TRAINING PAGE SECTIONS
+   ============================================ */
+
+/* Remove global main padding so hero touches the header */
+.main {
+  padding-top: 0;
+}
+
+/* Hero Banner */
+
+.training-hero {
+  position: relative;
+  width: 100%;
+  height: 630px;
+  margin-top: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.training-hero__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.training-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.training-hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(33, 58, 113, 0.90) 0%,
+    rgba(33, 58, 113, 0.95) 40%,
+    rgba(33, 58, 113, 1.00) 100%
+  );
+  opacity: 0.35;
+}
+
+/* Content Section */
+
+.training-content {
+  width: 100%;
+}
+
+.training-content__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.training-content__title {
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.01em;
+  color: var(--color-content-primary);
+}
+
+.training-content__description {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Bold stat heading ("600+ специалистов...") */
+.training-content__stat {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: normal;
+  color: var(--color-content-primary);
+}
+
+.training-content__intro {
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-content-primary);
+}
+
+/* Text blocks — normal block layout so <br> creates blank-line spacing */
+
+.training-content__block {
+  color: var(--color-content-primary);
+  font-size: var(--font-size-body-l);
+  line-height: 1.5;
+}
+
+.training-content__block-title {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.01em;
+}
+
+/* Showcase: image + caption (stacked mobile → side-by-side 660px+) */
+
+.training-content__showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.training-content__showcase-image {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.training-content__showcase-image::after {
+  content: none;
+}
+
+.training-content__showcase-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.training-content__showcase-text {
+  color: var(--color-content-primary);
+  font-size: var(--font-size-body-l);
+  line-height: 1.5;
+}
+
+.training-content__btn {
+  width: 100%;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+/* Form section: extra height and gradient opacity for this page */
+.form-section {
+  padding-bottom: 230px; /* base 80 + 150 */
+}
+
+.form-section__bg::after {
+  opacity: 0.35;
+}
+
+/* Tablet Vertical: 660px+ */
+@media (min-width: 660px) {
+  .training-content__inner {
+    gap: 32px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .training-content__block-title {
+    font-size: 20px;
+  }
+
+  .training-content__showcase {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .training-content__showcase-image {
+    flex: 0 0 45%;
+    height: 314px;
+  }
+
+  .training-content__showcase-text {
+    flex: 1;
+  }
+
+  .training-content__btn {
+    width: 300px;
+  }
+}
