@@ -1,0 +1,111 @@
+/* ============================================
+   SERVICES HERO SECTION
+   ============================================ */
+
+.services-hero {
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 48px;
+}
+
+.services-hero__inner {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Text panel */
+
+.services-hero__text {
+  background: var(--color-glass-card-strong);
+  border: 1px solid var(--color-glass-card-default-stroke);
+  box-shadow: 0px 12px 18px rgba(0, 0, 0, 0.24);
+  border-radius: 32px 0 0 32px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--color-content-primary);
+  justify-content: center;
+  min-height: 290px;
+  box-sizing: border-box;
+}
+
+.services-hero__title {
+  font-weight: 700;
+  font-size: var(--font-size-h1);
+  line-height: normal;
+  letter-spacing: 0.01em;
+}
+
+.services-hero__description {
+  font-weight: 400;
+  font-size: var(--font-size-body-l);
+  line-height: 1.5;
+}
+
+/* Image panel */
+
+.services-hero__image {
+  border: 1px solid var(--color-glass-card-default-stroke);
+  border-radius: 0 32px 32px 0;
+  overflow: hidden;
+  height: 260px;
+  flex-shrink: 0;
+}
+
+.services-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tablet Vertical: 660px+ */
+@media (min-width: 660px) {
+  .services-hero__inner {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .services-hero__text {
+    flex: 0 0 381px;
+    min-height: unset;
+    height: 332px;
+    padding: 24px 16px;
+    gap: 32px;
+  }
+
+  .services-hero__image {
+    flex: 1;
+    height: 332px;
+  }
+}
+
+/* Tablet Horizontal: 940px+ */
+@media (min-width: 940px) {
+  .services-hero {
+    padding-bottom: 64px;
+  }
+
+  .services-hero__text {
+    flex-basis: 458px;
+    height: 372px;
+    padding: 32px;
+  }
+
+  .services-hero__image {
+    height: 372px;
+  }
+}
+
+/* Desktop: 1200px+ */
+@media (min-width: 1200px) {
+  .services-hero__text {
+    flex-basis: 559px;
+    height: 400px;
+  }
+
+  .services-hero__image {
+    height: 400px;
+  }
+}
