@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Агропромышленная Микробиология Групп — микробиологические решения для животноводства и растениеводства"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>АМ ГРУПП — Микробиологические решения</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/src/css/reset.css" />
+    <link rel="stylesheet" href="/src/css/variables.css" />
+    <link rel="stylesheet" href="/src/css/fonts.css" />
+    <link rel="stylesheet" href="/src/css/global.css" />
+    <link rel="stylesheet" href="/src/css/grid.css" />
+    <link rel="stylesheet" href="/src/css/grid-debug.css" />
+    <link rel="stylesheet" href="/src/css/components/buttons/button.css" />
+    <link rel="stylesheet" href="/src/css/components/card.css" />
+    <link rel="stylesheet" href="/src/css/components/hero.css" />
+    <link rel="stylesheet" href="/src/css/components/catalog-section.css" />
+    <link rel="stylesheet" href="/src/css/components/products-section.css" />
+    <link
+      rel="stylesheet"
+      href="/src/css/components/effectiveness-section.css"
+    />
+    <link rel="stylesheet" href="/src/css/components/partnership-section.css" />
+    <link rel="stylesheet" href="/src/css/components/faq-section.css" />
+    <link rel="stylesheet" href="/src/css/components/form-section.css" />
+    <link rel="stylesheet" href="/src/css/components/news-section.css" />
+    <link rel="stylesheet" href="/src/css/components/footer.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Header -->
+      <header class="header">
+        <div class="container">
+          <div class="header__container">
+            <a href="/" class="header__logo">
+              <img
+                src="/src/assets/images/Logo/logo header.png"
+                alt="АМ Групп — Агропромышленная микробиология групп"
+                height="140"
+              />
+            </a>
+            <nav class="header__nav">
+              <a href="/" class="header__link">Главная</a>
+              <a href="/products" class="header__link">Продукция</a>
+              <a href="/services" class="header__link">Услуги</a>
+              <a href="/about" class="header__link">О компании</a>
+              <a href="/contacts" class="header__link">Контакты</a>
+            </nav>
+            <button
+              class="burger"
+              aria-label="Открыть меню"
+              aria-expanded="false"
+              aria-controls="burger-menu"
+            >
+              <svg
+                width="60"
+                height="24"
+                viewBox="0 0 60 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <rect y="0" width="60" height="4" rx="2" fill="currentColor" />
+                <rect y="20" width="60" height="4" rx="2" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+      <!-- Burger menu overlay -->
+      <div class="burger-menu" id="burger-menu" aria-hidden="true">
+        <div class="container">
+          <!-- Nav links -->
+          <nav class="burger-menu__nav" aria-label="Мобильная навигация">
+            <a href="/" class="burger-menu__link">Главная</a>
+            <a href="/products" class="burger-menu__link">Продукция</a>
+            <a href="/services" class="burger-menu__link">Услуги</a>
+            <a href="/about" class="burger-menu__link">О компании</a>
+            <a href="/contacts" class="burger-menu__link">Контакты</a>
+          </nav>
+        </div>
+      </div>
+      <!-- Main -->
+      <main class="main"></main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer__container">
+          <!-- Top: brand + socials -->
+          <div class="footer__top">
+            <div class="footer__brand">
+              <p class="footer__company-name">
+                Агропромышленная Микробиология Групп
+              </p>
+              <div class="footer__brand-inner">
+                <div class="footer__logo">
+                  <img
+                    src="/src/assets/images/Logo/logo footer.png"
+                    alt="АМ Групп — Агропромышленная Микробиология Групп"
+                    width="260"
+                    height="160"
+                  />
+                </div>
+                <div class="footer__contacts">
+                  <p class="footer__contact-item">8 (929) 692-87-55</p>
+                  <p class="footer__contact-item">info@microbio.pro</p>
+                </div>
+              </div>
+            </div>
+            <div class="footer__socials">
+              <a
+                href="#"
+                class="footer__social-link"
+                aria-label="MAX — социальная сеть"
+              >
+                <img
+                  src="/src/assets/icons/Footer/Icon-MAX.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </a>
+              <a href="#" class="footer__social-link" aria-label="TikTok">
+                <img
+                  src="/src/assets/icons/Footer/Icon-Tik-Tok.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </a>
+              <a href="#" class="footer__social-link" aria-label="ВКонтакте">
+                <img
+                  src="/src/assets/icons/Footer/Icon-vk.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </a>
+            </div>
+          </div>
+          <!-- Bottom: legal links -->
+          <div class="footer__bottom">
+            <div class="footer__divider"></div>
+            <div class="footer__legal">
+              <a href="/policy.html" class="footer__legal-link">
+                Политика конфиденциальности
+              </a>
+              <a href="/cookies.html" class="footer__legal-link">
+                Файлы cookie
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- JS -->
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/js/faq.js"></script>
+    <script type="module" src="/src/js/news.js"></script>
+  </body>
+</html>
