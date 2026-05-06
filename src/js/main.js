@@ -64,3 +64,18 @@ window.addEventListener('resize', () => {
     closeMenu();
   }
 });
+
+// Cookie banner
+const cookieBanner = document.getElementById('cookie-banner');
+const cookieAcceptBtn = document.getElementById('cookie-accept');
+
+if (cookieBanner && cookieAcceptBtn) {
+  if (!localStorage.getItem('cookieAccepted')) {
+    cookieBanner.classList.remove('hidden');
+  }
+
+  cookieAcceptBtn.addEventListener('click', () => {
+    localStorage.setItem('cookieAccepted', 'true');
+    cookieBanner.classList.add('hidden');
+  });
+}
