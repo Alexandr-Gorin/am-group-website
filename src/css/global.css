@@ -27,7 +27,6 @@ body {
 }
 
 main {
-  padding-top: 20px;
   background: var(--gradient-bloom);
   background-repeat: no-repeat;
   background-size: 100% 100%;

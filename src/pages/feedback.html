@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Агропромышленная Микробиология Групп — микробиологические решения для животноводства и растениеводства"
+      content="Ваша заявка принята. Наши специалисты свяжутся с вами в ближайшее время."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>АМ ГРУПП — Микробиологические решения</title>
+    <title>Заявка отправлена — АМ Групп</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="/src/css/reset.css" />
@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="/src/css/components/news-section.css" />
     <link rel="stylesheet" href="/src/css/components/footer.css" />
     <link rel="stylesheet" href="/src/css/components/cookie-banner.css" />
+    <link rel="stylesheet" href="/src/css/components/feedback.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -88,7 +89,40 @@
         </div>
       </div>
       <!-- Main -->
-      <main class="main"></main>
+      <main class="main">
+        <section class="feedback">
+          <!-- Blurred background -->
+          <div class="feedback__bg" aria-hidden="true">
+            <img
+              src="/src/assets/images/Feedback/Image-Banner.jpg"
+              alt=""
+              class="feedback__bg-img"
+            />
+          </div>
+
+          <!-- Center card container -->
+          <div class="feedback__center">
+            <!-- Glass content card (left) -->
+            <div class="feedback__card">
+              <h1 class="feedback__title">Заявка отправлена</h1>
+              <div class="feedback__desc">
+                <p>Ваш запрос принят в работу</p>
+                <p>Наши специалисты свяжутся с вами в ближайшее время для уточнения деталей</p>
+              </div>
+              <a href="catalog.html" class="button button--secondary">Смотреть каталог</a>
+            </div>
+
+            <!-- Sharp image (right, hidden on mobile) -->
+            <div class="feedback__image-wrap" aria-hidden="true">
+              <img
+                src="/src/assets/images/Feedback/Image-Banner.jpg"
+                alt=""
+                class="feedback__image"
+              />
+            </div>
+          </div>
+        </section>
+      </main>
 
       <!-- Footer -->
       <footer class="footer">
