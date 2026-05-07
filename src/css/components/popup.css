@@ -1,0 +1,237 @@
+/* ============================================
+   POPUP MODAL — Lead Form
+   ============================================ */
+
+/* Fullscreen overlay — hidden by default */
+.popup {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    rgba(36, 63, 125, 0.7) 0%,
+    rgba(33, 58, 113, 0.7) 45%,
+    rgba(23, 42, 84, 0.7) 100%
+  );
+  overflow-y: auto;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popup.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup.is-open .popup__card {
+  transform: translateY(0);
+}
+
+/* Card */
+.popup__card {
+  position: relative;
+  z-index: 1;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  background: var(--color-glass-panel-mini-fill);
+  border: 1px solid var(--color-glass-panel-stroke);
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Close button */
+.popup__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-content-primary);
+  padding: 0;
+  border-radius: 50%;
+}
+
+/* Image area */
+.popup__image-wrap {
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(33, 58, 113, 0.4);
+}
+
+.popup__image {
+  width: 280px;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Form container */
+.popup__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
+/* Header */
+.popup__header {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  text-align: center;
+  color: var(--color-content-primary);
+}
+
+.popup__title {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.popup__subtitle {
+  font-size: var(--font-size-body-l);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Form layout */
+.popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Inputs */
+.popup__input {
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-neutral-subtle);
+  border-radius: 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-neutral-strong);
+  letter-spacing: 0.16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.popup__input::placeholder {
+  color: rgba(60, 60, 59, 0.7);
+}
+
+/* Disclaimer */
+.popup__disclaimer {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--color-content-primary);
+}
+
+.popup__disclaimer-link {
+  color: var(--color-content-primary);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+/* Submit — full width inside popup */
+.popup__submit {
+  width: 100%;
+}
+
+/* Body scroll lock */
+body.popup-open {
+  overflow: hidden;
+}
+
+/* ============================================
+   TABLET-V: 660px+
+   ============================================ */
+
+@media (min-width: 660px) {
+  .popup__card {
+    max-width: 460px;
+  }
+
+  .popup__image-wrap {
+    height: 280px;
+  }
+
+  .popup__image {
+    width: 360px;
+  }
+
+  .popup__form-container {
+    padding: 32px;
+  }
+}
+
+/* ============================================
+   TABLET-H: 940px+
+   ============================================ */
+
+@media (min-width: 940px) {
+  .popup__card {
+    max-width: 620px;
+  }
+
+  .popup__image-wrap {
+    height: 300px;
+  }
+
+  .popup__image {
+    width: auto;
+    max-width: 500px;
+    height: 100%;
+  }
+
+  .popup__disclaimer {
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   DESKTOP: 1024px+
+   ============================================ */
+
+@media (min-width: 1024px) {
+  .popup__card {
+    max-width: 563px;
+  }
+
+  .popup__image-wrap {
+    height: 390px;
+  }
+
+  .popup__image {
+    width: 460px;
+    height: auto;
+  }
+}

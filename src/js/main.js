@@ -65,6 +65,46 @@ window.addEventListener('resize', () => {
   }
 });
 
+// Popup modal
+const popup = document.getElementById('popup');
+const popupClose = document.getElementById('popup-close');
+
+function openPopup() {
+  if (!popup) return;
+  popup.classList.add('is-open');
+  popup.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('popup-open');
+}
+
+function closePopup() {
+  if (!popup) return;
+  popup.classList.remove('is-open');
+  popup.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('popup-open');
+}
+
+document.querySelectorAll('[data-popup="open"]').forEach(btn => {
+  btn.addEventListener('click', openPopup);
+});
+
+const popupForm = popup?.querySelector('.popup__form');
+popupForm?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  closePopup();
+  window.location.href = '/src/pages/feedback.html';
+});
+
+document.getElementById('popup').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
+popupClose?.addEventListener('click', closePopup);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && popup?.classList.contains('is-open')) {
+    closePopup();
+  }
+});
+
 // Cookie banner
 const cookieBanner = document.getElementById('cookie-banner');
 const cookieAcceptBtn = document.getElementById('cookie-accept');
