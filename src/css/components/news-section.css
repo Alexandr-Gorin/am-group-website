@@ -78,6 +78,16 @@
   gap: 24px;
 }
 
+a.news-section__item-row {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+}
+
+a.news-section__item-row:hover {
+  opacity: 0.8;
+}
+
 /* Image */
 
 .news-section__item-image {
