@@ -31,6 +31,39 @@
   display: block;
 }
 
+/* Состояние увеличенного фото с фирменным оверлеем */
+.hero__image--full {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  z-index: 9999;
+
+  /* Твой фирменный градиент с opacity 65% (0.65) */
+  background: linear-gradient(
+    180deg,
+    rgba(36, 63, 125, 0.65) 0%,
+    rgba(33, 58, 113, 0.65) 45%,
+    rgba(23, 42, 84, 0.65) 100%
+  );
+
+  /* Размытие заднего фона для еще более крутого эффекта (по желанию) */
+  backdrop-filter: blur(8px);
+
+  cursor: zoom-out;
+  padding: 40px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Добавим плавности при клике */
+.hero__image {
+  cursor: zoom-in;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Content */
 
 .hero__content {
