@@ -67,29 +67,45 @@ window.addEventListener("resize", () => {
 
 // Popup modal
 const popup = document.getElementById("popup");
+const popupVacancy = document.getElementById("popup-vacancy"); // Добавили новый попап
 const popupClose = document.getElementById("popup-close");
+const popupVacancyClose = document.getElementById("popup-vacancy-close"); // Закрытие для вакансий
 
-function openPopup() {
-  if (!popup) return;
-  popup.classList.add("is-open");
-  popup.setAttribute("aria-hidden", "false");
+// Универсальная функция открытия (принимает конкретный элемент)
+function openPopup(targetPopup) {
+  if (!targetPopup) return;
+  targetPopup.classList.add("is-open");
+  targetPopup.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
 
+// Функция закрытия (закрывает все открытые попапы)
 function closePopup() {
-  if (!popup) return;
-  popup.classList.remove("is-open");
-  popup.setAttribute("aria-hidden", "true");
+  const openPopups = document.querySelectorAll(".popup.is-open");
+  openPopups.forEach((p) => {
+    p.classList.remove("is-open");
+    p.setAttribute("aria-hidden", "true");
+  });
   document.body.style.overflow = "";
 }
 
+// 1. Слушатель для ОБЫЧНЫХ кнопок (data-popup="open")
 document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    openPopup();
+    openPopup(popup);
   });
 });
 
+// 2. Слушатель для кнопок ВАКАНСИЙ (data-popup="vacancy")
+document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openPopup(popupVacancy);
+  });
+});
+
+// Логика отправки основной формы
 const popupForm = popup?.querySelector(".popup__form");
 popupForm?.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -97,13 +113,28 @@ popupForm?.addEventListener("submit", function (e) {
   window.location.href = "/src/pages/feedback.html";
 });
 
-document.getElementById("popup").addEventListener("click", function (e) {
-  if (e.target === this) closePopup();
+// Логика отправки формы вакансий (если нужно перенаправление на другую страницу, поменяй путь)
+const vacancyForm = popupVacancy?.querySelector(".popup__form");
+vacancyForm?.addEventListener("submit", function (e) {
+  e.preventDefault();
+  closePopup();
+  window.location.href = "/src/pages/feedback.html";
 });
-popupClose?.addEventListener("click", closePopup);
 
+// Закрытие по клику на оверлей (фон) для обоих окон
+[popup, popupVacancy].forEach((modal) => {
+  modal?.addEventListener("click", function (e) {
+    if (e.target === this) closePopup();
+  });
+});
+
+// Кнопки закрытия (крестики)
+popupClose?.addEventListener("click", closePopup);
+popupVacancyClose?.addEventListener("click", closePopup);
+
+// Закрытие на Escape
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && popup?.classList.contains("is-open")) {
+  if (e.key === "Escape") {
     closePopup();
   }
 });

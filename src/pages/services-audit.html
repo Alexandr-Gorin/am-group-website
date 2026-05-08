@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="/src/css/components/footer.css" />
     <link rel="stylesheet" href="/src/css/components/services-audit.css" />
     <link rel="stylesheet" href="/src/css/components/cookie-banner.css" />
-      <link rel="stylesheet" href="/src/css/components/popup.css" />
+    <link rel="stylesheet" href="/src/css/components/popup.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -84,7 +84,9 @@
             <a href="../../index.html" class="burger-menu__link">Главная</a>
             <a href="catalog.html" class="burger-menu__link">Продукция</a>
             <a href="services.html" class="burger-menu__link">Услуги</a>
-            <a href="about-company.html" class="burger-menu__link">О компании</a>
+            <a href="about-company.html" class="burger-menu__link"
+              >О компании</a
+            >
             <a href="contacts.html" class="burger-menu__link">Контакты</a>
           </nav>
         </div>
@@ -128,8 +130,8 @@
                     1. Первичный (дистанционный) аудит
                   </p>
                   <p>
-                    Проводится онлайн и позволяет быстро выявить проблемные
-                    зоны в технологических процессах кормопроизводства и
+                    Проводится онлайн и позволяет быстро выявить проблемные зоны
+                    в технологических процессах кормопроизводства и
                     кормозаготовки.
                   </p>
                   <p>
@@ -138,8 +140,8 @@
                   </p>
                   <br />
                   <p>
-                    Результат: краткий технологический профиль с указанием
-                    узких мест и первичных рекомендаций.
+                    Результат: краткий технологический профиль с указанием узких
+                    мест и первичных рекомендаций.
                   </p>
                 </div>
 
@@ -158,8 +160,8 @@
                   </p>
                   <br />
                   <p>
-                    Результат: подробная аналитика, заключение и рекомендации
-                    по оптимизации процессов, направленные на повышение качества
+                    Результат: подробная аналитика, заключение и рекомендации по
+                    оптимизации процессов, направленные на повышение качества
                     кормов и общей эффективности хозяйства.
                   </p>
                 </div>
@@ -175,13 +177,13 @@
                 </div>
               </div>
 
-              <button
-                type="button"
-                class="button button--primary audit-content__btn"
-                data-modal="consultation"
+              <a
+                href="#"
+                class="button button--primary products-section__cta"
+                data-popup="open"
               >
                 Получить консультацию
-              </button>
+              </a>
             </div>
           </div>
         </section>
@@ -201,8 +203,8 @@
               <div class="form-section__text">
                 <h2 class="form-section__title">Остались вопросы?</h2>
                 <p class="form-section__subtitle">
-                  Оставьте заявку и наши специалисты свяжутся с Вами в
-                  ближайшее время.
+                  Оставьте заявку и наши специалисты свяжутся с Вами в ближайшее
+                  время.
                 </p>
               </div>
               <form
@@ -248,8 +250,8 @@
                 <p class="form-section__privacy">
                   Нажимая кнопку
                   <strong>"Получить консультацию",</strong> Вы соглашаетесь с
-                  <a href="policy.html">Политикой конфиденциальности</a> и даёте согласие
-                  на обработку персональных данных.
+                  <a href="policy.html">Политикой конфиденциальности</a> и даёте
+                  согласие на обработку персональных данных.
                 </p>
               </form>
             </div>
@@ -276,7 +278,9 @@
                   />
                 </div>
                 <div class="footer__contacts">
-                  <a href="tel:+79296928755" class="footer__contact-item">8 (929) 692-87-55</a>
+                  <a href="tel:+79296928755" class="footer__contact-item"
+                    >8 (929) 692-87-55</a
+                  >
                   <p class="footer__contact-item">info@microbio.pro</p>
                 </div>
               </div>
@@ -297,7 +301,13 @@
                   height="52"
                 />
               </a>
-              <a href="https://www.tiktok.com/@microbio.pro" class="footer__social-link" aria-label="TikTok" target="_blank" rel="noopener">
+              <a
+                href="https://www.tiktok.com/@microbio.pro"
+                class="footer__social-link"
+                aria-label="TikTok"
+                target="_blank"
+                rel="noopener"
+              >
                 <img
                   src="/src/assets/icons/Footer/Icon-Tik-Tok.svg"
                   alt=""
@@ -306,7 +316,13 @@
                   height="52"
                 />
               </a>
-              <a href="https://vk.me/microbio_pro" class="footer__social-link" aria-label="ВКонтакте" target="_blank" rel="noopener">
+              <a
+                href="https://vk.me/microbio_pro"
+                class="footer__social-link"
+                aria-label="ВКонтакте"
+                target="_blank"
+                rel="noopener"
+              >
                 <img
                   src="/src/assets/icons/Footer/Icon-vk.svg"
                   alt=""
@@ -338,34 +354,106 @@
     <script type="module" src="/src/js/faq.js"></script>
     <script type="module" src="/src/js/news.js"></script>
     <!-- Cookie Banner -->
-    <div class="cookie-banner hidden" id="cookie-banner" role="dialog" aria-label="Уведомление о файлах cookie">
-      <p class="cookie-banner__text">Мы используем файлы cookie для персонализации сервиса, аналитики и комфортной работы с сайтом</p>
-      <button class="button button--soft cookie-banner__btn" id="cookie-accept">Понятно</button>
+    <div
+      class="cookie-banner hidden"
+      id="cookie-banner"
+      role="dialog"
+      aria-label="Уведомление о файлах cookie"
+    >
+      <p class="cookie-banner__text">
+        Мы используем файлы cookie для персонализации сервиса, аналитики и
+        комфортной работы с сайтом
+      </p>
+      <button class="button button--soft cookie-banner__btn" id="cookie-accept">
+        Понятно
+      </button>
     </div>
     <!-- Popup Modal -->
-    <div class="popup" id="popup" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Форма обратной связи">
+    <div
+      class="popup"
+      id="popup"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Форма обратной связи"
+    >
       <div class="popup__card">
         <button class="popup__close" id="popup-close" aria-label="Закрыть">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <line
+              x1="6"
+              y1="6"
+              x2="18"
+              y2="18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="18"
+              y1="6"
+              x2="6"
+              y2="18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </button>
         <div class="popup__image-wrap">
-          <img src="/src/assets/images/Logo/logo header.png" alt="" class="popup__image" aria-hidden="true" />
+          <img
+            src="/src/assets/images/Logo/logo header.png"
+            alt=""
+            class="popup__image"
+            aria-hidden="true"
+          />
         </div>
         <div class="popup__form-container">
           <div class="popup__header">
             <h2 class="popup__title">Свяжитесь с нами</h2>
-            <p class="popup__subtitle">Наши специалисты ответят на все Ваши вопросы</p>
+            <p class="popup__subtitle">
+              Наши специалисты ответят на все Ваши вопросы
+            </p>
           </div>
           <form class="popup__form" action="#" method="POST">
             <input type="hidden" name="source" value="popup" />
-            <input type="text" name="company" class="popup__input" placeholder="Название организации" required />
-            <input type="text" name="name" class="popup__input" placeholder="ФИО" required />
-            <input type="tel" name="phone" class="popup__input" placeholder="Телефон" required />
-            <p class="popup__disclaimer">Отправляя заявку, Вы соглашаетесь с <a href="policy.html" class="popup__disclaimer-link">политикой конфиденциальности</a></p>
-            <button type="submit" class="button button--primary popup__submit">Отправить заявку</button>
+            <input
+              type="text"
+              name="company"
+              class="popup__input"
+              placeholder="Название организации"
+              required
+            />
+            <input
+              type="text"
+              name="name"
+              class="popup__input"
+              placeholder="ФИО"
+              required
+            />
+            <input
+              type="tel"
+              name="phone"
+              class="popup__input"
+              placeholder="Телефон"
+              required
+            />
+            <p class="popup__disclaimer">
+              Отправляя заявку, Вы соглашаетесь с
+              <a href="policy.html" class="popup__disclaimer-link"
+                >политикой конфиденциальности</a
+              >
+            </p>
+            <button type="submit" class="button button--primary popup__submit">
+              Отправить заявку
+            </button>
           </form>
         </div>
       </div>

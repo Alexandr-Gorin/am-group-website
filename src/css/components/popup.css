@@ -13,6 +13,7 @@
   z-index: 9999;
   align-items: center;
   justify-content: center;
+  font-family: "Manrope", sans-serif;
   background: linear-gradient(
     180deg,
     rgba(36, 63, 125, 0.7) 0%,
@@ -23,7 +24,9 @@
   padding: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .popup.is-open {
@@ -50,6 +53,31 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+/* Специфическая карточка вакансии */
+.popup__card--vacancy {
+  background: var(
+    --color-glass-panel-mini-fill
+  ); /* Твой радиальный + линейный градиент */
+  border: 1px solid var(--color-glass-panel-stroke);
+  max-width: 560px;
+  border-radius: 32px;
+  position: relative;
+  padding: 40px;
+}
+
+.popup__card--vacancy {
+  font-family: "Manrope", sans-serif !important;
+  background: var(--color-glass-panel-mini-fill); /* Твой градиент */
+  border: 1px solid var(--color-glass-panel-stroke);
+  border-radius: 32px;
+}
+
+.popup__title {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  /* Твой H2 стиль */
 }
 
 /* Close button */
@@ -233,5 +261,14 @@ body.popup-open {
   .popup__image {
     width: 460px;
     height: auto;
+  }
+}
+
+/* Мобильная версия pop-up vacancy размерам (300x400) */
+@media (max-width: 600px) {
+  .popup__card--vacancy {
+    max-width: 300px;
+    min-height: 400px;
+    padding: 24px;
   }
 }
