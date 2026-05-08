@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="«Лучшие технологии в агропромышленности» — АМ ГРУПП"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>«Лучшие технологии в агропромышленности» — АМ ГРУПП</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/src/css/reset.css" />
+    <link rel="stylesheet" href="/src/css/variables.css" />
+    <link rel="stylesheet" href="/src/css/fonts.css" />
+    <link rel="stylesheet" href="/src/css/global.css" />
+    <link rel="stylesheet" href="/src/css/grid.css" />
+    <link rel="stylesheet" href="/src/css/components/buttons/button.css" />
+    <link rel="stylesheet" href="/src/css/components/footer.css" />
+    <link rel="stylesheet" href="/src/css/components/cookie-banner.css" />
+    <link rel="stylesheet" href="/src/css/components/popup.css" />
+    <link rel="stylesheet" href="/src/css/components/news-article.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Header -->
+      <header class="header">
+        <div class="container">
+          <div class="header__container">
+            <a href="../../index.html" class="header__logo">
+              <img
+                src="/src/assets/images/Logo/logo header.png"
+                alt="АМ Групп — Агропромышленная микробиология групп"
+                height="140"
+              />
+            </a>
+            <nav class="header__nav">
+              <a href="../../index.html" class="header__link">Главная</a>
+              <a href="catalog.html" class="header__link">Продукция</a>
+              <a href="services.html" class="header__link">Услуги</a>
+              <a href="about-company.html" class="header__link">О компании</a>
+              <a href="contacts.html" class="header__link">Контакты</a>
+            </nav>
+            <button
+              class="burger"
+              aria-label="Открыть меню"
+              aria-expanded="false"
+              aria-controls="burger-menu"
+            >
+              <svg
+                width="60"
+                height="24"
+                viewBox="0 0 60 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <rect y="0" width="60" height="4" rx="2" fill="currentColor" />
+                <rect y="20" width="60" height="4" rx="2" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+      <!-- Burger menu overlay -->
+      <div class="burger-menu" id="burger-menu" aria-hidden="true">
+        <div class="container">
+          <nav class="burger-menu__nav" aria-label="Мобильная навигация">
+            <a href="../../index.html" class="burger-menu__link">Главная</a>
+            <a href="catalog.html" class="burger-menu__link">Продукция</a>
+            <a href="services.html" class="burger-menu__link">Услуги</a>
+            <a href="about-company.html" class="burger-menu__link"
+              >О компании</a
+            >
+            <a href="contacts.html" class="burger-menu__link">Контакты</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <main class="main">
+        <!-- Hero image -->
+        <section class="news-article-hero" aria-label="Фото к статье">
+          <img
+            src="/src/assets/images/Main page/News/Image-News-3.jpg"
+            alt=""
+            class="news-article-hero__image"
+          />
+          <div class="news-article-hero__overlay" aria-hidden="true"></div>
+        </section>
+
+        <!-- Article body -->
+        <section class="news-article">
+          <div class="container">
+            <!-- Content: title, meta, text, CTA -->
+            <div class="news-article__inner">
+              <h1 class="news-article__title">
+                «Лучшие технологии в агропромышленности»
+              </h1>
+              <div class="news-article__meta">
+                <span class="news-article__meta-item">24.09.2025</span>
+                <span class="news-article__meta-item">ООО АМ ГРУПП</span>
+              </div>
+              <div class="news-article__body">
+                <p>
+                  На днях состоялась церемония награждения Startech.Awards, и:
+                </p>
+                <p>
+                  «Агропромышленная микробиология групп» — победитель в
+                  номинации «Лучшие технологии в агропромышленности»! 🎉
+                </p>
+                <p>📊 Немного цифр о конкурсе:</p>
+                <p>🔹 1400+ заявок со всей страны</p>
+                <p>🔹 100+ экспертов в составе жюри</p>
+                <p>🔹 60 сильнейших финалистов</p>
+                <p>…и мы вошли в число лучших из лучших! 🚀</p>
+                <p>
+                  Это большая победа для нашей команды, и мы благодарим
+                  организаторов, жюри и, конечно, всех, кто верит в нас и
+                  поддерживает 💙
+                </p>
+                <p>Дальше — только вперёд!</p>
+              </div>
+              <a
+                href="index.html#news"
+                class="button button--secondary news-article__btn"
+              >
+                Посмотреть все новости
+              </a>
+            </div>
+
+            <!-- Related news -->
+            <div class="news-article__related">
+              <h2 class="news-article__related-title">
+                Возможно вам будет интересно
+              </h2>
+              <div class="news-article__related-list">
+                <!-- News 1 -->
+                <a href="news-1.html" class="news-article__related-item">
+                  <div class="news-article__related-image">
+                    <img
+                      src="/src/assets/images/Main page/News/Image-News-1.jpg"
+                      alt="Севооборот под контролем: аграриев ждут новые штрафы"
+                    />
+                  </div>
+                  <div class="news-article__related-desc">
+                    <p class="news-article__related-name">
+                      Севооборот под контролем: аграриев ждут новые штрафы
+                    </p>
+                    <p class="news-article__related-excerpt">
+                      📍 Кубань предлагает штрафовать за нарушение севооборота
+                      по всей стране
+                    </p>
+                    <p class="news-article__related-date">24.09.2025</p>
+                  </div>
+                </a>
+                <!-- News 2 -->
+                <a href="news-2.html" class="news-article__related-item">
+                  <div class="news-article__related-image">
+                    <img
+                      src="/src/assets/images/Main page/News/Image-News-2.jpg"
+                      alt="Национальная премия «Агролидер 2025»"
+                    />
+                  </div>
+                  <div class="news-article__related-desc">
+                    <p class="news-article__related-name">
+                      Национальная премия «Агролидер 2025»
+                    </p>
+                    <p class="news-article__related-excerpt">
+                      Будем счастливы снова почувствовать вашу поддержку!
+                    </p>
+                    <p class="news-article__related-date">24.09.2025</p>
+                  </div>
+                </a>
+                <!-- News 4 -->
+                <a href="news-4.html" class="news-article__related-item">
+                  <div class="news-article__related-image">
+                    <img
+                      src="/src/assets/images/Main page/News/Image-News-4.jpg"
+                      alt="Ацидоз рубца: причины, последствия и решения"
+                    />
+                  </div>
+                  <div class="news-article__related-desc">
+                    <p class="news-article__related-name">
+                      Ацидоз рубца: причины, последствия и решения
+                    </p>
+                    <p class="news-article__related-date">27.11.2024</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer__container">
+          <!-- Top: brand + socials -->
+          <div class="footer__top">
+            <div class="footer__brand">
+              <p class="footer__company-name">
+                Агропромышленная Микробиология Групп
+              </p>
+              <div class="footer__brand-inner">
+                <div class="footer__logo">
+                  <img
+                    src="/src/assets/images/Logo/logo footer.png"
+                    alt="АМ Групп — Агропромышленная Микробиология Групп"
+                    width="260"
+                    height="160"
+                  />
+                </div>
+                <div class="footer__contacts">
+                  <a href="tel:+79296928755" class="footer__contact-item"
+                    >8 (929) 692-87-55</a
+                  >
+                  <p class="footer__contact-item">info@microbio.pro</p>
+                </div>
+              </div>
+            </div>
+            <div class="footer__socials">
+              <a
+                href="https://max.ru/join/25sBk2PF4AGs80LLwMh24_qFpafGD5IJfRFb3uILTzo"
+                class="footer__social-link"
+                aria-label="MAX — социальная сеть"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="/src/assets/icons/Footer/Icon-MAX.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </a>
+              <a
+                href="https://www.tiktok.com/@microbio.pro"
+                class="footer__social-link"
+                aria-label="TikTok"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="/src/assets/icons/Footer/Icon-Tik-Tok.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </a>
+              <a
+                href="https://vk.me/microbio_pro"
+                class="footer__social-link"
+                aria-label="ВКонтакте"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="/src/assets/icons/Footer/Icon-vk.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </a>
+            </div>
+          </div>
+          <!-- Bottom: legal links -->
+          <div class="footer__bottom">
+            <div class="footer__divider"></div>
+            <div class="footer__legal">
+              <a href="policy.html" class="footer__legal-link">
+                Политика конфиденциальности
+              </a>
+              <a href="cookie.html" class="footer__legal-link">
+                Файлы cookie
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- JS -->
+    <script type="module" src="/src/js/main.js"></script>
+
+    <!-- Cookie Banner -->
+    <div
+      class="cookie-banner hidden"
+      id="cookie-banner"
+      role="dialog"
+      aria-label="Уведомление о файлах cookie"
+    >
+      <p class="cookie-banner__text">
+        Мы используем файлы cookie для персонализации сервиса, аналитики и
+        комфортной работы с сайтом
+      </p>
+      <button class="button button--soft cookie-banner__btn" id="cookie-accept">
+        Понятно
+      </button>
+    </div>
+
+    <!-- Popup Modal -->
+    <div
+      class="popup"
+      id="popup"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Форма обратной связи"
+    >
+      <div class="popup__card">
+        <button class="popup__close" id="popup-close" aria-label="Закрыть">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <line
+              x1="6"
+              y1="6"
+              x2="18"
+              y2="18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="18"
+              y1="6"
+              x2="6"
+              y2="18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <div class="popup__image-wrap">
+          <img
+            src="/src/assets/images/Logo/logo header.png"
+            alt=""
+            class="popup__image"
+            aria-hidden="true"
+          />
+        </div>
+        <div class="popup__form-container">
+          <div class="popup__header">
+            <h2 class="popup__title">Свяжитесь с нами</h2>
+            <p class="popup__subtitle">
+              Наши специалисты ответят на все Ваши вопросы
+            </p>
+          </div>
+          <form class="popup__form" action="#" method="POST">
+            <input type="hidden" name="source" value="popup" />
+            <input
+              type="text"
+              name="company"
+              class="popup__input"
+              placeholder="Название организации"
+              required
+            />
+            <input
+              type="text"
+              name="name"
+              class="popup__input"
+              placeholder="ФИО"
+              required
+            />
+            <input
+              type="tel"
+              name="phone"
+              class="popup__input"
+              placeholder="Телефон"
+              required
+            />
+            <p class="popup__disclaimer">
+              Отправляя заявку, Вы соглашаетесь с
+              <a href="policy.html" class="popup__disclaimer-link"
+                >политикой конфиденциальности</a
+              >
+            </p>
+            <button type="submit" class="button button--primary popup__submit">
+              Отправить заявку
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
