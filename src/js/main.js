@@ -73,18 +73,21 @@ function openPopup() {
   if (!popup) return;
   popup.classList.add("is-open");
   popup.setAttribute("aria-hidden", "false");
-  document.body.classList.add("popup-open");
+  document.body.style.overflow = "hidden";
 }
 
 function closePopup() {
   if (!popup) return;
   popup.classList.remove("is-open");
   popup.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("popup-open");
+  document.body.style.overflow = "";
 }
 
 document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
-  btn.addEventListener("click", openPopup);
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openPopup();
+  });
 });
 
 const popupForm = popup?.querySelector(".popup__form");
@@ -121,19 +124,19 @@ if (cookieBanner && cookieAcceptBtn) {
 }
 
 /Увеличение фото по клику в hero/;
-document.addEventListener('DOMContentLoaded', () => {
-    const heroImg = document.querySelector('.hero__image');
+document.addEventListener("DOMContentLoaded", () => {
+  const heroImg = document.querySelector(".hero__image");
 
-    if (heroImg) {
-        heroImg.addEventListener('click', () => {
-            heroImg.classList.toggle('hero__image--full');
-            
-            // Блокируем скролл основной страницы
-            if (heroImg.classList.contains('hero__image--full')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        });
-    }
+  if (heroImg) {
+    heroImg.addEventListener("click", () => {
+      heroImg.classList.toggle("hero__image--full");
+
+      // Блокируем скролл основной страницы
+      if (heroImg.classList.contains("hero__image--full")) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+    });
+  }
 });
