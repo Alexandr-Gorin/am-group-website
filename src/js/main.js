@@ -67,11 +67,11 @@ window.addEventListener("resize", () => {
 
 // Popup modal
 const popup = document.getElementById("popup");
-const popupVacancy = document.getElementById("popup-vacancy"); // Добавили новый попап
+const popupVacancy = document.getElementById("popup-vacancy");
 const popupClose = document.getElementById("popup-close");
-const popupVacancyClose = document.getElementById("popup-vacancy-close"); // Закрытие для вакансий
+const popupVacancyClose = document.getElementById("popup-vacancy-close");
 
-// Универсальная функция открытия (принимает конкретный элемент)
+// Универсальная функция открытия
 function openPopup(targetPopup) {
   if (!targetPopup) return;
   targetPopup.classList.add("is-open");
@@ -79,7 +79,7 @@ function openPopup(targetPopup) {
   document.body.style.overflow = "hidden";
 }
 
-// Функция закрытия (закрывает все открытые попапы)
+// Функция закрытия
 function closePopup() {
   const openPopups = document.querySelectorAll(".popup.is-open");
   openPopups.forEach((p) => {
@@ -89,15 +89,30 @@ function closePopup() {
   document.body.style.overflow = "";
 }
 
-// 1. Слушатель для ОБЫЧНЫХ кнопок (data-popup="open")
+// 1. Слушатель для ОБЫЧНЫХ кнопок (Товары и консультации)
 document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
+
+    // --- ДОБАВЛЕНО ДЛЯ FORMSPREE ---
+    // Ищем название товара в родительской карточке (замени .product-card на свой класс карточки)
+    const card =
+      btn.closest(".product-card") || btn.closest(".partnership-section");
+    const productName =
+      card?.querySelector("h2, h3")?.innerText || "Общая консультация";
+
+    // Записываем это название в скрытое поле основного попапа
+    const hiddenInput = popup?.querySelector("#product-field");
+    if (hiddenInput) {
+      hiddenInput.value = productName;
+    }
+    // ------------------------------
+
     openPopup(popup);
   });
 });
 
-// 2. Слушатель для кнопок ВАКАНСИЙ (data-popup="vacancy")
+// 2. Слушатель для кнопок ВАКАНСИЙ
 document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -105,34 +120,60 @@ document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
   });
 });
 
-// Логика отправки основной формы
+// --- ЛОГИКА ОТПРАВКИ ЧЕРЕЗ FORMSPREE (AJAX) ---
+// Мы используем Fetch, чтобы форма отправлялась без перезагрузки,
+// а потом уже перекидываем пользователя на feedback.html
+
+async function handleFormSubmit(event, redirectUrl) {
+  event.preventDefault();
+  const form = event.target;
+  const data = new FormData(form);
+
+  // Отправляем данные на Formspree
+  const response = await fetch(form.action, {
+    method: "POST",
+    body: data,
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (response.ok) {
+    closePopup();
+    window.location.href = redirectUrl;
+  } else {
+    alert("Ошибка при отправке. Пожалуйста, попробуйте еще раз.");
+  }
+}
+
+// Логика основной формы
 const popupForm = popup?.querySelector(".popup__form");
-popupForm?.addEventListener("submit", function (e) {
-  e.preventDefault();
-  closePopup();
-  window.location.href = "/src/pages/feedback.html";
-});
+popupForm?.addEventListener("submit", (e) =>
+  handleFormSubmit(e, "/src/pages/feedback.html"),
+);
 
-// Логика отправки формы вакансий (если нужно перенаправление на другую страницу, поменяй путь)
+// Логика формы в секции "Остались вопросы"
+const staticForm = document.querySelector(".form-section__card");
+staticForm?.addEventListener("submit", (e) =>
+  handleFormSubmit(e, "/src/pages/feedback.html"),
+);
+
+// Логика формы вакансий
 const vacancyForm = popupVacancy?.querySelector(".popup__form");
-vacancyForm?.addEventListener("submit", function (e) {
-  e.preventDefault();
-  closePopup();
-  window.location.href = "/src/pages/feedback.html";
-});
+vacancyForm?.addEventListener("submit", (e) =>
+  handleFormSubmit(e, "/src/pages/feedback.html"),
+);
 
-// Закрытие по клику на оверлей (фон) для обоих окон
+// --- СТАНДАРТНОЕ ЗАКРЫТИЕ ---
 [popup, popupVacancy].forEach((modal) => {
   modal?.addEventListener("click", function (e) {
     if (e.target === this) closePopup();
   });
 });
 
-// Кнопки закрытия (крестики)
 popupClose?.addEventListener("click", closePopup);
 popupVacancyClose?.addEventListener("click", closePopup);
 
-// Закрытие на Escape
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closePopup();
