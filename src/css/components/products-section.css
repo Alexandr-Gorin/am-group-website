@@ -13,12 +13,6 @@
   gap: 32px;
 }
 
-/* Section header */
-
-.products-section__header {
-  padding-inline: 20px;
-}
-
 /* Cards grid */
 
 .products-section__grid {
@@ -124,10 +118,6 @@
     padding-top: 48px;
   }
 
-  .products-section__header {
-    padding-inline: 32px;
-  }
-
   .products-section__grid {
     gap: 32px;
   }
@@ -149,10 +139,6 @@
     padding-top: 64px;
   }
 
-  .products-section__header {
-    padding-inline: 32px;
-  }
-
   .products-section__grid {
     gap: 32px;
   }
@@ -172,10 +158,6 @@
 @media (min-width: 1200px) {
   .products-section {
     padding-top: 64px;
-  }
-
-  .products-section__header {
-    padding-inline: 32px;
   }
 
   .products-section__grid {

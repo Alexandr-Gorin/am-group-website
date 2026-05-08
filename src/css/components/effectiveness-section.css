@@ -15,7 +15,6 @@
 }
 
 .effectiveness-section__header {
-  padding-inline: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -61,10 +60,6 @@
     padding-bottom: 48px;
   }
 
-  .effectiveness-section__header {
-    padding-inline: 32px;
-  }
-
   .effectiveness-section__card {
     gap: 24px;
     padding: 32px;
@@ -82,10 +77,6 @@
     gap: 48px;
   }
 
-  .effectiveness-section__header {
-    padding-inline: 32px;
-  }
-
   .effectiveness-section__card {
     gap: 24px;
     padding: 32px;
@@ -101,10 +92,6 @@
 
   .effectiveness-section__inner {
     gap: 40px;
-  }
-
-  .effectiveness-section__header {
-    padding-inline: 32px;
   }
 
   .effectiveness-section__grid {

@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  padding-inline: 20px;
 }
 
 .catalog-section__header {
@@ -39,7 +38,6 @@
     flex-direction: row;
     align-items: center;
     gap: 20px;
-    padding-inline: 32px;
   }
 
   .catalog-section__header {
@@ -58,7 +56,6 @@
     flex-direction: row;
     align-items: center;
     gap: 40px;
-    padding-inline: 32px;
   }
 
   .catalog-section__header {

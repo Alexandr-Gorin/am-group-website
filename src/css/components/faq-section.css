@@ -14,10 +14,6 @@
   gap: 32px;
 }
 
-.faq-section__title {
-  padding-inline: 20px;
-}
-
 .faq-section__list {
   list-style: none;
   display: flex;
@@ -163,10 +159,6 @@
     padding-top: 48px;
     padding-bottom: 48px;
   }
-
-  .faq-section__title {
-    padding-inline: 32px;
-  }
 }
 
 /* Tablet Horizontal: 940–1199px */
@@ -178,10 +170,6 @@
 
   .faq-section__inner {
     gap: 48px;
-  }
-
-  .faq-section__title {
-    padding-inline: 32px;
   }
 
   .faq-section__question {
@@ -207,10 +195,6 @@
 
   .faq-section__inner {
     gap: 48px;
-  }
-
-  .faq-section__title {
-    padding-inline: 32px;
   }
 
   .faq-section__question {
