@@ -1,7 +1,8 @@
+require("dotenv").config();
+
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 
@@ -18,7 +19,7 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "thegorin_1@vk.com",
-    pass: "JHesJLLzWJuFkd0yBvTv", 
+    pass: process.env.EMAIL_PASS,
   },
   tls: {
     rejectUnauthorized: false,
