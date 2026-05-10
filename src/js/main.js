@@ -89,7 +89,7 @@ function closePopup() {
   document.body.style.overflow = "";
 }
 
-// 1. Слушатель для ОБЫЧНЫХ кнопок (Товары и консультации)
+// 1. Действие для ОБЫЧНЫХ кнопок (Товары и консультации)
 document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -112,7 +112,7 @@ document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
   });
 });
 
-// 2. Слушатель для кнопок ВАКАНСИЙ
+// 2. Действие для кнопки pop-up ВАКАНСИЙ
 document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -121,28 +121,35 @@ document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
 });
 
 // --- ЛОГИКА ОТПРАВКИ ЧЕРЕЗ FORMSPREE (AJAX) ---
-// Мы используем Fetch, чтобы форма отправлялась без перезагрузки,
-// а потом уже перекидываем пользователя на feedback.html
 
 async function handleFormSubmit(event, redirectUrl) {
   event.preventDefault();
   const form = event.target;
-  const data = new FormData(form);
 
-  // Отправляем данные на Formspree
-  const response = await fetch(form.action, {
-    method: "POST",
-    body: data,
-    headers: {
-      Accept: "application/json",
-    },
-  });
+  // 1. Собираем данные
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
 
-  if (response.ok) {
-    closePopup();
-    window.location.href = redirectUrl;
-  } else {
-    alert("Ошибка при отправке. Пожалуйста, попробуйте еще раз.");
+  try {
+    // 2. Отправляем запрос на наш сервер (порт 3001)
+    const response = await fetch(form.action, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      // 3. Если всё успешно
+      if (typeof closePopup === "function") closePopup();
+      window.location.href = redirectUrl;
+    } else {
+      alert("Ошибка сервера. Пожалуйста, попробуйте еще раз.");
+    }
+  } catch (error) {
+    console.error("Ошибка соединения:", error);
+    alert("Не удалось связаться с сервером. Проверьте, запущен ли он.");
   }
 }
 
