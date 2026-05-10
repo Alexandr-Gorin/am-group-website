@@ -94,8 +94,7 @@ document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // --- ДОБАВЛЕНО ДЛЯ FORMSPREE ---
-    // Ищем название товара в родительской карточке (замени .product-card на свой класс карточки)
+    // --- Node.js ---
     const card =
       btn.closest(".product-card") || btn.closest(".partnership-section");
     const productName =
@@ -106,7 +105,6 @@ document.querySelectorAll('[data-popup="open"]').forEach((btn) => {
     if (hiddenInput) {
       hiddenInput.value = productName;
     }
-    // ------------------------------
 
     openPopup(popup);
   });
@@ -120,8 +118,7 @@ document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
   });
 });
 
-// --- ЛОГИКА ОТПРАВКИ ЧЕРЕЗ FORMSPREE (AJAX) ---
-
+// Функция отправки формы с валидацией и запросом на сервер
 async function handleFormSubmit(event, redirectUrl) {
   event.preventDefault();
   const form = event.target;
@@ -130,15 +127,35 @@ async function handleFormSubmit(event, redirectUrl) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
+  // --- БЛОК ВАЛИДАЦИИ ---
+
+  // Проверка имени (если поле name есть в форме)
+  if (data.name && data.name.trim().length < 2) {
+    alert("Пожалуйста, введите ваше имя (минимум 2 буквы)");
+    return;
+  }
+
+  // Проверка телефона
+  if (data.phone) {
+    const cleanPhone = data.phone.replace(/\D/g, ""); // Удаляем всё, кроме цифр
+    if (cleanPhone.length < 11) {
+      alert("Пожалуйста, введите корректный номер телефона (11 цифр)");
+      return;
+    }
+  }
   try {
     // 2. Отправляем запрос на наш сервер (порт 3001)
-    const response = await fetch(form.action, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    // ВАЖНО: убедись, что в HTML у форм прописан action="http://localhost:3001/api/send-email"
+    const response = await fetch(
+      form.action || "http://localhost:3001/api/send-email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
 
     if (response.ok) {
       // 3. Если всё успешно

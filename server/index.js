@@ -12,7 +12,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Настройка почтового сервиса (SMTP)
-// Давай пока настроим под Яндекс (если будет другая почта - поменяем)
 const transporter = nodemailer.createTransport({
   host: "smtp.mail.ru",
   port: 465,
@@ -32,8 +31,8 @@ app.post("/api/send-email", (req, res) => {
   const { name, phone, company, product_name, _subject } = req.body;
 
   const mailOptions = {
-    from: '"AM Group Robot" <thegorin_1@vk.com>',
-    to: "agorin526@gmail.com", // Куда отправлять (твоя или клиента)
+    from: '"AM Group AI Robot" <thegorin_1@vk.com>',
+    to: "info@microbio.pro", // Почта клиента
     subject: _subject || "Новая заявка с сайта",
     html: `
       <h2>Новая заявка с сайта AM Group</h2>

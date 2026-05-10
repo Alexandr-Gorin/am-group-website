@@ -187,7 +187,6 @@
             </div>
           </div>
         </section>
-
         <!-- Form Section -->
         <section class="form-section">
           <div class="form-section__bg">
@@ -209,15 +208,16 @@
               </div>
               <form
                 class="form-section__card"
-                action="https://formspree.io/f/FORM_ID"
+                action="http://localhost:3001/api/send-email"
                 method="POST"
               >
                 <input
                   type="hidden"
                   name="_subject"
-                  value="Новая заявка с сайта — Аудит"
+                  value="Новая заявка со страницы - Аудит"
                 />
                 <input type="hidden" name="source" value="audit" />
+                <input type="hidden" name="product_name" value="Аудит" />
                 <div class="form-section__fields">
                   <input
                     type="text"
@@ -422,8 +422,18 @@
               Наши специалисты ответят на все Ваши вопросы
             </p>
           </div>
-          <form class="popup__form" action="#" method="POST">
+          <form
+            class="popup__form"
+            action="http://localhost:3001/api/send-email"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              name="_subject"
+              value="Заявка из Pop-up (Cтраница Аудит)"
+            />
             <input type="hidden" name="source" value="popup" />
+            <input type="hidden" name="product_name" value="Аудит" />
             <input
               type="text"
               name="company"
