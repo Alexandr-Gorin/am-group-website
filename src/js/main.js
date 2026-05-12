@@ -146,9 +146,9 @@ async function handleFormSubmit(event, redirectUrl) {
   }
   try {
     // 2. Отправляем запрос на наш сервер (порт 3001)
-    // ВАЖНО: убедись, что в HTML у форм прописан action="http://localhost:3001/api/send-email"
+    // ВАЖНО: убедись, что в HTML у форм прописан action="/api/send-email"
     const response = await fetch(
-      form.action || "http://localhost:3001/api/send-email",
+      form.action || "/api/send-email",
       {
         method: "POST",
         headers: {

@@ -229,7 +229,7 @@
               </div>
               <form
                 class="form-section__card"
-                action="http://localhost:3001/api/send-email"
+                action="/api/send-email"
                 method="POST"
               >
                 <input type="hidden" name="_subject" value="Новая заявка с сайта — страница Контакты" />
@@ -373,7 +373,7 @@
             <h2 class="popup__title">Свяжитесь с нами</h2>
             <p class="popup__subtitle">Наши специалисты ответят на все Ваши вопросы</p>
           </div>
-          <form class="popup__form" action="http://localhost:3001/api/send-email" method="POST">
+          <form class="popup__form" action="/api/send-email" method="POST">
             <input type="hidden" name="_subject" value="Заявка со страницы Контактов (AM Group)" />
             <input type="hidden" name="product_name" id="product-field" value="Общая консультация" />
             <input type="text" name="company" class="popup__input" placeholder="Название организации" required />
