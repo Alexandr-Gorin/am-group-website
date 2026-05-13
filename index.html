@@ -3,12 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="АМ ГРУПП — ведущий производитель микробиологических препаратов для животноводства и растениеводства. Биопрепараты для увеличения урожайности, улучшения почвы и здоровья животных." />
-    <meta name="keywords" content="микробиологические препараты, биопрепараты для сельского хозяйства, увеличение урожайности, биоудобрения, кормовые добавки, АМ ГРУПП, агромикробиология, растениеводство, животноводство" />
+    <meta
+      name="description"
+      content="АМ ГРУПП — ведущий производитель микробиологических препаратов для животноводства и растениеводства. Биопрепараты для увеличения урожайности, улучшения почвы и здоровья животных."
+    />
+    <meta
+      name="keywords"
+      content="микробиологические препараты, биопрепараты для сельского хозяйства, увеличение урожайности, биоудобрения, кормовые добавки, АМ ГРУПП, агромикробиология, растениеводство, животноводство"
+    />
     <meta name="author" content="АМ ГРУПП" />
-    <meta name="developer" content="TheGorin1 — UI/UX Design and Fullstack Infrastructure" />
-    <meta property="og:title" content="АМ ГРУПП — Микробиологические решения для сельского хозяйства" />
-    <meta property="og:description" content="АМ ГРУПП — ведущий производитель микробиологических препаратов для животноводства и растениеводства. Биопрепараты для увеличения урожайности, улучшения почвы и здоровья животных." />
+    <meta
+      name="developer"
+      content="TheGorin1 — UI/UX Design and Fullstack Infrastructure"
+    />
+    <meta
+      property="og:title"
+      content="АМ ГРУПП — Микробиологические решения для сельского хозяйства"
+    />
+    <meta
+      property="og:description"
+      content="АМ ГРУПП — ведущий производитель микробиологических препаратов для животноводства и растениеводства. Биопрепараты для увеличения урожайности, улучшения почвы и здоровья животных."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://microbio.pro/" />
     <meta name="robots" content="index, follow" />
@@ -49,15 +64,46 @@
     <link rel="stylesheet" href="/src/css/components/popup.css" />
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
-        ym(99049483, 'init', {clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        ((k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a));
+      })(
+        window,
+        document,
+        "script",
+        "https://mc.yandex.ru/metrika/tag.js",
+        "ym",
+      );
+      ym(99049483, "init", {
+        clickmap: true,
+        referrer: document.referrer,
+        url: location.href,
+        accurateTrackBounce: true,
+        trackLinks: true,
+      });
     </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/99049483" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/99049483"
+          style="position: absolute; left: -9999px"
+          alt=""
+        /></div
+    ></noscript>
     <!-- /Yandex.Metrika counter -->
   </head>
   <body>
@@ -75,16 +121,12 @@
             </a>
             <nav class="header__nav">
               <a href="/" class="header__link">Главная</a>
-              <a href="/pages/catalog.html" class="header__link"
-                >Продукция</a
-              >
+              <a href="/pages/catalog.html" class="header__link">Продукция</a>
               <a href="/pages/services.html" class="header__link">Услуги</a>
               <a href="/pages/about-company.html" class="header__link"
                 >О компании</a
               >
-              <a href="/pages/contacts.html" class="header__link"
-                >Контакты</a
-              >
+              <a href="/pages/contacts.html" class="header__link">Контакты</a>
             </nav>
             <button
               class="burger"
@@ -116,9 +158,7 @@
             <a href="/pages/catalog.html" class="burger-menu__link"
               >Продукция</a
             >
-            <a href="/pages/services.html" class="burger-menu__link"
-              >Услуги</a
-            >
+            <a href="/pages/services.html" class="burger-menu__link">Услуги</a>
             <a href="/pages/about-company.html" class="burger-menu__link"
               >О компании</a
             >
@@ -872,7 +912,7 @@
 
               <form
                 class="form-section__card"
-                action="http://localhost:3001/api/send-email"
+                action="/api/send-email"
                 method="POST"
               >
                 <input
@@ -918,9 +958,7 @@
                 <p class="form-section__privacy">
                   Нажимая кнопку <strong>"Получить консультацию",</strong> Вы
                   соглашаетесь с
-                  <a href="/pages/policy.html"
-                    >Политикой конфиденциальности</a
-                  >
+                  <a href="/pages/policy.html">Политикой конфиденциальности</a>
                   и даёте согласие на обработку персональных данных.
                 </p>
               </form>
@@ -940,10 +978,7 @@
               </div>
               <ul class="news-section__list">
                 <li class="news-section__item">
-                  <a
-                    class="news-section__item-row"
-                    href="/pages/news-1.html"
-                  >
+                  <a class="news-section__item-row" href="/pages/news-1.html">
                     <div class="news-section__item-image">
                       <img
                         src="/src/assets/images/Main page/News/Image-News-1.jpg"
@@ -965,10 +1000,7 @@
                   </a>
                 </li>
                 <li class="news-section__item">
-                  <a
-                    class="news-section__item-row"
-                    href="/pages/news-2.html"
-                  >
+                  <a class="news-section__item-row" href="/pages/news-2.html">
                     <div class="news-section__item-image">
                       <img
                         src="/src/assets/images/Main page/News/Image-News-2.jpg"
@@ -989,10 +1021,7 @@
                   </a>
                 </li>
                 <li class="news-section__item">
-                  <a
-                    class="news-section__item-row"
-                    href="/pages/news-3.html"
-                  >
+                  <a class="news-section__item-row" href="/pages/news-3.html">
                     <div class="news-section__item-image">
                       <img
                         src="/src/assets/images/Main page/News/Image-News-3.jpg"
@@ -1014,10 +1043,7 @@
                   </a>
                 </li>
                 <li class="news-section__item">
-                  <a
-                    class="news-section__item-row"
-                    href="/pages/news-4.html"
-                  >
+                  <a class="news-section__item-row" href="/pages/news-4.html">
                     <div class="news-section__item-image">
                       <img
                         src="/src/assets/images/Main page/News/Image-News-4.jpg"
@@ -1236,7 +1262,7 @@
           </div>
           <form
             class="popup__form"
-            action="http://localhost:3001/api/send-email"
+            action="/api/send-email"
             method="POST"
           >
             <input
