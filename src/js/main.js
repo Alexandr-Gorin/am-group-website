@@ -147,16 +147,13 @@ async function handleFormSubmit(event, redirectUrl) {
   try {
     // 2. Отправляем запрос на наш сервер (порт 3001)
     // ВАЖНО: убедись, что в HTML у форм прописан action="/api/send-email"
-    const response = await fetch(
-      form.action || "/api/send-email",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+    const response = await fetch(form.action || "/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(data),
+    });
 
     if (response.ok) {
       // 3. Если всё успешно
@@ -219,8 +216,7 @@ if (cookieBanner && cookieAcceptBtn) {
     cookieBanner.classList.add("hidden");
   });
 }
-
-/Увеличение фото по клику в hero/;
+//Увеличение изображения по клику в hero блоке
 document.addEventListener("DOMContentLoaded", () => {
   const heroImg = document.querySelector(".hero__image");
 
