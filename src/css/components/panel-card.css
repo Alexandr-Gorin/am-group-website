@@ -214,3 +214,39 @@
     gap: 24px;
   }
 }
+
+/* ============================================
+   BACK TO CATEGORIES — mobile-only button
+   ============================================ */
+
+.back-to-categories {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 32px auto;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 100px;
+  background: #213a71;
+  color: #ffffff;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow-elevation-1);
+  white-space: nowrap;
+}
+
+.back-to-categories__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 660px) {
+  .back-to-categories {
+    display: none;
+  }
+}

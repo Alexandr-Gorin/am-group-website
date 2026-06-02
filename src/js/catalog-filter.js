@@ -71,8 +71,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const filter = btn.dataset.filter;
       history.replaceState(null, '', filter === 'all' ? '#all' : '#' + filter);
       applyFilter(filter, true);
+      // Mobile only: scroll down to the cards grid
+      if (window.innerWidth < 660) {
+        const y = grid.getBoundingClientRect().top + window.scrollY - 20;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
     });
   });
+
+  // Mobile: "back to categories" button scrolls up to panel cards
+  const backBtn = document.querySelector('.back-to-categories');
+  const panelCards = document.querySelector('.panel-cards');
+  if (backBtn && panelCards) {
+    backBtn.addEventListener('click', () => {
+      panelCards.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   // Browser back/forward navigation
   window.addEventListener('hashchange', () => {
