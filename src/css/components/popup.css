@@ -47,7 +47,12 @@
   width: 100%;
   max-width: 480px;
   margin: auto;
-  background: var(--color-glass-panel-mini-fill);
+  background: linear-gradient(
+    180deg,
+    rgba(36, 63, 125, 0.95) 0%,
+    rgba(33, 58, 113, 0.95) 45%,
+    rgba(23, 42, 84, 0.95) 100%
+  );
   border: 1px solid var(--color-glass-panel-stroke);
   border-radius: 32px;
   overflow: hidden;
@@ -57,9 +62,12 @@
 
 /* Специфическая карточка вакансии */
 .popup__card--vacancy {
-  background: var(
-    --color-glass-panel-mini-fill
-  ); /* Твой радиальный + линейный градиент */
+  background: linear-gradient(
+    180deg,
+    rgba(36, 63, 125, 0.95) 0%,
+    rgba(33, 58, 113, 0.95) 45%,
+    rgba(23, 42, 84, 0.95) 100%
+  );
   border: 1px solid var(--color-glass-panel-stroke);
   max-width: 560px;
   border-radius: 32px;
@@ -69,7 +77,12 @@
 
 .popup__card--vacancy {
   font-family: "Manrope", sans-serif !important;
-  background: var(--color-glass-panel-mini-fill); /* Твой градиент */
+  background: linear-gradient(
+    180deg,
+    rgba(36, 63, 125, 0.95) 0%,
+    rgba(33, 58, 113, 0.95) 45%,
+    rgba(23, 42, 84, 0.95) 100%
+  );
   border: 1px solid var(--color-glass-panel-stroke);
   border-radius: 32px;
 }
