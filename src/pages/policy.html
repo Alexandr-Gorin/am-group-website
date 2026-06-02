@@ -802,12 +802,14 @@
               placeholder="Телефон"
               required
             />
-            <p class="popup__disclaimer">
-              Отправляя заявку, Вы соглашаетесь с
-              <a href="policy.html" class="popup__disclaimer-link"
-                >политикой конфиденциальности</a
-              >
-            </p>
+            <div class="form-consent">
+              <p class="form-consent__required">Нажимая «Отправить», я подтверждаю согласие на обработку персональных данных согласно <a href="/src/pages/policy.html" class="form-consent__link">Политике конфиденциальности</a>.</p>
+              <label class="form-consent__checkbox-label">
+                <input type="checkbox" name="marketing_consent" value="yes" class="form-consent__checkbox-input">
+                <span class="form-consent__checkbox-visual"></span>
+                <span class="form-consent__checkbox-text">Согласен(на) на получение рекламных и информационных рассылок.</span>
+              </label>
+            </div>
             <button type="submit" class="button button--primary popup__submit">
               Отправить заявку
             </button>

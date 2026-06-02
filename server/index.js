@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
 // Главный маршрут для отправки писем
 app.post("/api/send-email", (req, res) => {
   // Получаем данные из формы (те самые name из HTML)
-  const { name, phone, company, product_name, _subject } = req.body;
+  const { name, phone, company, product_name, _subject, marketing_consent } = req.body;
 
   const mailOptions = {
     from: '"AM Group AI Robot" <thegorin_1@vk.com>',
@@ -40,6 +40,7 @@ app.post("/api/send-email", (req, res) => {
       <p><b>Телефон:</b> ${phone}</p>
       <p><b>Компания:</b> ${company}</p>
       <p><b>Интересует:</b> ${product_name}</p>
+      <p><b>Согласие на рассылку:</b> ${marketing_consent === "yes" ? "Да" : "Нет"}</p>
     `,
   };
 
