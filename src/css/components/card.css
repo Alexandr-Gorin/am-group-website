@@ -57,6 +57,7 @@
 }
 
 .card {
+  position: relative;
   width: 300px;
   min-height: 460px;
   padding: 32px 24px;
@@ -73,6 +74,14 @@
   -webkit-backdrop-filter: var(--blur-card-default);
   transition: opacity 0.4s ease, transform 0.4s ease, background 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+}
+
+/* Stretched link — expands the <a> button's click area to the whole card */
+.card a.button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .card.is-hidden {
