@@ -156,17 +156,12 @@
   --shadow-header-default: 0px 16px 56px 0px rgba(0, 0, 0, 0.32);
 
   /* Header / Scroll state */
-  --color-glass-header-scroll-fill:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.01) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.36) 0%,
-      rgba(255, 255, 255, 0.16) 100%
-    );
+  --gradient-primary: linear-gradient(
+    180deg,
+    #243f7d 0%,
+    #213a71 45%,
+    #172a54 100%
+  );
   --color-glass-header-scroll-stroke: rgba(255, 255, 255, 0.15);
   --shadow-header-scroll: 0px 12px 40px 0px rgba(0, 0, 0, 0.28);
 
