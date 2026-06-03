@@ -1,19 +1,27 @@
-const faqItems = document.querySelectorAll('.faq-section__item');
+function initAccordion(itemSelector, questionSelector) {
+  const items = document.querySelectorAll(itemSelector);
+  if (!items.length) return;
 
-faqItems.forEach(item => {
-  const button = item.querySelector('.faq-section__question');
+  items.forEach(item => {
+    const button = item.querySelector(questionSelector);
+    if (!button) return;
 
-  button.addEventListener('click', () => {
-    const isOpen = item.classList.contains('is-open');
+    button.addEventListener('click', () => {
+      const isOpen = item.classList.contains('is-open');
 
-    faqItems.forEach(other => {
-      other.classList.remove('is-open');
-      other.querySelector('.faq-section__question').setAttribute('aria-expanded', 'false');
+      items.forEach(other => {
+        other.classList.remove('is-open');
+        const q = other.querySelector(questionSelector);
+        if (q) q.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        item.classList.add('is-open');
+        button.setAttribute('aria-expanded', 'true');
+      }
     });
-
-    if (!isOpen) {
-      item.classList.add('is-open');
-      button.setAttribute('aria-expanded', 'true');
-    }
   });
-});
+}
+
+initAccordion('.faq-section__item', '.faq-section__question');
+initAccordion('.useful-materials__item', '.useful-materials__question');
