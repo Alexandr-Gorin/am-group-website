@@ -89,7 +89,6 @@
     var(--button-secondary-hover-fill-base);
   border-color: var(--button-secondary-hover-stroke);
   box-shadow: var(--button-secondary-hover-shadow);
-  transform: translateY(-1px);
 }
 
 /* Ghost button */
