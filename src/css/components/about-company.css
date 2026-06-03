@@ -92,20 +92,23 @@
   height: 200px;
   padding: 24px 32px;
   cursor: pointer;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.384) 0%,
-    rgba(255, 255, 255, 0.288) 100%
-  );
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.18),
     0px 12px 18px rgba(0, 0, 0, 0.24);
 }
 
-.awards__card:nth-child(4n + 1) { border-radius: 16px 32px 16px 32px; }
-.awards__card:nth-child(4n + 2) { border-radius: 32px 16px 32px 16px; }
-.awards__card:nth-child(4n + 3) { border-radius: 32px 16px 8px 16px; }
-.awards__card:nth-child(4n + 0) { border-radius: 16px 8px 16px 32px; }
+.awards__card:nth-child(4n + 1) {
+  border-radius: 16px 32px 16px 32px;
+}
+.awards__card:nth-child(4n + 2) {
+  border-radius: 32px 16px 32px 16px;
+}
+.awards__card:nth-child(4n + 3) {
+  border-radius: 32px 16px 8px 16px;
+}
+.awards__card:nth-child(4n + 0) {
+  border-radius: 16px 8px 16px 32px;
+}
 
 .awards__card-img {
   max-width: 100%;
@@ -295,7 +298,6 @@
   color: var(--color-content-primary);
 }
 
-
 /* ===== CEO QUOTE ===== */
 
 .ceo {
@@ -478,9 +480,15 @@
     padding: 16px;
   }
 
-  .awards__card:nth-child(n) { border-radius: 16px; }
-  .awards__card:nth-child(2n + 1) { border-radius: 16px 32px 16px 32px; }
-  .awards__card:nth-child(2n + 0) { border-radius: 32px 16px 32px 16px; }
+  .awards__card:nth-child(n) {
+    border-radius: 16px;
+  }
+  .awards__card:nth-child(2n + 1) {
+    border-radius: 16px 32px 16px 32px;
+  }
+  .awards__card:nth-child(2n + 0) {
+    border-radius: 32px 16px 32px 16px;
+  }
 
   .awards__card-img {
     width: 140px;
@@ -578,7 +586,9 @@
     padding: 16px;
   }
 
-  .awards__card:nth-child(n) { border-radius: 12px; }
+  .awards__card:nth-child(n) {
+    border-radius: 12px;
+  }
 
   .awards__card-img {
     width: auto;
