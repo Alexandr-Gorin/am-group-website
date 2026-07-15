@@ -34,3 +34,30 @@
 
   updateItems(0);
 })();
+
+(function () {
+  const icons = document.querySelectorAll('.news-share__icon');
+  if (!icons.length) return;
+
+  const rawUrl = window.location.href;
+  const ogTitleEl = document.querySelector('meta[property="og:title"]');
+  const rawTitle = ogTitleEl ? ogTitleEl.content : document.title;
+
+  const url = encodeURIComponent(rawUrl);
+  const title = encodeURIComponent(rawTitle);
+
+  const links = {
+    telegram: `https://t.me/share/url?url=${url}&text=${title}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(rawTitle + ' ' + rawUrl)}`,
+    max: `https://max.ru/:share?text=${url}`,
+    x: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+    vk: `https://vk.com/share.php?url=${url}&title=${title}`,
+  };
+
+  icons.forEach(function (icon) {
+    var network = icon.dataset.network;
+    if (links[network]) {
+      icon.href = links[network];
+    }
+  });
+})();

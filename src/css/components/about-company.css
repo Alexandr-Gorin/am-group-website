@@ -37,6 +37,7 @@
 }
 
 .about-overview__title {
+  max-width: 100%;
   font-size: var(--font-size-h2);
   font-weight: 700;
   line-height: 1.2;
@@ -393,7 +394,7 @@
 /* Desktop (1200px+) */
 @media (min-width: 1200px) {
   .about-overview__header {
-    max-width: 683px;
+    max-width: 1096px;
   }
 
   .about-overview__body {
