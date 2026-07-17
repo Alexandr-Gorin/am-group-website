@@ -171,19 +171,19 @@ async function handleFormSubmit(event, redirectUrl) {
 // Логика основной формы
 const popupForm = popup?.querySelector(".popup__form");
 popupForm?.addEventListener("submit", (e) =>
-  handleFormSubmit(e, "/src/pages/feedback.html"),
+  handleFormSubmit(e, "/pages/feedback"),
 );
 
 // Логика формы в секции "Остались вопросы"
 const staticForm = document.querySelector(".form-section__card");
 staticForm?.addEventListener("submit", (e) =>
-  handleFormSubmit(e, "/src/pages/feedback.html"),
+  handleFormSubmit(e, "/pages/feedback"),
 );
 
 // Логика формы вакансий
 const vacancyForm = popupVacancy?.querySelector(".popup__form");
 vacancyForm?.addEventListener("submit", (e) =>
-  handleFormSubmit(e, "/src/pages/feedback.html"),
+  handleFormSubmit(e, "/pages/feedback"),
 );
 
 // --- СТАНДАРТНОЕ ЗАКРЫТИЕ ---
