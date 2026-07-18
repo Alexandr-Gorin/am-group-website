@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@sanity/client": "^7.23.2",
+    "@sanity/image-url": "^2.1.1",
+    "node-html-parser": "^9.0.0",
     "vite": "^8.0.4"
   }
 }
