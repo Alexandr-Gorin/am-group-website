@@ -1,7 +1,9 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import { sanityHeroPlugin } from './vite-plugin-sanity.js'
 
 export default defineConfig({
+  plugins: [sanityHeroPlugin()],
   server: {
     proxy: {
       '/api': 'http://localhost:3001',
