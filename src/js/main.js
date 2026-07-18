@@ -119,6 +119,9 @@ document.querySelectorAll('[data-popup="vacancy"]').forEach((btn) => {
   });
 });
 
+// Required by SmartCaptcha data-callback; token is injected into the form automatically
+window.smartCaptchaCallback = function () {};
+
 // Функция отправки формы с валидацией и запросом на сервер
 async function handleFormSubmit(event, redirectUrl) {
   event.preventDefault();
@@ -144,6 +147,17 @@ async function handleFormSubmit(event, redirectUrl) {
       return;
     }
   }
+
+  // SmartCaptcha check (only on forms that have the widget)
+  if (form.querySelector(".smart-captcha")) {
+    const captchaToken = data["smart-token"];
+    if (!captchaToken) {
+      alert("Пожалуйста, подтвердите, что вы не робот.");
+      return;
+    }
+    data.token = captchaToken;
+  }
+
   try {
     // 2. Отправляем запрос на наш сервер (порт 3001)
     // ВАЖНО: убедись, что в HTML у форм прописан action="/api/send-email"
