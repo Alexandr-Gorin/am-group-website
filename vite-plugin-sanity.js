@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 import { parse } from 'node-html-parser'
 
 function escapeHtml(str) {
@@ -19,7 +19,7 @@ export function sanityHeroPlugin() {
     ...(process.env.SANITY_API_TOKEN && { token: process.env.SANITY_API_TOKEN }),
   })
 
-  const builder = imageUrlBuilder(client)
+  const builder = createImageUrlBuilder(client)
 
   return {
     name: 'sanity-hero',
