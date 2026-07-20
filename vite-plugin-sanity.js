@@ -10,17 +10,21 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
 }
 
-function processSvg(svgText) {
+// Shared helper for all icon fields in this plugin.
+// iconClass is injected onto the root <svg> element so CSS controls color.
+// Hardcoded fill values are stripped so fill:currentColor (or whatever the
+// CSS class provides) takes effect — fill="none" is kept for stroke-only icons.
+function processSvg(svgText, iconClass) {
   let s = svgText
     .replace(/<\?xml[^?]*\?>/g, '')
     .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\s+fill="(?!none")[^"]*"/g, '')
     .trim()
-  // Inject class and aria-hidden onto the root <svg> element
   s = s.replace(/^<svg([^>]*)>/i, (_, attrs) => {
     const cleaned = attrs
       .replace(/\s*class="[^"]*"/g, '')
       .replace(/\s*aria-hidden="[^"]*"/g, '')
-    return `<svg${cleaned} class="products-section__card-icon" aria-hidden="true">`
+    return `<svg${cleaned} class="${iconClass}" aria-hidden="true">`
   })
   return s
 }
@@ -154,7 +158,7 @@ export function sanityTaskCardsPlugin() {
               const resp = await fetch(card.iconUrl)
               if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
               const svgText = await resp.text()
-              svgMarkup = processSvg(svgText)
+              svgMarkup = processSvg(svgText, 'products-section__card-icon')
             } catch (e) {
               console.warn(`\n[sanity-task-cards] Could not fetch icon for "${card.title}": ${e.message}\n`)
             }
