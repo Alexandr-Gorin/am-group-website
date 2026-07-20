@@ -29,6 +29,13 @@ export const taskCard = defineType({
       to: [{type: 'category'}],
     }),
     defineField({
+      name: 'filterKey',
+      title: 'Filter Key',
+      type: 'string',
+      description:
+        'Must exactly match one of the static catalog page\'s filter tokens: feed-supply, byproducts, cattle, soil, seeds, plants. Do not change this value without also updating the catalog page\'s JS (catalog-filter.js).',
+    }),
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',
