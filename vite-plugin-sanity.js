@@ -180,6 +180,86 @@ export function sanityTaskCardsPlugin() {
   }
 }
 
+export function sanityPartnershipPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-partnership',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('index.html')) return html
+
+      let section, cards
+      try {
+        ;[section, cards] = await Promise.all([
+          client.fetch(`*[_type == "partnershipSection"][0]{ heading, subheading, buttonText }`),
+          client.fetch(`*[_type == "partnerCard"] | order(order asc){ title, description, "imageRef": image }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-partnership] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-partnership] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-partnership] No partnershipSection document found — building with static fallback content.\n')
+        return html
+      }
+      if (!cards || cards.length < 3) {
+        console.warn(`\n[sanity-partnership] Expected 3 partnerCard documents, got ${cards ? cards.length : 0} — building with static fallback content.\n`)
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section.heading) {
+        const el = root.querySelector('[data-sanity="partnershipHeading"]')
+        if (el) el.innerHTML = escapeHtml(section.heading)
+      }
+
+      if (section.subheading) {
+        const el = root.querySelector('[data-sanity="partnershipSubheading"]')
+        if (el) el.innerHTML = escapeHtml(section.subheading)
+      }
+
+      if (section.buttonText) {
+        const el = root.querySelector('[data-sanity="partnershipButtonText"]')
+        if (el) el.innerHTML = '\n                ' + escapeHtml(section.buttonText) + '\n              '
+      }
+
+      const grid = root.querySelector('[data-sanity="partnershipGrid"]')
+      if (!grid) {
+        console.warn('\n[sanity-partnership] Could not find [data-sanity="partnershipGrid"] in HTML — skipping.\n')
+        return root.toString()
+      }
+
+      const cardHtml = cards.map((card) => {
+        const imgUrl = card.imageRef
+          ? builder.image(card.imageRef).auto('format').width(800).url()
+          : ''
+        const imgTag = imgUrl
+          ? `<img src="${imgUrl}" alt="${escapeHtml(card.title)}" />`
+          : ''
+        return `<article class="partnership-section__card">
+                  <div class="partnership-section__card-image partnership-section__card-image-wrapper">
+                    ${imgTag}
+                  </div>
+                  <div class="partnership-section__card-content">
+                    <p class="partnership-section__card-title">${escapeHtml(card.title)}</p>
+                    <p class="partnership-section__card-body">${escapeHtml(card.description)}</p>
+                  </div>
+                </article>`
+      }).join('\n')
+
+      grid.innerHTML = '\n' + cardHtml + '\n              '
+      return root.toString()
+    },
+  }
+}
+
 export function sanityStatsSectionPlugin() {
   const client = makeSanityClient()
 
