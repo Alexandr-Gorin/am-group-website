@@ -179,3 +179,66 @@ export function sanityTaskCardsPlugin() {
     },
   }
 }
+
+export function sanityStatsSectionPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-stats-section',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('index.html')) return html
+
+      let section, cards
+      try {
+        ;[section, cards] = await Promise.all([
+          client.fetch(`*[_type == "statsSection"][0]{ heading, subheading }`),
+          client.fetch(`*[_type == "statCard"] | order(order asc){ value, description }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-stats-section] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-stats-section] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-stats-section] No statsSection document found — building with static fallback content.\n')
+        return html
+      }
+      if (!cards || cards.length < 6) {
+        console.warn(`\n[sanity-stats-section] Expected 6 statCard documents, got ${cards ? cards.length : 0} — building with static fallback content.\n`)
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section.heading) {
+        const el = root.querySelector('[data-sanity="statsHeading"]')
+        if (el) el.innerHTML = escapeHtml(section.heading)
+      }
+
+      if (section.subheading) {
+        const el = root.querySelector('[data-sanity="statsSubheading"]')
+        if (el) el.innerHTML = escapeHtml(section.subheading)
+      }
+
+      const grid = root.querySelector('[data-sanity="statsGrid"]')
+      if (!grid) {
+        console.warn('\n[sanity-stats-section] Could not find [data-sanity="statsGrid"] in HTML — skipping.\n')
+        return root.toString()
+      }
+
+      const cardHtml = cards.map((card) =>
+        `<article class="effectiveness-section__card">
+                <p class="effectiveness-section__card-title">${escapeHtml(card.value)}</p>
+                <p class="effectiveness-section__card-body">${escapeHtml(card.description)}</p>
+              </article>`
+      ).join('\n')
+
+      grid.innerHTML = '\n' + cardHtml + '\n              '
+      return root.toString()
+    },
+  }
+}
