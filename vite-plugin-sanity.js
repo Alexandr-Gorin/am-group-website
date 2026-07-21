@@ -497,3 +497,88 @@ export function sanityContactSectionPlugin() {
     },
   }
 }
+
+const materialsPortableTextComponents = {
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href ?? '#'
+      return `<a href="${escapeHtml(href)}" class="useful-materials__link" target="_blank" rel="noopener noreferrer">${children}</a>`
+    },
+  },
+}
+
+function renderMaterialItem(item, index) {
+  const id = `um-${index + 1}`
+  const bodyHtml = toHTML(item.body ?? [], { components: materialsPortableTextComponents })
+  return `<li class="useful-materials__item">
+                  <hr class="useful-materials__divider" />
+                  <button
+                    class="useful-materials__question"
+                    aria-expanded="false"
+                    aria-controls="${id}"
+                  >
+                    <span class="useful-materials__question-text">${escapeHtml(item.title ?? '')}</span>
+                    <span class="useful-materials__icon" aria-hidden="true"></span>
+                  </button>
+                  <div id="${id}" class="useful-materials__answer-wrapper">
+                    <div class="useful-materials__answer">
+                      <div class="useful-materials__answer-inner">
+                        ${bodyHtml}
+                      </div>
+                    </div>
+                  </div>
+                </li>`
+}
+
+export function sanityMaterialsPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-materials',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('index.html')) return html
+
+      let section, items
+      try {
+        ;[section, items] = await Promise.all([
+          client.fetch(`*[_type == "materialsSection"][0]{ heading }`),
+          client.fetch(`*[_type == "materialItem"] | order(order asc){ title, body, order }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-materials] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-materials] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-materials] No materialsSection document found — building with static fallback content.\n')
+        return html
+      }
+      if (!items || items.length === 0) {
+        console.warn('\n[sanity-materials] No materialItem documents found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section.heading) {
+        const el = root.querySelector('[data-sanity="materialsHeading"]')
+        if (el) el.innerHTML = escapeHtml(section.heading)
+      }
+
+      const list = root.querySelector('[data-sanity="materialsList"]')
+      if (!list) {
+        console.warn('\n[sanity-materials] Could not find [data-sanity="materialsList"] in HTML — skipping.\n')
+        return root.toString()
+      }
+
+      const itemsHtml = items.map((item, i) => renderMaterialItem(item, i)).join('\n')
+      list.innerHTML = '\n' + itemsHtml + '\n              '
+
+      return root.toString()
+    },
+  }
+}

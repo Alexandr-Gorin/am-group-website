@@ -1,9 +1,9 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import { sanityHeroPlugin, sanityTaskCardsPlugin, sanityStatsSectionPlugin, sanityPartnershipPlugin, sanityFaqPlugin, sanityContactSectionPlugin } from './vite-plugin-sanity.js'
+import { sanityHeroPlugin, sanityTaskCardsPlugin, sanityStatsSectionPlugin, sanityPartnershipPlugin, sanityFaqPlugin, sanityContactSectionPlugin, sanityMaterialsPlugin } from './vite-plugin-sanity.js'
 
 export default defineConfig({
-  plugins: [sanityHeroPlugin(), sanityTaskCardsPlugin(), sanityStatsSectionPlugin(), sanityPartnershipPlugin(), sanityFaqPlugin(), sanityContactSectionPlugin()],
+  plugins: [sanityHeroPlugin(), sanityTaskCardsPlugin(), sanityStatsSectionPlugin(), sanityPartnershipPlugin(), sanityFaqPlugin(), sanityContactSectionPlugin(), sanityMaterialsPlugin()],
   server: {
     proxy: {
       '/api': 'http://localhost:3001',
