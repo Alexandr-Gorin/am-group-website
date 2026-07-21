@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client'
 import { createImageUrlBuilder } from '@sanity/image-url'
 import { parse } from 'node-html-parser'
+import { toHTML } from '@portabletext/to-html'
 
 function escapeHtml(str) {
   return String(str)
@@ -318,6 +319,91 @@ export function sanityStatsSectionPlugin() {
       ).join('\n')
 
       grid.innerHTML = '\n' + cardHtml + '\n              '
+      return root.toString()
+    },
+  }
+}
+
+const faqPortableTextComponents = {
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href ?? '#'
+      return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${children}</a>`
+    },
+  },
+}
+
+function renderFaqItem(item, index) {
+  const id = `faq-${index + 1}`
+  const answerHtml = toHTML(item.answer ?? [], { components: faqPortableTextComponents })
+  return `<li class="faq-section__item">
+                  <hr class="faq-section__divider" />
+                  <button
+                    class="faq-section__question"
+                    aria-expanded="false"
+                    aria-controls="${id}"
+                  >
+                    <span class="faq-section__question-text">${escapeHtml(item.question ?? '')}</span>
+                    <span class="faq-section__icon" aria-hidden="true"></span>
+                  </button>
+                  <div id="${id}" class="faq-section__answer-wrapper">
+                    <div class="faq-section__answer">
+                      <div class="faq-section__answer-inner">
+                        ${answerHtml}
+                      </div>
+                    </div>
+                  </div>
+                </li>`
+}
+
+export function sanityFaqPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-faq',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('index.html')) return html
+
+      let section, items
+      try {
+        ;[section, items] = await Promise.all([
+          client.fetch(`*[_type == "faqSection"][0]{ heading }`),
+          client.fetch(`*[_type == "faqItem"] | order(order asc){ question, answer, order }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-faq] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-faq] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-faq] No faqSection document found — building with static fallback content.\n')
+        return html
+      }
+      if (!items || items.length === 0) {
+        console.warn('\n[sanity-faq] No faqItem documents found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section.heading) {
+        const el = root.querySelector('[data-sanity="faqHeading"]')
+        if (el) el.innerHTML = escapeHtml(section.heading)
+      }
+
+      const list = root.querySelector('[data-sanity="faqList"]')
+      if (!list) {
+        console.warn('\n[sanity-faq] Could not find [data-sanity="faqList"] in HTML — skipping.\n')
+        return root.toString()
+      }
+
+      const itemsHtml = items.map((item, i) => renderFaqItem(item, i)).join('\n')
+      list.innerHTML = '\n' + itemsHtml + '\n              '
+
       return root.toString()
     },
   }

@@ -13,5 +13,8 @@
     "@sanity/image-url": "^2.1.1",
     "node-html-parser": "^9.0.0",
     "vite": "^8.0.4"
+  },
+  "dependencies": {
+    "@portabletext/to-html": "^5.0.2"
   }
 }
