@@ -25,9 +25,33 @@ export const contactSection = {
     {
       name: 'consentText',
       title: 'Текст согласия на обработку данных',
-      type: 'string',
-      initialValue:
-        'Нажимая «Отправить», я подтверждаю согласие на обработку персональных данных согласно Политике конфиденциальности.',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [{title: 'Normal', value: 'normal'}],
+          lists: [],
+          marks: {
+            decorators: [{title: 'Жирный', value: 'strong'}],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Ссылка',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: (Rule) =>
+                      Rule.uri({allowRelative: true}),
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
     },
     {
       name: 'newsletterText',

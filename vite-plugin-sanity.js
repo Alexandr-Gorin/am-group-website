@@ -408,3 +408,92 @@ export function sanityFaqPlugin() {
     },
   }
 }
+
+const consentPortableTextComponents = {
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href ?? '#'
+      return `<a href="${escapeHtml(href)}" class="form-consent__link">${children}</a>`
+    },
+  },
+}
+
+export function sanityContactSectionPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-contact-section',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('index.html')) return html
+
+      let section
+      try {
+        section = await client.fetch(
+          `*[_type == "contactSection"][0]{
+            heading,
+            subheading,
+            buttonText,
+            consentText,
+            newsletterText,
+            backgroundImage
+          }`
+        )
+      } catch (err) {
+        console.warn('\n[sanity-contact-section] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-contact-section] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-contact-section] No contactSection document found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section.heading) {
+        const el = root.querySelector('[data-sanity="contactHeading"]')
+        if (el) el.innerHTML = escapeHtml(section.heading)
+      }
+
+      if (section.subheading) {
+        const el = root.querySelector('[data-sanity="contactSubheading"]')
+        if (el) el.innerHTML = escapeHtml(section.subheading)
+      }
+
+      if (section.buttonText) {
+        const el = root.querySelector('[data-sanity="contactButtonText"]')
+        if (el) el.innerHTML = escapeHtml(section.buttonText)
+      }
+
+      if (section.newsletterText) {
+        const el = root.querySelector('[data-sanity="contactNewsletterText"]')
+        if (el) el.innerHTML = escapeHtml(section.newsletterText)
+      }
+
+      if (Array.isArray(section.consentText) && section.consentText.length > 0) {
+        const el = root.querySelector('[data-sanity="contactConsentText"]')
+        if (el) {
+          // toHTML wraps each block in <p>; strip those since the target is already a <p>
+          const rendered = toHTML(section.consentText, { components: consentPortableTextComponents })
+            .replace(/<\/?p>/g, '')
+          el.innerHTML = rendered
+        }
+      }
+
+      if (section.backgroundImage) {
+        const el = root.querySelector('[data-sanity="contactBgImage"]')
+        if (el) {
+          const url = builder.image(section.backgroundImage).auto('format').width(1920).url()
+          el.setAttribute('src', url)
+        }
+      }
+
+      return root.toString()
+    },
+  }
+}
