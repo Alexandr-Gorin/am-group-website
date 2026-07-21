@@ -13,6 +13,20 @@ export const newsArticle = defineType({
       options: {source: 'title'},
       validation: (R) => R.required(),
     }),
+    defineField({
+      name: 'pageNumber',
+      title: 'Page Number',
+      type: 'number',
+      description: 'Stable integer that maps this article to news-{N}.html. Assign once and never change.',
+      validation: (R) => R.required().integer().positive(),
+    }),
+    defineField({
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'string',
+      description: 'Short teaser shown on the homepage carousel and in related-articles blocks.',
+      validation: (R) => R.required(),
+    }),
     defineField({name: 'date', title: 'Date', type: 'date', validation: (R) => R.required()}),
     defineField({
       name: 'body',

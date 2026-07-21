@@ -2,6 +2,8 @@ import { createClient } from '@sanity/client'
 import { createImageUrlBuilder } from '@sanity/image-url'
 import { parse } from 'node-html-parser'
 import { toHTML } from '@portabletext/to-html'
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs'
+import { resolve } from 'path'
 
 function escapeHtml(str) {
   return String(str)
@@ -579,6 +581,233 @@ export function sanityMaterialsPlugin() {
       list.innerHTML = '\n' + itemsHtml + '\n              '
 
       return root.toString()
+    },
+  }
+}
+
+// ─── News ────────────────────────────────────────────────────────────────────
+
+function formatDate(dateStr) {
+  if (!dateStr) return ''
+  const [year, month, day] = dateStr.split('-')
+  return `${day}.${month}.${year}`
+}
+
+const newsBodyPortableTextComponents = {
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href ?? '#'
+      return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${children}</a>`
+    },
+  },
+}
+
+function renderRelatedItem(article, builder) {
+  const imgUrl = article.image
+    ? builder.image(article.image).auto('format').width(400).url()
+    : ''
+  const dateStr = formatDate(article.date)
+  const excerptHtml = article.excerpt
+    ? `<p class="news-article__related-excerpt">${escapeHtml(article.excerpt)}</p>`
+    : ''
+  return `<a href="/pages/news-${article.pageNumber}" class="news-article__related-item">
+                  <div class="news-article__related-image">
+                    <img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(article.title)}" />
+                  </div>
+                  <div class="news-article__related-desc">
+                    <p class="news-article__related-name">${escapeHtml(article.title)}</p>
+                    ${excerptHtml}
+                    <p class="news-article__related-date">${dateStr}</p>
+                  </div>
+                </a>`
+}
+
+function injectCarousel(html, articles, builder) {
+  const root = parse(html)
+  const list = root.querySelector('[data-sanity="newsList"]')
+  if (!list) {
+    console.warn('\n[sanity-news] Could not find [data-sanity="newsList"] in HTML — skipping carousel.\n')
+    return html
+  }
+
+  const itemsHtml = articles.map(article => {
+    const imgUrl = article.image
+      ? builder.image(article.image).auto('format').width(800).url()
+      : ''
+    const dateStr = formatDate(article.date)
+    return `<li class="news-section__item">
+                  <a class="news-section__item-row" href="/pages/news-${article.pageNumber}">
+                    <div class="news-section__item-image">
+                      <img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(article.title)}" />
+                    </div>
+                    <div class="news-section__item-content">
+                      <div class="news-section__item-description">
+                        <p class="news-section__item-title">${escapeHtml(article.title)}</p>
+                        <p class="news-section__item-excerpt">${escapeHtml(article.excerpt || '')}</p>
+                      </div>
+                      <p class="news-section__item-date">${dateStr}</p>
+                    </div>
+                  </a>
+                </li>`
+  }).join('\n')
+
+  list.innerHTML = '\n' + itemsHtml + '\n              '
+  return root.toString()
+}
+
+function injectArticlePage(html, article, allArticles, builder) {
+  const root = parse(html)
+
+  const titleStr = `Новости: ${article.title}. АМ ГРУПП - микробиологические решения для животноводства и растениеводства`
+
+  const titleEl = root.querySelector('title')
+  if (titleEl) titleEl.innerHTML = escapeHtml(titleStr)
+
+  const metaDesc = root.querySelector('meta[name="description"]')
+  if (metaDesc) metaDesc.setAttribute('content', article.excerpt || article.title || '')
+
+  const ogTitle = root.querySelector('meta[property="og:title"]')
+  if (ogTitle) ogTitle.setAttribute('content', titleStr)
+
+  const ogUrl = root.querySelector('meta[property="og:url"]')
+  if (ogUrl) ogUrl.setAttribute('content', `https://microbio.pro/pages/news-${article.pageNumber}`)
+
+  if (article.image) {
+    const heroImg = root.querySelector('.news-article-hero__image')
+    if (heroImg) {
+      heroImg.setAttribute('src', builder.image(article.image).auto('format').width(1920).url())
+    }
+  }
+
+  const h1 = root.querySelector('.news-article__title')
+  if (h1) h1.innerHTML = escapeHtml(article.title)
+
+  const dateEls = root.querySelectorAll('.news-article__meta-item')
+  if (dateEls && dateEls[0]) dateEls[0].innerHTML = formatDate(article.date)
+
+  const bodyEl = root.querySelector('.news-article__body')
+  if (bodyEl && Array.isArray(article.body) && article.body.length > 0) {
+    bodyEl.innerHTML = toHTML(article.body, { components: newsBodyPortableTextComponents })
+  }
+
+  const relatedEl = root.querySelector('.news-article__related-list')
+  if (relatedEl) {
+    const related = allArticles
+      .filter(a => a.pageNumber !== article.pageNumber)
+      .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+      .slice(0, 3)
+    relatedEl.innerHTML = '\n' + related.map(a => renderRelatedItem(a, builder)).join('\n') + '\n                '
+  }
+
+  return root.toString()
+}
+
+export async function prepareNewsPages(projectRoot) {
+  const pagesDir = resolve(projectRoot, 'src/pages')
+  const templatePath = resolve(pagesDir, 'news-template.html')
+
+  const client = makeSanityClient()
+  let articles
+  try {
+    articles = await client.fetch(
+      `*[_type == "newsArticle" && defined(pageNumber)] { pageNumber }`
+    )
+  } catch (err) {
+    console.warn('\n[sanity-news] Failed to query Sanity for news pages:', err.message)
+    console.warn('[sanity-news] Will use existing news-*.html files only.\n')
+    articles = []
+  }
+
+  if (articles && articles.length > 0 && existsSync(templatePath)) {
+    const template = readFileSync(templatePath, 'utf-8')
+    for (const { pageNumber } of articles) {
+      if (!pageNumber) continue
+      const dest = resolve(pagesDir, `news-${pageNumber}.html`)
+      if (!existsSync(dest)) {
+        writeFileSync(dest, template, 'utf-8')
+        console.log(`[sanity-news] Generated news-${pageNumber}.html from template`)
+      }
+    }
+  }
+
+  const newsInputs = {}
+  for (const f of readdirSync(pagesDir)) {
+    const m = f.match(/^news-(\d+)\.html$/)
+    if (m) newsInputs[`news-${m[1]}`] = resolve(pagesDir, f)
+  }
+  return newsInputs
+}
+
+export function sanityNewsPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+  let articlesCache = null
+
+  async function getArticles() {
+    if (!articlesCache) {
+      articlesCache = await client.fetch(
+        `*[_type == "newsArticle" && defined(pageNumber)] | order(date desc) {
+          title, excerpt, date, pageNumber, image, body
+        }`
+      )
+    }
+    return articlesCache
+  }
+
+  return {
+    name: 'sanity-news',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      // Homepage carousel
+      if (ctx.filename.endsWith('index.html')) {
+        let articles
+        try {
+          articles = await getArticles()
+        } catch (err) {
+          console.warn('\n[sanity-news] Failed to fetch Sanity data:', err.message)
+          console.warn('[sanity-news] Building homepage news carousel with static fallback.\n')
+          return html
+        }
+        if (!articles || articles.length === 0) {
+          console.warn('\n[sanity-news] No newsArticle documents found — building homepage with static fallback.\n')
+          return html
+        }
+        try {
+          return injectCarousel(html, articles, builder)
+        } catch (err) {
+          console.warn('\n[sanity-news] Error injecting carousel:', err.message, '— building with static fallback.\n')
+          return html
+        }
+      }
+
+      // Individual article pages
+      const newsMatch = ctx.filename.match(/[/\\]news-(\d+)\.html$/)
+      if (newsMatch) {
+        const pageNumber = parseInt(newsMatch[1], 10)
+        let allArticles
+        try {
+          allArticles = await getArticles()
+        } catch (err) {
+          console.warn(`\n[sanity-news] Failed to fetch Sanity data for news-${pageNumber}.html:`, err.message)
+          console.warn('[sanity-news] Building with static fallback.\n')
+          return html
+        }
+        const article = allArticles ? allArticles.find(a => a.pageNumber === pageNumber) : null
+        if (!article) {
+          console.warn(`\n[sanity-news] No Sanity article with pageNumber=${pageNumber} — building with static fallback.\n`)
+          return html
+        }
+        try {
+          return injectArticlePage(html, article, allArticles, builder)
+        } catch (err) {
+          console.warn(`\n[sanity-news] Error injecting content into news-${pageNumber}.html:`, err.message, '— building with static fallback.\n')
+          return html
+        }
+      }
+
+      return html
     },
   }
 }
