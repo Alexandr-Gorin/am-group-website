@@ -811,3 +811,355 @@ export function sanityNewsPlugin() {
     },
   }
 }
+
+// ─── Products ─────────────────────────────────────────────────────────────────
+
+const PANEL_ARROW_SVG = `<svg class="button__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18.4141 13.0001L13.7071 8.29309C13.6142 8.20025 13.504 8.1266 13.3827 8.07635C13.2614 8.02611 13.1314 8.00024 13.0001 8.00024C12.8688 8.00024 12.7387 8.02611 12.6174 8.07635C12.4961 8.1266 12.3859 8.20025 12.2931 8.29309C12.2002 8.38594 12.1266 8.49616 12.0763 8.61747C12.0261 8.73878 12.0002 8.86879 12.0002 9.00009C12.0002 9.1314 12.0261 9.26141 12.0763 9.38272C12.1266 9.50403 12.2002 9.61425 12.2931 9.70709L14.5861 12.0001H7.00006C6.73485 12.0001 6.48049 12.1055 6.29296 12.293C6.10542 12.4805 6.00006 12.7349 6.00006 13.0001C6.00006 13.2653 6.10542 13.5197 6.29296 13.7072C6.48049 13.8947 6.73485 14.0001 7.00006 14.0001H14.5861L12.2931 16.2931C12.1999 16.3857 12.1259 16.4959 12.0755 16.6172C12.025 16.7386 11.999 16.8687 11.999 17.0001C11.999 17.1315 12.025 17.2616 12.0755 17.3829C12.1259 17.5043 12.1999 17.6144 12.2931 17.7071C12.4806 17.8946 12.7349 17.9999 13.0001 17.9999C13.2652 17.9999 13.5195 17.8946 13.7071 17.7071L18.4141 13.0001Z" fill="currentColor"/></svg>`
+
+function normalizeFilterTags(filterTags) {
+  return (filterTags || []).flatMap(t => t.split(',').map(s => s.trim())).filter(Boolean)
+}
+
+function renderPanelCard(category, svgMarkup) {
+  const key = escapeHtml(category.filterKey)
+  const title = escapeHtml(category.title)
+  return `<a href="#${key}" data-filter="${key}" class="panel-card">
+          <p class="panel-card__title">${title}</p>
+          <div class="panel-card__icon">
+            ${svgMarkup}
+          </div>
+          <button class="button button--ghost" tabindex="-1">
+            Подробнее
+            ${PANEL_ARROW_SVG}
+          </button>
+        </a>`
+}
+
+function renderCatalogCard(product, imageUrl) {
+  const tags = normalizeFilterTags(product.filterTags)
+  const dataCategory = escapeHtml(tags.join(' '))
+  const slug = escapeHtml(product.slug)
+  const title = escapeHtml(product.title)
+  const desc = escapeHtml(product.shortDescription || '')
+  const buttonType = product.buttonType === 'secondary' ? 'secondary' : 'primary'
+  const imgTag = imageUrl
+    ? `<img class="card__image" src="${escapeHtml(imageUrl)}" alt="${title}" />`
+    : ''
+  return `<article class="card" data-category="${dataCategory}">
+                <div class="card__image-wrapper">
+                  ${imgTag}
+                </div>
+                <div class="card__content">
+                  <h3 class="card__title">${title}</h3>
+                  <p class="card__description">${desc}</p>
+                </div>
+                <a href="product-${slug}" class="button button--${buttonType}">Подробнее</a>
+              </article>`
+}
+
+const productBodyPortableTextComponents = {
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href ?? '#'
+      return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${children}</a>`
+    },
+  },
+}
+
+function renderProductAccordionItem(title, bodyHtml) {
+  return `<div class="accordion__item">
+                    <button class="accordion__header" aria-expanded="false">
+                      <span class="accordion__title">${escapeHtml(title)}</span>
+                      <span class="accordion__icon" aria-hidden="true"></span>
+                    </button>
+                    <div class="accordion__body">
+                      <div class="accordion__content">
+                        ${bodyHtml}
+                      </div>
+                    </div>
+                  </div>`
+}
+
+function injectProductPage(html, product, builder) {
+  const root = parse(html)
+
+  const pageTitle = product.pageTitle || product.title || ''
+  const titleStr = `${pageTitle}. АМ ГРУПП - микробиологические решения для животноводства и растениеводства`
+
+  const titleEl = root.querySelector('title')
+  if (titleEl) titleEl.innerHTML = escapeHtml(titleStr)
+
+  const metaDesc = root.querySelector('meta[name="description"]')
+  if (metaDesc && product.shortDescription) metaDesc.setAttribute('content', product.shortDescription)
+
+  const ogTitle = root.querySelector('meta[property="og:title"]')
+  if (ogTitle) ogTitle.setAttribute('content', titleStr)
+
+  const ogUrl = root.querySelector('meta[property="og:url"]')
+  if (ogUrl) ogUrl.setAttribute('content', `https://microbio.pro/pages/product-${product.slug}`)
+
+  const h1 = root.querySelector('.product-card__title')
+  if (h1) h1.innerHTML = escapeHtml(pageTitle)
+
+  if (product.mainImage) {
+    try {
+      const imgUrl = builder.image(product.mainImage).auto('format').width(800).url()
+      const heroImg = root.querySelector('.product-card__image')
+      if (heroImg) {
+        heroImg.setAttribute('src', escapeHtml(imgUrl))
+        heroImg.setAttribute('alt', escapeHtml(pageTitle))
+      }
+    } catch (e) {
+      console.warn(`\n[sanity-product-page] Could not build image URL for "${product.slug}": ${e.message}\n`)
+    }
+  }
+
+  const accordion = root.querySelector('.accordion')
+  if (accordion) {
+    const items = []
+    if (product.descriptionTitle || product.descriptionBody) {
+      const descTitle = product.descriptionTitle || pageTitle
+      const descBody = product.descriptionBody
+        ? `<p>${product.descriptionBody.split('\n').map(escapeHtml).join('</p><p>')}</p>`
+        : ''
+      items.push(renderProductAccordionItem(descTitle, descBody))
+    }
+    if (product.purpose && product.purpose.length > 0) {
+      items.push(renderProductAccordionItem('Назначение', toHTML(product.purpose, { components: productBodyPortableTextComponents })))
+    }
+    if (product.composition && product.composition.length > 0) {
+      items.push(renderProductAccordionItem('Состав', toHTML(product.composition, { components: productBodyPortableTextComponents })))
+    }
+    if (product.application && product.application.length > 0) {
+      items.push(renderProductAccordionItem('Применение', toHTML(product.application, { components: productBodyPortableTextComponents })))
+    }
+    if (items.length > 0) {
+      accordion.innerHTML = '\n' + items.join('\n') + '\n                '
+    }
+  }
+
+  const subjectInput = root.querySelector('input[name="_subject"]')
+  if (subjectInput) subjectInput.setAttribute('value', `Заявка: ${pageTitle}`)
+
+  const productNameInput = root.querySelector('input[name="product_name"]')
+  if (productNameInput) productNameInput.setAttribute('value', pageTitle)
+
+  const backBtn = root.querySelector('[data-sanity="backBtn"]')
+  if (backBtn && product.categoryFilterKey) {
+    backBtn.setAttribute('href', `/pages/catalog#${product.categoryFilterKey}`)
+    backBtn.removeAttribute('data-sanity')
+  }
+
+  // Certificates
+  const certEl = root.querySelector('[data-sanity="certificates"]')
+  if (certEl) {
+    if (product.certificates && product.certificates.length > 0) {
+      certEl.setAttribute('class', 'product-card__awards')
+      certEl.removeAttribute('data-sanity')
+      certEl.innerHTML = product.certificates.map((img) => {
+        const url = builder.image(img).auto('format').width(400).url()
+        return `<div class="awards__card"><img class="awards__card-img product-card__award-img" data-lightbox-group="certificates" src="${escapeHtml(url)}" alt="Сертификат" /></div>`
+      }).join('\n')
+    } else {
+      certEl.remove()
+    }
+  }
+
+  // ResearchResults
+  const researchEl = root.querySelector('[data-sanity="researchResults"]')
+  if (researchEl) {
+    if (product.researchResults && product.researchResults.length > 0) {
+      researchEl.setAttribute('class', 'product-card__awards')
+      researchEl.removeAttribute('data-sanity')
+      researchEl.innerHTML = product.researchResults.map((img) => {
+        const url = builder.image(img).auto('format').width(800).url()
+        return `<div class="awards__card"><img class="awards__card-img product-card__award-img" data-lightbox-group="research-results" src="${escapeHtml(url)}" alt="Результаты исследований" /></div>`
+      }).join('\n')
+    } else {
+      researchEl.remove()
+    }
+  }
+
+  return root.toString()
+}
+
+export async function prepareProductPages(projectRoot) {
+  const pagesDir = resolve(projectRoot, 'src/pages')
+  const templatePath = resolve(pagesDir, 'product-template.html')
+
+  if (!existsSync(templatePath)) {
+    console.warn('\n[sanity-products] product-template.html not found — skipping auto-generation.\n')
+  } else {
+    const client = makeSanityClient()
+    let slugs
+    try {
+      slugs = await client.fetch(`*[_type == "product" && defined(slug.current)] { "slug": slug.current }`)
+    } catch (err) {
+      console.warn('\n[sanity-products] Failed to query Sanity for product slugs:', err.message)
+      slugs = []
+    }
+    if (slugs && slugs.length > 0) {
+      const template = readFileSync(templatePath, 'utf-8')
+      for (const { slug } of slugs) {
+        if (!slug) continue
+        const dest = resolve(pagesDir, `product-${slug}.html`)
+        if (!existsSync(dest)) {
+          writeFileSync(dest, template, 'utf-8')
+          console.log(`[sanity-products] Generated product-${slug}.html from template`)
+        }
+      }
+    }
+  }
+
+  const productInputs = {}
+  for (const f of readdirSync(pagesDir)) {
+    const m = f.match(/^product-(.+)\.html$/)
+    if (m && m[1] !== 'template') productInputs[`product-${m[1]}`] = resolve(pagesDir, f)
+  }
+  return productInputs
+}
+
+export function sanityProductsPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-products',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('catalog.html')) return html
+
+      let categories, products
+      try {
+        ;[categories, products] = await Promise.all([
+          client.fetch(`*[_type == "category"] | order(order asc) {
+            title, filterKey, "iconUrl": icon.asset->url
+          }`),
+          client.fetch(`*[_type == "product"] | order(category->order asc, title asc) {
+            title, "slug": slug.current, filterTags, shortDescription, buttonType,
+            "mainImage": mainImage[0]
+          }`)
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-products] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-products] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!categories || categories.length === 0) {
+        console.warn('\n[sanity-products] No category documents found — building with static fallback.\n')
+        return html
+      }
+      if (!products || products.length === 0) {
+        console.warn('\n[sanity-products] No product documents found — building with static fallback.\n')
+        return html
+      }
+
+      const panelHtmlParts = await Promise.all(
+        categories.map(async (cat) => {
+          let svgMarkup = ''
+          if (cat.iconUrl) {
+            try {
+              const resp = await fetch(cat.iconUrl)
+              if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+              svgMarkup = processSvg(await resp.text(), 'panel-card__icon-svg')
+            } catch (e) {
+              console.warn(`\n[sanity-products] Could not fetch icon for "${cat.title}": ${e.message}\n`)
+            }
+          }
+          return renderPanelCard(cat, svgMarkup)
+        })
+      )
+
+      const cardHtmlParts = await Promise.all(
+        products.map(async (product) => {
+          let imageUrl = ''
+          if (product.mainImage) {
+            try {
+              imageUrl = builder.image(product.mainImage).auto('format').width(600).url()
+            } catch (e) {
+              console.warn(`\n[sanity-products] Could not build image URL for "${product.title}": ${e.message}\n`)
+            }
+          }
+          return renderCatalogCard(product, imageUrl)
+        })
+      )
+
+      const root = parse(html)
+
+      const panelCardsEl = root.querySelector('[data-sanity="catalogPanelCards"]')
+      if (!panelCardsEl) {
+        console.warn('\n[sanity-products] Could not find [data-sanity="catalogPanelCards"] — skipping panel cards.\n')
+      } else {
+        panelCardsEl.innerHTML = '\n' + panelHtmlParts.join('\n') + '\n      '
+      }
+
+      const gridEl = root.querySelector('[data-sanity="catalogGrid"]')
+      if (!gridEl) {
+        console.warn('\n[sanity-products] Could not find [data-sanity="catalogGrid"] — skipping product grid.\n')
+      } else {
+        gridEl.innerHTML = '\n' + cardHtmlParts.join('\n') + '\n              '
+      }
+
+      return root.toString()
+    },
+  }
+}
+
+export function sanityProductPagePlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+  let productsCache = null
+
+  async function getProducts() {
+    if (!productsCache) {
+      productsCache = await client.fetch(
+        `*[_type == "product" && defined(slug.current)] {
+          title, pageTitle, shortDescription, "slug": slug.current,
+          "categoryFilterKey": category->filterKey,
+          "mainImage": mainImage[0],
+          descriptionTitle, descriptionBody,
+          purpose, composition, application,
+          certificates, researchResults
+        }`
+      )
+    }
+    return productsCache
+  }
+
+  return {
+    name: 'sanity-product-page',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      const productMatch = ctx.filename.match(/[/\\]product-(.+)\.html$/)
+      if (!productMatch) return html
+
+      const slug = productMatch[1]
+      let allProducts
+      try {
+        allProducts = await getProducts()
+      } catch (err) {
+        console.warn(`\n[sanity-product-page] Failed to fetch data for product-${slug}.html:`, err.message)
+        console.warn('[sanity-product-page] Building with static fallback.\n')
+        return html
+      }
+
+      const product = allProducts ? allProducts.find(p => p.slug === slug) : null
+      if (!product) {
+        console.warn(`\n[sanity-product-page] No product with slug="${slug}" found — building with static fallback.\n`)
+        return html
+      }
+
+      try {
+        return injectProductPage(html, product, builder)
+      } catch (err) {
+        console.warn(`\n[sanity-product-page] Error injecting content into product-${slug}.html:`, err.message, '— building with static fallback.\n')
+        return html
+      }
+    },
+  }
+}
