@@ -1164,6 +1164,184 @@ export function sanityProductPagePlugin() {
   }
 }
 
+// ─── Service Cards (services.html) ───────────────────────────────────────────
+
+export function sanityServiceCardsPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-service-cards',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('services.html')) return html
+
+      let cards
+      try {
+        cards = await client.fetch(
+          `*[_type == "servicePageCard"]{title, description, buttonText, targetService->{slug}}`
+        )
+      } catch (err) {
+        console.warn('\n[sanity-service-cards] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-service-cards] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!cards?.length) {
+        console.warn('\n[sanity-service-cards] No servicePageCard documents found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      for (const card of cards) {
+        const slug = card.targetService?.slug?.current
+        if (!slug) continue
+        const cardEl = root.querySelector(`[data-sanity="serviceCard-${slug}"]`)
+        if (!cardEl) continue
+
+        const titleEl = cardEl.querySelector('.services-card__title')
+        if (titleEl && card.title) titleEl.innerHTML = escapeHtml(card.title)
+
+        const descEls = cardEl.querySelectorAll('.services-card__description')
+        if (descEls.length && card.description) {
+          descEls[0].innerHTML = escapeHtml(card.description)
+          for (let i = 1; i < descEls.length; i++) descEls[i].remove()
+        }
+
+        const btnEl = cardEl.querySelector('.services-card__btn')
+        if (btnEl && card.buttonText) btnEl.innerHTML = escapeHtml(card.buttonText)
+      }
+
+      return root.toString()
+    },
+  }
+}
+
+// ─── Individual Service Pages ─────────────────────────────────────────────────
+
+const SERVICE_PAGE_MAP = {
+  audit: { file: 'services-audit.html', prefix: 'audit' },
+  soprovozhdenie: { file: 'services-support.html', prefix: 'support' },
+  obuchenie: { file: 'services-training.html', prefix: 'training' },
+}
+
+// Selectors for elements that live INSIDE [data-sanity="serviceDescriptionBody"]
+// but belong to separate Sanity fields — save before replacing innerHTML.
+const SERVICE_PRESERVE_SELECTORS = {
+  audit: [],
+  support: ['.products-section__cta'],
+  training: ['.training-content__showcase'],
+}
+
+function makeServiceBodyComponents(prefix) {
+  return {
+    block: {
+      h3: ({ children }) => `<p class="${prefix}-content__block-title">${children}</p>`,
+      h4: ({ children }) => `<p class="${prefix}-content__block-title">${children}</p>`,
+      normal: ({ children }) => `<p>${children}</p>`,
+    },
+    list: {
+      bullet: ({ children }) => `<ul>${children}</ul>`,
+    },
+  }
+}
+
+export function sanityServicePagePlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+  let servicesPromise = null
+
+  return {
+    name: 'sanity-service-page',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      const entry = Object.entries(SERVICE_PAGE_MAP).find(([, info]) => ctx.filename.endsWith(info.file))
+      if (!entry) return html
+      const [slug, { prefix }] = entry
+
+      if (!servicesPromise) {
+        servicesPromise = client.fetch(
+          `*[_type == "service"]{title, slug, heroImage, heroAlt, descriptionTitle, descriptionBody, programImage, programImageAlt, programTitle, programDescription, ctaButtonText}`
+        )
+      }
+
+      let allServices
+      try {
+        allServices = await servicesPromise
+      } catch (err) {
+        servicesPromise = null
+        console.warn(`\n[sanity-service-page] Failed to fetch Sanity data:`, err.message)
+        console.warn('[sanity-service-page] Building with static fallback content.\n')
+        return html
+      }
+
+      const service = allServices?.find(s => s.slug?.current === slug)
+      if (!service) {
+        console.warn(`\n[sanity-service-page] No service with slug="${slug}" found — building with static fallback.\n`)
+        return html
+      }
+
+      const root = parse(html)
+
+      if (service.heroImage) {
+        const el = root.querySelector('[data-sanity="serviceHeroImage"]')
+        if (el) {
+          el.setAttribute('src', builder.image(service.heroImage).auto('format').width(1920).url())
+          if (service.heroAlt) el.setAttribute('alt', escapeHtml(service.heroAlt))
+        }
+      }
+
+      if (service.descriptionTitle) {
+        const el = root.querySelector('[data-sanity="serviceTitle"]')
+        if (el) el.innerHTML = escapeHtml(service.descriptionTitle)
+      }
+
+      if (service.descriptionBody) {
+        const el = root.querySelector('[data-sanity="serviceDescriptionBody"]')
+        if (el) {
+          const components = makeServiceBodyComponents(prefix)
+          const bodyHtml = toHTML(service.descriptionBody, { components })
+          const preserveSelectors = SERVICE_PRESERVE_SELECTORS[prefix] || []
+          const preserved = preserveSelectors
+            .map(sel => el.querySelector(sel))
+            .filter(Boolean)
+            .map(n => n.outerHTML)
+          el.innerHTML = bodyHtml + preserved.join('')
+        }
+      }
+
+      if (service.programImage) {
+        const el = root.querySelector('[data-sanity="serviceProgramImage"]')
+        if (el) {
+          el.setAttribute('src', builder.image(service.programImage).auto('format').width(800).url())
+          if (service.programImageAlt) el.setAttribute('alt', escapeHtml(service.programImageAlt))
+        }
+      }
+
+      if (service.programTitle) {
+        const el = root.querySelector('[data-sanity="serviceProgramTitle"]')
+        if (el) el.innerHTML = escapeHtml(service.programTitle)
+      }
+
+      if (service.programDescription) {
+        const el = root.querySelector('[data-sanity="serviceProgramDescription"]')
+        if (el) el.innerHTML = escapeHtml(service.programDescription)
+      }
+
+      if (service.ctaButtonText) {
+        const el = root.querySelector('[data-sanity="serviceCtaBtn"]')
+        if (el) el.innerHTML = escapeHtml(service.ctaButtonText)
+      }
+
+      return root.toString()
+    },
+  }
+}
+
 export function sanityServicesHeroPlugin() {
   const client = makeSanityClient()
   const builder = createImageUrlBuilder(client)
