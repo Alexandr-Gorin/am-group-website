@@ -32,6 +32,14 @@ export const product = defineType({
       to: [{type: 'category'}],
     }),
     defineField({
+      name: 'filterTags',
+      title: 'Filter Tags',
+      type: 'array',
+      group: 'card',
+      of: [{type: 'string'}],
+      description: 'All filter tokens for this product (e.g. ["soil", "seeds", "plants"]). Joined as data-category on the catalog card. Must include the parent category filterKey plus any sub-tokens.',
+    }),
+    defineField({
       name: 'shortDescription',
       title: 'Short Description',
       type: 'string',

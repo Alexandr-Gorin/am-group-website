@@ -25,6 +25,13 @@ export const category = defineType({
       type: 'image',
     }),
     defineField({
+      name: 'filterKey',
+      title: 'Filter Key',
+      type: 'string',
+      description: 'English slug used as data-filter on the catalog panel button (e.g. feed-supply, byproducts, cattle, soil). Must be unique and URL-safe.',
+      validation: (R) => R.required(),
+    }),
+    defineField({
       name: 'order',
       title: 'Order',
       type: 'number',
