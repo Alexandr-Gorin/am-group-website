@@ -1163,3 +1163,55 @@ export function sanityProductPagePlugin() {
     },
   }
 }
+
+export function sanityServicesHeroPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-services-hero',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('services.html')) return html
+
+      let hero
+      try {
+        hero = await client.fetch(`*[_type == "servicesHero"][0]`)
+      } catch (err) {
+        console.warn('\n[sanity-services-hero] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-services-hero] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!hero) {
+        console.warn('\n[sanity-services-hero] No servicesHero document found in Sanity — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (hero.heading) {
+        const el = root.querySelector('[data-sanity="servicesHeroHeading"]')
+        if (el) el.innerHTML = escapeHtml(hero.heading)
+      }
+
+      if (hero.subheading) {
+        const el = root.querySelector('[data-sanity="servicesHeroSubheading"]')
+        if (el) el.innerHTML = escapeHtml(hero.subheading)
+      }
+
+      if (hero.image) {
+        const el = root.querySelector('[data-sanity="servicesHeroImage"]')
+        if (el) {
+          const url = builder.image(hero.image).auto('format').width(1200).url()
+          el.setAttribute('src', url)
+          el.setAttribute('alt', escapeHtml(hero.heading || ''))
+        }
+      }
+
+      return root.toString()
+    },
+  }
+}

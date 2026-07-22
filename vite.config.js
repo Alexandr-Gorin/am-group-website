@@ -1,13 +1,13 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import { sanityHeroPlugin, sanityTaskCardsPlugin, sanityStatsSectionPlugin, sanityPartnershipPlugin, sanityFaqPlugin, sanityContactSectionPlugin, sanityMaterialsPlugin, sanityNewsPlugin, prepareNewsPages, prepareProductPages, sanityProductsPlugin, sanityProductPagePlugin } from './vite-plugin-sanity.js'
+import { sanityHeroPlugin, sanityTaskCardsPlugin, sanityStatsSectionPlugin, sanityPartnershipPlugin, sanityFaqPlugin, sanityContactSectionPlugin, sanityMaterialsPlugin, sanityNewsPlugin, prepareNewsPages, prepareProductPages, sanityProductsPlugin, sanityProductPagePlugin, sanityServicesHeroPlugin } from './vite-plugin-sanity.js'
 
 export default defineConfig(async () => {
   const newsInputs = await prepareNewsPages(__dirname)
   const productInputs = await prepareProductPages(__dirname)
 
   return {
-    plugins: [sanityHeroPlugin(), sanityTaskCardsPlugin(), sanityStatsSectionPlugin(), sanityPartnershipPlugin(), sanityFaqPlugin(), sanityContactSectionPlugin(), sanityMaterialsPlugin(), sanityNewsPlugin(), sanityProductsPlugin(), sanityProductPagePlugin()],
+    plugins: [sanityHeroPlugin(), sanityTaskCardsPlugin(), sanityStatsSectionPlugin(), sanityPartnershipPlugin(), sanityFaqPlugin(), sanityContactSectionPlugin(), sanityMaterialsPlugin(), sanityNewsPlugin(), sanityProductsPlugin(), sanityProductPagePlugin(), sanityServicesHeroPlugin()],
     server: {
       proxy: {
         '/api': 'http://localhost:3001',
