@@ -1577,3 +1577,59 @@ export function sanityAboutAdvantagesPlugin() {
     },
   }
 }
+
+export function sanityAboutBrandsPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-about-brands',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('about-company.html')) return html
+
+      let section, cards
+      try {
+        ;[section, cards] = await Promise.all([
+          client.fetch(`*[_type == "aboutBrandsSection"][0]{ heading }`),
+          client.fetch(`*[_type == "brandCard"] | order(order asc) { logo, logoAlt }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-about-brands] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-about-brands] Building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section?.heading) {
+        const titleEl = root.querySelector('[data-sanity="brandsSectionHeading"]')
+        if (titleEl) titleEl.set_content(escapeHtml(section.heading))
+      }
+
+      if (!cards?.length) {
+        console.warn('\n[sanity-about-brands] No brandCard documents found — skipping grid.\n')
+        return root.toString()
+      }
+
+      const grid = root.querySelector('[data-sanity="brandsGrid"]')
+      if (!grid) {
+        console.warn('\n[sanity-about-brands] Could not find [data-sanity="brandsGrid"] — skipping.\n')
+        return root.toString()
+      }
+
+      grid.innerHTML = '\n              ' + cards.map(card => {
+        const src = card.logo
+          ? builder.image(card.logo).auto('format').width(600).url()
+          : ''
+        const alt = escapeHtml(card.logoAlt || '')
+        return `<div class="brands__card"><img src="${src}" alt="${alt}" /></div>`
+      }).join('\n              ') + '\n            '
+
+      console.log(`[sanity-about-brands] Injected ${cards.length} brand cards.`)
+      return root.toString()
+    },
+  }
+}
