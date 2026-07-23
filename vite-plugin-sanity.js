@@ -1633,3 +1633,46 @@ export function sanityAboutBrandsPlugin() {
     },
   }
 }
+
+export function sanityAboutVacancyPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-about-vacancy',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('about-company.html')) return html
+
+      let section
+      try {
+        section = await client.fetch(
+          `*[_type == "aboutVacancySection"][0]{ heading, subheading, buttonText }`
+        )
+      } catch (err) {
+        console.warn('\n[sanity-about-vacancy] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-about-vacancy] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-about-vacancy] No aboutVacancySection document found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      const headingEl = root.querySelector('[data-sanity="vacancyHeading"]')
+      const subheadingEl = root.querySelector('[data-sanity="vacancySubheading"]')
+      const btnEl = root.querySelector('[data-sanity="vacancyButtonText"]')
+
+      if (headingEl && section.heading) headingEl.set_content(escapeHtml(section.heading))
+      if (subheadingEl && section.subheading) subheadingEl.set_content(escapeHtml(section.subheading))
+      if (btnEl && section.buttonText) btnEl.set_content(escapeHtml(section.buttonText))
+
+      console.log('[sanity-about-vacancy] Injected vacancy section.')
+      return root.toString()
+    },
+  }
+}
