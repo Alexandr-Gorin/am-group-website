@@ -1451,3 +1451,51 @@ export function sanityAboutHeroPlugin() {
     },
   }
 }
+
+// ─── About Company Awards grid ────────────────────────────────────────────────
+
+export function sanityAboutAwardsPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-about-awards',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('about-company.html')) return html
+
+      let awards
+      try {
+        awards = await client.fetch(
+          `*[_type == "awardCard"] | order(order asc) { image, imageAlt }`
+        )
+      } catch (err) {
+        console.warn('\n[sanity-about-awards] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-about-awards] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!awards?.length) {
+        console.warn('\n[sanity-about-awards] No awardCard documents found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+      const grid = root.querySelector('[data-sanity="awardsGrid"]')
+      if (!grid) return root.toString()
+
+      grid.innerHTML = awards.map(award => {
+        const src = award.image
+          ? builder.image(award.image).auto('format').width(300).url()
+          : ''
+        const alt = escapeHtml(award.imageAlt || '')
+        return `<div class="awards__card"><img class="awards__card-img" src="${src}" alt="${alt}" /></div>`
+      }).join('\n              ')
+
+      console.log(`[sanity-about-awards] Injected ${awards.length} award cards.`)
+      return root.toString()
+    },
+  }
+}
