@@ -1393,3 +1393,61 @@ export function sanityServicesHeroPlugin() {
     },
   }
 }
+
+// ─── About Company Hero ───────────────────────────────────────────────────────
+
+const aboutHeroBodyComponents = {
+  block: {
+    normal: ({ children }) => `<p>${children}</p>`,
+  },
+  list: {
+    bullet: ({ children }) => `<ul class="about-overview__list">${children}</ul>`,
+  },
+}
+
+export function sanityAboutHeroPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-about-hero',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('about-company.html')) return html
+
+      let hero
+      try {
+        hero = await client.fetch(`*[_type == "aboutHero"][0]`)
+      } catch (err) {
+        console.warn('\n[sanity-about-hero] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-about-hero] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!hero) {
+        console.warn('\n[sanity-about-hero] No aboutHero document found in Sanity — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (hero.eyebrow) {
+        const el = root.querySelector('[data-sanity="aboutEyebrow"]')
+        if (el) el.innerHTML = escapeHtml(hero.eyebrow)
+      }
+
+      if (hero.heading) {
+        const el = root.querySelector('[data-sanity="aboutHeading"]')
+        if (el) el.innerHTML = escapeHtml(hero.heading)
+      }
+
+      if (hero.description) {
+        const el = root.querySelector('[data-sanity="aboutDescription"]')
+        if (el) el.innerHTML = toHTML(hero.description, { components: aboutHeroBodyComponents })
+      }
+
+      return root.toString()
+    },
+  }
+}
