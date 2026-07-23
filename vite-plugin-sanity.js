@@ -1499,3 +1499,81 @@ export function sanityAboutAwardsPlugin() {
     },
   }
 }
+
+export function sanityAboutAdvantagesPlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-about-advantages',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('about-company.html')) return html
+
+      let section, cards
+      try {
+        ;[section, cards] = await Promise.all([
+          client.fetch(`*[_type == "aboutAdvantagesSection"][0]{ heading, subheading }`),
+          client.fetch(`*[_type == "advantageCard"] | order(order asc) { title, subtitle, description, "iconUrl": icon.asset->url }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-about-advantages] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-about-advantages] Building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      if (section) {
+        const titleEl = root.querySelector('[data-sanity="advantagesSectionHeading"]')
+        const subtitleEl = root.querySelector('[data-sanity="advantagesSectionSubheading"]')
+        if (titleEl && section.heading) titleEl.set_content(escapeHtml(section.heading))
+        if (subtitleEl && section.subheading) subtitleEl.set_content(escapeHtml(section.subheading))
+      }
+
+      if (!cards?.length) {
+        console.warn('\n[sanity-about-advantages] No advantageCard documents found — skipping grid.\n')
+        return root.toString()
+      }
+
+      const cardHtmlParts = await Promise.all(
+        cards.map(async (card) => {
+          let svgMarkup = ''
+          if (card.iconUrl) {
+            try {
+              const resp = await fetch(card.iconUrl)
+              if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+              svgMarkup = processSvg(await resp.text(), 'why-us__card-icon-svg')
+            } catch (e) {
+              console.warn(`\n[sanity-about-advantages] Could not fetch icon for "${card.title}": ${e.message}\n`)
+            }
+          }
+          return `<div class="why-us__card">
+                <div class="why-us__card-header">
+                  <h3 class="why-us__card-title">${escapeHtml(card.title || '')}</h3>
+                  <span class="why-us__card-icon" aria-hidden="true">
+                    ${svgMarkup}
+                  </span>
+                </div>
+                <div class="why-us__card-body">
+                  <p class="why-us__card-label">${escapeHtml(card.subtitle || '')}</p>
+                  <p class="why-us__card-text">${escapeHtml(card.description || '')}</p>
+                </div>
+              </div>`
+        })
+      )
+
+      const grid = root.querySelector('[data-sanity="advantagesGrid"]')
+      if (!grid) {
+        console.warn('\n[sanity-about-advantages] Could not find [data-sanity="advantagesGrid"] — skipping.\n')
+        return root.toString()
+      }
+
+      grid.innerHTML = '\n              ' + cardHtmlParts.join('\n\n              ') + '\n            '
+
+      console.log(`[sanity-about-advantages] Injected ${cards.length} advantage cards.`)
+      return root.toString()
+    },
+  }
+}
