@@ -1676,3 +1676,75 @@ export function sanityAboutVacancyPlugin() {
     },
   }
 }
+
+const missionBodyComponents = {
+  block: {
+    normal: ({ children }) => `<p>${children}</p>`,
+  },
+  list: {
+    bullet: ({ children }) => children,
+  },
+  listItem: {
+    bullet: ({ children }) => `<p>• ${children}</p>`,
+  },
+}
+
+export function sanityAboutMissionPlugin() {
+  const client = makeSanityClient()
+  const builder = createImageUrlBuilder(client)
+
+  return {
+    name: 'sanity-about-mission',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('about-company.html')) return html
+
+      let section
+      try {
+        section = await client.fetch(
+          `*[_type == "aboutMissionSection"][0]{ photo, photoAlt, label, greeting, body, signatureName, signaturePosition }`
+        )
+      } catch (err) {
+        console.warn('\n[sanity-about-mission] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-about-mission] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!section) {
+        console.warn('\n[sanity-about-mission] No aboutMissionSection document found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      const photoEl = root.querySelector('[data-sanity="missionPhoto"]')
+      if (photoEl && section.photo) {
+        photoEl.setAttribute('src', builder.image(section.photo).auto('format').width(852).url())
+        photoEl.setAttribute('alt', escapeHtml(section.photoAlt || ''))
+      }
+
+      const labelEl = root.querySelector('[data-sanity="missionLabel"]')
+      if (labelEl && section.label) labelEl.set_content(escapeHtml(section.label))
+
+      const letterEl = root.querySelector('[data-sanity="missionLetter"]')
+      if (letterEl) {
+        const greetingHtml = section.greeting
+          ? `<p class="ceo__letter-greeting">${escapeHtml(section.greeting)}</p>`
+          : ''
+        const bodyHtml = section.body ? toHTML(section.body, { components: missionBodyComponents }) : ''
+        letterEl.innerHTML = greetingHtml + bodyHtml
+      }
+
+      const nameEl = root.querySelector('[data-sanity="missionSignatureName"]')
+      if (nameEl && section.signatureName) nameEl.set_content(escapeHtml(section.signatureName))
+
+      const posEl = root.querySelector('[data-sanity="missionSignaturePosition"]')
+      if (posEl && section.signaturePosition) posEl.set_content(escapeHtml(section.signaturePosition))
+
+      console.log('[sanity-about-mission] Injected mission section.')
+      return root.toString()
+    },
+  }
+}
