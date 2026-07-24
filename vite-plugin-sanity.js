@@ -1828,3 +1828,76 @@ export function sanityContactsPagePlugin() {
     },
   }
 }
+
+const policySectionComponents = {
+  block: {
+    normal: ({ children }) => `<p class="policy__body">${children}</p>`,
+  },
+  list: {
+    bullet: ({ children }) => `<div class="policy__list"><ul>${children}</ul></div>`,
+  },
+  listItem: {
+    bullet: ({ children }) => `<li>${children}</li>`,
+  },
+  marks: {
+    strong: ({ children }) => `<strong>${children}</strong>`,
+  },
+}
+
+function renderPolicyBlock(section) {
+  const bodyHtml = section.body ? toHTML(section.body, { components: policySectionComponents }) : ''
+  return `<div class="policy__block">
+              <h2 class="policy__section-title">${escapeHtml(section.sectionTitle || '')}</h2>
+              ${bodyHtml}
+            </div>`
+}
+
+export function sanityPolicyPagePlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-policy-page',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('policy.html')) return html
+
+      let page, sections
+      try {
+        ;[page, sections] = await Promise.all([
+          client.fetch(`*[_type == "policyPage"][0]{ title, subtitle }`),
+          client.fetch(`*[_type == "policySection"] | order(order asc) { sectionTitle, body }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-policy-page] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-policy-page] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!page || !sections?.length) {
+        console.warn('\n[sanity-policy-page] Missing policyPage or policySection documents — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+      const doc = root.querySelector('[data-sanity="policyDocument"]')
+      if (!doc) {
+        console.warn('\n[sanity-policy-page] Could not find [data-sanity="policyDocument"] — skipping.\n')
+        return root.toString()
+      }
+
+      const heroHtml = `<div class="policy__hero">
+              <h1 class="policy__hero-title">${escapeHtml(page.title || '')}</h1>
+              <p class="policy__hero-subtitle">${escapeHtml(page.subtitle || '')}</p>
+            </div>`
+
+      const blocksHtml = sections.map(renderPolicyBlock).join('\n            ')
+
+      doc.innerHTML = '\n            ' + heroHtml + '\n\n            ' + blocksHtml + '\n          '
+
+      console.log(`[sanity-policy-page] Injected policy page: title + ${sections.length} sections.`)
+      return root.toString()
+    },
+  }
+}
