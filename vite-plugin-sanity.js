@@ -1901,3 +1901,58 @@ export function sanityPolicyPagePlugin() {
     },
   }
 }
+
+export function sanityCookiePagePlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-cookie-page',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('cookie.html')) return html
+
+      let page, sections
+      try {
+        ;[page, sections] = await Promise.all([
+          client.fetch(`*[_type == "cookiePage"][0]{ title, intro }`),
+          client.fetch(`*[_type == "cookieSection"] | order(order asc) { sectionTitle, body }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-cookie-page] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-cookie-page] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!page || !sections?.length) {
+        console.warn('\n[sanity-cookie-page] Missing cookiePage or cookieSection documents — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+      const doc = root.querySelector('[data-sanity="cookieDocument"]')
+      if (!doc) {
+        console.warn('\n[sanity-cookie-page] Could not find [data-sanity="cookieDocument"] — skipping.\n')
+        return root.toString()
+      }
+
+      const heroHtml = `<div class="policy__hero">
+              <h1 class="policy__hero-title">${escapeHtml(page.title || '')}</h1>
+            </div>`
+
+      const introHtml = page.intro
+        ? `<div class="policy__block">
+              ${toHTML(page.intro, { components: policySectionComponents })}
+            </div>`
+        : ''
+
+      const blocksHtml = sections.map(renderPolicyBlock).join('\n            ')
+
+      doc.innerHTML = '\n            ' + heroHtml + '\n\n            ' + introHtml + '\n\n            ' + blocksHtml + '\n          '
+
+      console.log(`[sanity-cookie-page] Injected cookie page: title + intro + ${sections.length} sections.`)
+      return root.toString()
+    },
+  }
+}
