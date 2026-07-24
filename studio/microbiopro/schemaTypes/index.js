@@ -15,7 +15,6 @@ import {materialItem} from './materialItem'
 import {servicesHero} from './servicesHero'
 import {service} from './service'
 import {servicePageCard} from './servicePageCard'
-import {servicesFeedbackSection} from './servicesFeedbackSection'
 import {aboutHero} from './aboutHero'
 import {awardCard} from './awardCard'
 import {aboutAdvantagesSection} from './aboutAdvantagesSection'
@@ -30,4 +29,4 @@ import {policySection} from './policySection'
 import {cookiePage} from './cookiePage'
 import {cookieSection} from './cookieSection'
 
-export const schemaTypes = [category, product, newsArticle, homeHero, taskCard, statsSection, statCard, partnershipSection, partnerCard, faqSection, faqItem, contactSection, materialsSection, materialItem, servicesHero, service, servicePageCard, servicesFeedbackSection, aboutHero, awardCard, aboutAdvantagesSection, advantageCard, aboutBrandsSection, brandCard, aboutVacancySection, aboutMissionSection, contactsPage, policyPage, policySection, cookiePage, cookieSection]
+export const schemaTypes = [category, product, newsArticle, homeHero, taskCard, statsSection, statCard, partnershipSection, partnerCard, faqSection, faqItem, contactSection, materialsSection, materialItem, servicesHero, service, servicePageCard, aboutHero, awardCard, aboutAdvantagesSection, advantageCard, aboutBrandsSection, brandCard, aboutVacancySection, aboutMissionSection, contactsPage, policyPage, policySection, cookiePage, cookieSection]
