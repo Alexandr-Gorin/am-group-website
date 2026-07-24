@@ -1748,3 +1748,83 @@ export function sanityAboutMissionPlugin() {
     },
   }
 }
+
+function formatPhone(raw) {
+  const digits = raw.replace(/\D/g, '')
+  const ten = digits.length === 11 ? digits.slice(1) : digits
+  return `8 (${ten.slice(0, 3)}) ${ten.slice(3, 6)}-${ten.slice(6, 8)}-${ten.slice(8, 10)}`
+}
+
+export function sanityContactsPagePlugin() {
+  const client = makeSanityClient()
+
+  return {
+    name: 'sanity-contacts-page',
+    apply: 'build',
+    enforce: 'pre',
+
+    async transformIndexHtml(html, ctx) {
+      if (!ctx.filename.endsWith('contacts.html')) return html
+
+      let page
+      try {
+        page = await client.fetch(
+          `*[_type == "contactsPage"][0]{ title, subtitle, body, phone1, phone2, email, socialsLabel, maxUrl, vkUrl, tiktokUrl }`
+        )
+      } catch (err) {
+        console.warn('\n[sanity-contacts-page] Failed to fetch Sanity data:', err.message)
+        console.warn('[sanity-contacts-page] Building with static fallback content.\n')
+        return html
+      }
+
+      if (!page) {
+        console.warn('\n[sanity-contacts-page] No contactsPage document found — building with static fallback content.\n')
+        return html
+      }
+
+      const root = parse(html)
+
+      const titleEl = root.querySelector('[data-sanity="contactsTitle"]')
+      if (titleEl && page.title) titleEl.set_content(escapeHtml(page.title))
+
+      const subtitleEl = root.querySelector('[data-sanity="contactsSubtitle"]')
+      if (subtitleEl && page.subtitle) subtitleEl.set_content(escapeHtml(page.subtitle))
+
+      const bodyEl = root.querySelector('[data-sanity="contactsBody"]')
+      if (bodyEl && page.body) bodyEl.set_content(escapeHtml(page.body))
+
+      for (const [attr, raw] of [['contactsPhone1', page.phone1], ['contactsPhone2', page.phone2]]) {
+        if (!raw) continue
+        const el = root.querySelector(`[data-sanity="${attr}"]`)
+        if (!el) continue
+        el.setAttribute('href', `tel:${raw}`)
+        const textEl = el.querySelector('.contacts__item-text')
+        if (textEl) textEl.set_content(formatPhone(raw))
+      }
+
+      const emailEl = root.querySelector('[data-sanity="contactsEmail"]')
+      if (emailEl && page.email) {
+        emailEl.setAttribute('href', `mailto:${page.email}`)
+        const textEl = emailEl.querySelector('.contacts__item-text')
+        if (textEl) textEl.set_content(escapeHtml(page.email))
+      }
+
+      const socialsLabelEl = root.querySelector('[data-sanity="contactsSocialsLabel"]')
+      if (socialsLabelEl && page.socialsLabel) socialsLabelEl.set_content(escapeHtml(page.socialsLabel))
+
+      const socialMap = [
+        ['contactsSocialMax', page.maxUrl],
+        ['contactsSocialVk', page.vkUrl],
+        ['contactsSocialTiktok', page.tiktokUrl],
+      ]
+      for (const [attr, url] of socialMap) {
+        if (!url) continue
+        const el = root.querySelector(`[data-sanity="${attr}"]`)
+        if (el) el.setAttribute('href', url)
+      }
+
+      console.log('[sanity-contacts-page] Injected contacts page content.')
+      return root.toString()
+    },
+  }
+}
