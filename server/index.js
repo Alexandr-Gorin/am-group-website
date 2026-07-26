@@ -3,12 +3,27 @@ require("dotenv").config();
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
+const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+const { exec } = require("child_process");
+const { promisify } = require("util");
+
+const execAsync = promisify(exec);
 
 const app = express();
 
 // Разрешаем фронтенду присылать данные на бэкенд
 app.use(cors());
-app.use(express.json());
+
+// Capture raw body for webhook HMAC verification before JSON parsing consumes it
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      req.rawBody = buf.toString("utf-8");
+    },
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 
 // Настройка почтового сервиса (SMTP)
@@ -80,7 +95,186 @@ app.post("/api/send-email", async (req, res) => {
   }
 });
 
-const PORT = 3001; // Сделаем 3001, так как 3000 может быть занят Витом
+// ---------------------------------------------------------------------------
+// Sanity webhook — POST /webhook/sanity-deploy
+// ---------------------------------------------------------------------------
+
+const WEBHOOK_SECRET = process.env.SANITY_WEBHOOK_SECRET;
+const DEPLOY_LOCK = "/tmp/am-group-deploy.lock";
+const LOG_DIR = "/var/log/am-group-deploy";
+const PROJECT_DIR = "/var/www/am-group-website";
+
+function isValidSanitySignature(rawBody, signature, secret) {
+  if (!signature || !secret) return false;
+
+  // Header format: t=<unix_timestamp>,v1=<hex_hmac>
+  const commaIdx = signature.indexOf(",");
+  if (commaIdx === -1) return false;
+  const tPart = signature.slice(0, commaIdx);
+  const v1Part = signature.slice(commaIdx + 1);
+  if (!tPart.startsWith("t=") || !v1Part.startsWith("v1=")) return false;
+
+  const timestamp = parseInt(tPart.slice(2), 10);
+  const providedHash = v1Part.slice(3);
+
+  // Reject signatures older than 5 minutes (replay protection)
+  const ageSecs = Math.abs(Math.floor(Date.now() / 1000) - timestamp);
+  if (ageSecs > 300) {
+    console.warn(`[webhook] Rejected stale signature (age: ${ageSecs}s)`);
+    return false;
+  }
+
+  const expected = crypto
+    .createHmac("sha256", secret)
+    .update(`${timestamp}.${rawBody}`)
+    .digest("hex");
+
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(expected, "hex"),
+      Buffer.from(providedHash, "hex")
+    );
+  } catch {
+    return false;
+  }
+}
+
+function appendLog(logFile, msg) {
+  const line = `[${new Date().toISOString()}] ${msg}\n`;
+  try {
+    fs.appendFileSync(logFile, line);
+  } catch {}
+  console.log("[deploy]", msg);
+}
+
+async function runDeploy() {
+  const ts = Date.now();
+  const logFile = path.join(
+    LOG_DIR,
+    `deploy-${new Date().toISOString().replace(/[:.]/g, "-")}.log`
+  );
+  const newDistDir = path.join(PROJECT_DIR, `dist_new_${ts}`);
+  const oldDistDir = path.join(PROJECT_DIR, `dist_old_${ts}`);
+  const liveDistDir = path.join(PROJECT_DIR, "dist");
+
+  try {
+    fs.mkdirSync(LOG_DIR, { recursive: true });
+  } catch {}
+
+  const log = (msg) => appendLog(logFile, msg);
+
+  const run = async (cmd) => {
+    log(`> ${cmd}`);
+    try {
+      const { stdout, stderr } = await execAsync(cmd, {
+        cwd: PROJECT_DIR,
+        env: { ...process.env, HOME: "/root" },
+      });
+      if (stdout.trim()) log(stdout.trim());
+      if (stderr.trim()) log(`[stderr] ${stderr.trim()}`);
+    } catch (err) {
+      log(`FAILED: ${cmd}`);
+      log(err.stderr ? err.stderr.trim() : err.message);
+      throw err;
+    }
+  };
+
+  let swapDone = false;
+
+  try {
+    log("=== Deploy started ===");
+
+    // 1. git pull
+    await run("git pull origin main");
+
+    // 2. npm install only if package files changed in this pull
+    let pkgChanged = false;
+    try {
+      const { stdout } = await execAsync(
+        "git diff --name-only ORIG_HEAD HEAD -- package.json package-lock.json",
+        { cwd: PROJECT_DIR }
+      );
+      pkgChanged = stdout.trim().length > 0;
+    } catch {
+      pkgChanged = true; // if unsure, install to be safe
+    }
+    if (pkgChanged) {
+      log("package files changed — running npm install");
+      await run("npm install");
+    } else {
+      log("package files unchanged — skipping npm install");
+    }
+
+    // 3. Build to temp dir (never touches live dist/)
+    log(`Building to ${newDistDir}`);
+    await run(`npm run build -- --outDir ${newDistDir} --emptyOutDir`);
+
+    // 4. Atomic swap: rename old dist aside, rename new into place
+    log("Swapping dist directories");
+    fs.renameSync(liveDistDir, oldDistDir);
+    fs.renameSync(newDistDir, liveDistDir);
+    swapDone = true;
+
+    // 5. Recreate pages symlink in the new live dist
+    const pagesSymlink = path.join(liveDistDir, "pages");
+    const pagesTarget = path.join(liveDistDir, "src", "pages");
+    try { fs.unlinkSync(pagesSymlink); } catch {}
+    fs.symlinkSync(pagesTarget, pagesSymlink);
+    log("Pages symlink recreated");
+
+    // 6. Remove old dist
+    await run(`rm -rf ${oldDistDir}`);
+    log("=== Deploy complete ===");
+
+  } catch (err) {
+    log(`=== Deploy FAILED: ${err.message} ===`);
+
+    // Safety net: if swap started but new dist never landed, restore old
+    if (swapDone && !fs.existsSync(liveDistDir) && fs.existsSync(oldDistDir)) {
+      try {
+        fs.renameSync(oldDistDir, liveDistDir);
+        log("Restored previous dist after failed swap");
+      } catch (restoreErr) {
+        log(`CRITICAL: could not restore dist — ${restoreErr.message}`);
+      }
+    }
+
+    // Remove partial new dist if it exists
+    try { fs.rmSync(newDistDir, { recursive: true, force: true }); } catch {}
+
+  } finally {
+    try { fs.unlinkSync(DEPLOY_LOCK); } catch {}
+    log("Lock released");
+  }
+}
+
+app.post("/webhook/sanity-deploy", (req, res) => {
+  // 1. Verify Sanity HMAC signature
+  const signature = req.headers["sanity-webhook-signature"];
+  if (!isValidSanitySignature(req.rawBody, signature, WEBHOOK_SECRET)) {
+    console.warn(`[webhook] Invalid/missing signature from ${req.ip}`);
+    return res.status(401).json({ error: "Invalid signature" });
+  }
+
+  // 2. Acquire lock (atomic: throws if file already exists)
+  try {
+    fs.openSync(DEPLOY_LOCK, "wx");
+  } catch {
+    console.log("[webhook] Deploy already in progress — ignoring duplicate call");
+    return res.status(202).json({ message: "Deploy already in progress" });
+  }
+
+  // 3. Respond immediately so Sanity doesn't time out waiting
+  res.status(200).json({ message: "Deploy started" });
+
+  // 4. Run the deploy asynchronously (lock is released in finally block)
+  runDeploy().catch((err) => {
+    console.error("[webhook] Unhandled deploy error:", err.message);
+    try { fs.unlinkSync(DEPLOY_LOCK); } catch {}
+  });
+});
+
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Бэкенд запущен на http://localhost:${PORT}`);
 });
