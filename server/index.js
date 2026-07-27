@@ -98,6 +98,59 @@ app.post("/api/send-email", async (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// Sanity Presentation tool preview — GET /api/preview-data
+// ---------------------------------------------------------------------------
+
+const PREVIEW_CLIENT_SECRET = "amg-preview-2026";
+const SANITY_PREVIEW_TOKEN = process.env.SANITY_PREVIEW_TOKEN;
+
+app.get("/api/preview-data", async (req, res) => {
+  if (req.query.secret !== PREVIEW_CLIENT_SECRET) {
+    return res.status(403).json({ error: "Invalid secret" });
+  }
+  if (!SANITY_PREVIEW_TOKEN) {
+    console.warn("[preview] SANITY_PREVIEW_TOKEN not set in server/.env");
+    return res.status(503).json({ error: "Preview not configured" });
+  }
+
+  const query = `{
+    "hero": *[_type == "homeHero"][0]{heading, subheading, buttonText, bannerImage},
+    "partnership": *[_type == "partnershipSection"][0]{heading, subheading, buttonText},
+    "faqSection": *[_type == "faqSection"][0]{heading},
+    "faqItems": *[_type == "faqItem"] | order(order asc){question, answer},
+    "contact": *[_type == "contactSection"][0]{
+      heading, subheading, buttonText, consentText, newsletterText, backgroundImage
+    }
+  }`;
+
+  try {
+    const sanityRes = await fetch(
+      "https://b33hwgh0.api.sanity.io/v2024-01-01/data/query/production",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${SANITY_PREVIEW_TOKEN}`,
+        },
+        body: JSON.stringify({ query, perspective: "previewDrafts" }),
+      }
+    );
+
+    if (!sanityRes.ok) {
+      const text = await sanityRes.text();
+      console.error("[preview] Sanity API error:", sanityRes.status, text);
+      return res.status(502).json({ error: "Sanity API error" });
+    }
+
+    const json = await sanityRes.json();
+    res.json(json.result);
+  } catch (err) {
+    console.error("[preview] Fetch error:", err.message);
+    res.status(500).json({ error: "Internal error" });
+  }
+});
+
+// ---------------------------------------------------------------------------
 // Sanity webhook — POST /webhook/sanity-deploy
 // ---------------------------------------------------------------------------
 
