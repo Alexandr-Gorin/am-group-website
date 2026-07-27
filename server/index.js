@@ -109,8 +109,7 @@ const PROJECT_DIR = "/var/www/am-group-website";
 function isValidSanitySignature(rawBody, signature, secret) {
   if (!signature || !secret) return false;
 
-  // Header format: t=<unix_timestamp_ms>,v1=<hex_hmac>
-  // Sanity sends the timestamp in milliseconds (not seconds)
+  // Header format: t=<unix_timestamp_ms>,v1=<base64url_hmac>
   const commaIdx = signature.indexOf(",");
   if (commaIdx === -1) return false;
   const tPart = signature.slice(0, commaIdx);
@@ -120,19 +119,17 @@ function isValidSanitySignature(rawBody, signature, secret) {
   const timestamp = parseInt(tPart.slice(2), 10);
   const providedHash = v1Part.slice(3);
 
-  // Timestamp is in ms — compare against Date.now() (also ms) for replay protection
+  // Replay protection: reject signatures older than 5 minutes
   const ageMs = Math.abs(Date.now() - timestamp);
   if (ageMs > 5 * 60 * 1000) {
     console.warn(`[webhook] Rejected stale signature (age: ${Math.floor(ageMs / 1000)}s)`);
     return false;
   }
 
-  // Sanity's HMAC payload: String(timestamp) + rawBody (no separator — two .update() calls)
-  // Sanity encodes the digest as base64url (not hex)
+  // Sanity signs: HMAC-SHA256(secret, `${timestamp}.${rawBody}`) — dot separator
   const expectedBuf = crypto
     .createHmac("sha256", secret)
-    .update(String(timestamp))
-    .update(rawBody)
+    .update(`${timestamp}.${rawBody}`)
     .digest();
 
   try {
