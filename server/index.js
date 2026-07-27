@@ -113,15 +113,28 @@ app.get("/api/preview-data", async (req, res) => {
     return res.status(503).json({ error: "Preview not configured" });
   }
 
-  const query = `{
-    "hero": *[_type == "homeHero"][0]{heading, subheading, buttonText, bannerImage},
-    "partnership": *[_type == "partnershipSection"][0]{heading, subheading, buttonText},
-    "faqSection": *[_type == "faqSection"][0]{heading},
-    "faqItems": *[_type == "faqItem"] | order(order asc){question, answer},
-    "contact": *[_type == "contactSection"][0]{
-      heading, subheading, buttonText, consentText, newsletterText, backgroundImage
-    }
-  }`;
+  const page = req.query.page || 'home';
+
+  let query;
+  if (page === 'catalog') {
+    query = `{
+      "categories": *[_type == "category"] | order(order asc){ title, filterKey, "iconUrl": icon.asset->url },
+      "products": *[_type == "product"] | order(category->order asc, title asc){
+        title, "slug": slug.current, filterTags, shortDescription, buttonType,
+        "mainImage": mainImage[0]
+      }
+    }`;
+  } else {
+    query = `{
+      "hero": *[_type == "homeHero"][0]{heading, subheading, buttonText, bannerImage},
+      "partnership": *[_type == "partnershipSection"][0]{heading, subheading, buttonText},
+      "faqSection": *[_type == "faqSection"][0]{heading},
+      "faqItems": *[_type == "faqItem"] | order(order asc){question, answer},
+      "contact": *[_type == "contactSection"][0]{
+        heading, subheading, buttonText, consentText, newsletterText, backgroundImage
+      }
+    }`;
+  }
 
   try {
     const sanityRes = await fetch(

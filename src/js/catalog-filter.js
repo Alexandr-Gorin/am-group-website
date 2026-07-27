@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function reinitCatalogFilter() {
   const cards = Array.from(document.querySelectorAll('.card[data-category]'));
   const filterBtns = Array.from(document.querySelectorAll('[data-filter]'));
   const grid = document.querySelector('.cards-grid');
@@ -95,4 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Apply filter on load without animation
   applyFilter(getFilterFromHash(), false);
-});
+}
+
+document.addEventListener('DOMContentLoaded', reinitCatalogFilter);
+// Called by preview-mode.js after DOM is patched with draft content
+document.addEventListener('catalog:reinit', reinitCatalogFilter);
