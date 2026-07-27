@@ -13,6 +13,8 @@ const execAsync = promisify(exec);
 
 const app = express();
 
+app.set('trust proxy', '127.0.0.1');
+
 // Разрешаем фронтенду присылать данные на бэкенд
 app.use(cors());
 
@@ -126,16 +128,17 @@ function isValidSanitySignature(rawBody, signature, secret) {
   }
 
   // Sanity's HMAC payload: String(timestamp) + rawBody (no separator — two .update() calls)
-  const expected = crypto
+  // Sanity encodes the digest as base64url (not hex)
+  const expectedBuf = crypto
     .createHmac("sha256", secret)
     .update(String(timestamp))
     .update(rawBody)
-    .digest("hex");
+    .digest();
 
   try {
     return crypto.timingSafeEqual(
-      Buffer.from(expected, "hex"),
-      Buffer.from(providedHash, "hex")
+      expectedBuf,
+      Buffer.from(providedHash, "base64url")
     );
   } catch {
     return false;
@@ -255,7 +258,7 @@ app.post("/webhook/sanity-deploy", (req, res) => {
   // 1. Verify Sanity HMAC signature
   const signature = req.headers["sanity-webhook-signature"];
   if (!isValidSanitySignature(req.rawBody, signature, WEBHOOK_SECRET)) {
-    console.warn(`[webhook] Invalid/missing signature from ${req.ip}`);
+    console.warn(`[webhook] Invalid/missing signature from ${req.headers['x-real-ip'] || req.ip}`);
     return res.status(401).json({ error: "Invalid signature" });
   }
 
@@ -264,7 +267,7 @@ app.post("/webhook/sanity-deploy", (req, res) => {
     fs.openSync(DEPLOY_LOCK, "wx");
   } catch {
     console.log("[webhook] Deploy already in progress — ignoring duplicate call");
-    return res.status(202).json({ message: "Deploy already in progress" });
+    return res.status(503).json({ message: "Deploy in progress, retry later" });
   }
 
   // 3. Respond immediately so Sanity doesn't time out waiting
