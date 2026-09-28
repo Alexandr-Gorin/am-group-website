@@ -1,3 +1,6 @@
+import {getSlugFromPath, isValidSlug} from './utils/slug.js'
+if (!isValidSlug(getSlugFromPath('product-'))) window.location.replace('/pages/error.html')
+
 document.addEventListener('DOMContentLoaded', () => {
   const items = Array.from(document.querySelectorAll('.accordion__item'));
 

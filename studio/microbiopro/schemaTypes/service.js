@@ -1,3 +1,5 @@
+import {makeSlugField} from './fields/slugField'
+
 export const service = {
   name: 'service',
   title: 'Услуга',
@@ -8,14 +10,7 @@ export const service = {
       title: 'Название услуги',
       type: 'string',
     },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-      },
-    },
+    makeSlugField(),
     {
       name: 'heroImage',
       title: 'Hero-изображение',

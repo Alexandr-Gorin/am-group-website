@@ -1,4 +1,5 @@
 import {defineType, defineField} from 'sanity'
+import {makeSlugField} from './fields/slugField'
 
 export const newsArticle = defineType({
   name: 'newsArticle',
@@ -6,13 +7,7 @@ export const newsArticle = defineType({
   type: 'document',
   fields: [
     defineField({name: 'title', title: 'Title', type: 'string', validation: (R) => R.required()}),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: (R) => R.required(),
-    }),
+    defineField(makeSlugField()),
     defineField({
       name: 'pageNumber',
       title: 'Page Number',

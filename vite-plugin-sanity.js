@@ -998,10 +998,15 @@ export async function prepareProductPages(projectRoot) {
       console.warn('\n[sanity-products] Failed to query Sanity for product slugs:', err.message)
       slugs = []
     }
+    const VALID_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
     if (slugs && slugs.length > 0) {
       const template = readFileSync(templatePath, 'utf-8')
       for (const { slug } of slugs) {
         if (!slug) continue
+        if (!VALID_SLUG_RE.test(slug)) {
+          console.warn(`[sanity-products] Skipping product with invalid slug "${slug}" — fix it in Sanity Studio (latin lowercase, digits, hyphens only).`)
+          continue
+        }
         const dest = resolve(pagesDir, `product-${slug}.html`)
         if (!existsSync(dest)) {
           writeFileSync(dest, template, 'utf-8')
@@ -1150,8 +1155,8 @@ export function sanityProductPagePlugin() {
 
       const product = allProducts ? allProducts.find(p => p.slug === slug) : null
       if (!product) {
-        console.warn(`\n[sanity-product-page] No product with slug="${slug}" found — building with static fallback.\n`)
-        return html
+        console.warn(`\n[sanity-product-page] No product with slug="${slug}" found — injecting error redirect.\n`)
+        return html.replace('</body>', '<script>window.location.replace("/pages/error.html")</script></body>')
       }
 
       try {

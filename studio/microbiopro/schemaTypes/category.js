@@ -1,4 +1,5 @@
 import {defineType, defineField} from 'sanity'
+import {makeSlugField} from './fields/slugField'
 
 export const category = defineType({
   name: 'category',
@@ -6,13 +7,7 @@ export const category = defineType({
   type: 'document',
   fields: [
     defineField({name: 'title', title: 'Title', type: 'string', validation: (R) => R.required()}),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: (R) => R.required(),
-    }),
+    defineField(makeSlugField()),
     defineField({
       name: 'description',
       title: 'Description',
