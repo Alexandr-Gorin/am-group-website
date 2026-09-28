@@ -54,6 +54,24 @@
   flex-shrink: 0;
 }
 
+.cookie-banner__link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 0.3s, opacity 0.3s;
+}
+
+.cookie-banner__link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.cookie-banner__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 @media (min-width: 660px) {
   .cookie-banner {
     flex-direction: row;
