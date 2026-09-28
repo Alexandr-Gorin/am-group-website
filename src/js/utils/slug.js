@@ -10,7 +10,7 @@ const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
  */
 export function getSlugFromPath(filePrefix = '') {
   try {
-    const raw = window.location.pathname.split('/').pop() ?? ''
+    const raw = window.location.pathname.split('/').filter(Boolean).pop() ?? ''
     const decoded = decodeURIComponent(raw).replace(/\.html$/, '')
     const slug = filePrefix && decoded.startsWith(filePrefix)
       ? decoded.slice(filePrefix.length)

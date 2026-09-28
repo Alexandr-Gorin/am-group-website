@@ -1,3 +1,7 @@
+if (import.meta.env.DEV) {
+  import('/src/css/grid-debug.css')
+}
+
 /Скроллинг header/;
 const header = document.querySelector(".header");
 
