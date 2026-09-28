@@ -800,7 +800,8 @@ export function sanityNewsPlugin() {
           return html
         }
         try {
-          return injectArticlePage(html, article, allArticles, builder)
+          const injected = injectArticlePage(html, article, allArticles, builder)
+          return injected.replace('</head>', `    <link rel="canonical" href="https://microbio.pro/pages/news-${pageNumber}" />\n  </head>`)
         } catch (err) {
           console.warn(`\n[sanity-news] Error injecting content into news-${pageNumber}.html:`, err.message, '— building with static fallback.\n')
           return html
@@ -1160,7 +1161,8 @@ export function sanityProductPagePlugin() {
       }
 
       try {
-        return injectProductPage(html, product, builder)
+        const injected = injectProductPage(html, product, builder)
+        return injected.replace('</head>', `    <link rel="canonical" href="https://microbio.pro/pages/product-${slug}" />\n  </head>`)
       } catch (err) {
         console.warn(`\n[sanity-product-page] Error injecting content into product-${slug}.html:`, err.message, '— building with static fallback.\n')
         return html
@@ -1958,6 +1960,56 @@ export function sanityCookiePagePlugin() {
 
       console.log(`[sanity-cookie-page] Injected cookie page: title + intro + ${sections.length} sections.`)
       return root.toString()
+    },
+  }
+}
+
+// ─── Sitemap ──────────────────────────────────────────────────────────────────
+
+export function sanitySitemapPlugin() {
+  return {
+    name: 'sanity-sitemap',
+    apply: 'build',
+    async closeBundle() {
+      const client = makeSanityClient()
+      let products = [], news = []
+      try {
+        ;[products, news] = await Promise.all([
+          client.fetch(`*[_type == "product" && defined(slug.current)] { "slug": slug.current, _updatedAt }`),
+          client.fetch(`*[_type == "newsArticle" && defined(pageNumber)] { pageNumber, _updatedAt }`),
+        ])
+      } catch (err) {
+        console.warn('\n[sanity-sitemap] Failed to fetch Sanity data:', err.message)
+      }
+
+      const staticUrls = [
+        'https://microbio.pro/',
+        'https://microbio.pro/pages/catalog',
+        'https://microbio.pro/pages/services',
+        'https://microbio.pro/pages/services-audit',
+        'https://microbio.pro/pages/services-support',
+        'https://microbio.pro/pages/services-training',
+        'https://microbio.pro/pages/about-company',
+        'https://microbio.pro/pages/contacts',
+        'https://microbio.pro/pages/policy',
+        'https://microbio.pro/pages/cookie',
+      ]
+
+      const entry = (loc, lastmod) =>
+        lastmod
+          ? `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`
+          : `  <url>\n    <loc>${loc}</loc>\n  </url>`
+
+      const rows = [
+        ...staticUrls.map(url => entry(url, null)),
+        ...(products || []).map(p => entry(`https://microbio.pro/pages/product-${p.slug}`, p._updatedAt.slice(0, 10))),
+        ...(news || []).sort((a, b) => a.pageNumber - b.pageNumber).map(a => entry(`https://microbio.pro/pages/news-${a.pageNumber}`, a._updatedAt.slice(0, 10))),
+      ]
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join('\n')}\n</urlset>\n`
+
+      writeFileSync(resolve(process.cwd(), 'dist/sitemap.xml'), xml, 'utf-8')
+      console.log(`[sanity-sitemap] dist/sitemap.xml — ${staticUrls.length} static + ${(products || []).length} products + ${(news || []).length} news URLs.`)
     },
   }
 }
