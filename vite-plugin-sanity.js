@@ -854,7 +854,7 @@ function renderCatalogCard(product, imageUrl) {
                   <h3 class="card__title">${title}</h3>
                   <p class="card__description">${desc}</p>
                 </div>
-                <a href="product-${slug}" class="button button--${buttonType}">Подробнее</a>
+                <a href="/pages/product-${slug}" class="button button--${buttonType}">Подробнее</a>
               </article>`
 }
 
