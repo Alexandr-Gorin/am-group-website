@@ -1970,7 +1970,7 @@ export function sanitySitemapPlugin() {
   return {
     name: 'sanity-sitemap',
     apply: 'build',
-    async closeBundle() {
+    async generateBundle() {
       const client = makeSanityClient()
       let products = [], news = []
       try {
@@ -2008,8 +2008,8 @@ export function sanitySitemapPlugin() {
 
       const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rows.join('\n')}\n</urlset>\n`
 
-      writeFileSync(resolve(process.cwd(), 'dist/sitemap.xml'), xml, 'utf-8')
-      console.log(`[sanity-sitemap] dist/sitemap.xml — ${staticUrls.length} static + ${(products || []).length} products + ${(news || []).length} news URLs.`)
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: xml })
+      console.log(`[sanity-sitemap] sitemap.xml — ${staticUrls.length} static + ${(products || []).length} products + ${(news || []).length} news URLs.`)
     },
   }
 }
