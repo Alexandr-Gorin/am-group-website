@@ -44,6 +44,7 @@ const transporter = nodemailer.createTransport({
 
 // Главный маршрут для отправки писем
 app.post("/api/send-email", async (req, res) => {
+  if (!req.body) return res.status(400).json({ message: "Request body required" });
   // Получаем данные из формы (те самые name из HTML)
   const { name, phone, company, product_name, _subject, marketing_consent, token } = req.body;
 
@@ -138,14 +139,14 @@ app.get("/api/preview-data", async (req, res) => {
 
   try {
     const sanityRes = await fetch(
-      "https://b33hwgh0.api.sanity.io/v2024-01-01/data/query/production",
+      "https://b33hwgh0.api.sanity.io/v2024-01-01/data/query/production?perspective=previewDrafts",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${SANITY_PREVIEW_TOKEN}`,
         },
-        body: JSON.stringify({ query, perspective: "previewDrafts" }),
+        body: JSON.stringify({ query }),
       }
     );
 
@@ -253,8 +254,9 @@ async function runDeploy() {
   try {
     log("=== Deploy started ===");
 
-    // 1. git pull
-    await run("git pull origin main");
+    // 1. Fetch + hard reset — never blocked by untracked files that conflict with incoming commits
+    await run("git fetch origin");
+    await run("git reset --hard origin/main");
 
     // 2. npm install only if package files changed in this pull
     let pkgChanged = false;
@@ -291,7 +293,12 @@ async function runDeploy() {
     fs.symlinkSync(pagesTarget, pagesSymlink);
     log("Pages symlink recreated");
 
-    // 6. Remove old dist
+    // 6. Set permissions: files 644, dirs 755
+    await run(`find ${liveDistDir} -type f -exec chmod 644 {} +`);
+    await run(`find ${liveDistDir} -type d -exec chmod 755 {} +`);
+    log("Permissions set (files 644, dirs 755)");
+
+    // 7. Remove old dist
     await run(`rm -rf ${oldDistDir}`);
     log("=== Deploy complete ===");
 
