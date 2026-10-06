@@ -30,3 +30,7 @@ server/node_modules
 .env
 
 .claude/
+
+# local work folders
+Claude outputs/
+portfolio/
